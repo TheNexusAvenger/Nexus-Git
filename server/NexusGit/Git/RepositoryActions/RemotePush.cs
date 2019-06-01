@@ -41,7 +41,7 @@ namespace NexusGit.Git.RepositoryActions
         public override GitResponse CompleteAction(ExecutableOutput executableOutput)
         {
             // If everything is up to date, return that as a response.
-            if (executableOutput.OutputContainsAtLine(0,"Everything up-to-date"))
+            if (executableOutput.OutputContains("Everything up-to-date"))
             {
                 return GitResponse.CreateSingleLineResponse("Nothing to push.");
             }
