@@ -47,18 +47,18 @@ namespace NexusGit.Git.RepositoryActions
             }
 
             // If the push was rejected, return that as a response.
-            if (executableOutput.OutputContainsAtLine(1,"(fetch first)"))
+            if (executableOutput.OutputContains("(fetch first)"))
             {
                 return GitResponse.CreateSingleLineResponse("Push rejected. Fetch first.");
             }
 
             // Format the response.
             GitResponse newResponse = new GitResponse();
-            if (executableOutput.OutputContainsAtLine(1,"(forced update)"))
+            if (executableOutput.OutputContains("(forced update)"))
             {
                 newResponse.AddResponse("Force push complete.");
             }
-            else if (executableOutput.OutputContainsAtLine(1,"->"))
+            else if (executableOutput.OutputContains("->"))
             {
                 newResponse.AddResponse("Push complete.");
             }
