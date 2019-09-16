@@ -20,7 +20,7 @@ namespace NexusGit.Git.RepositoryActions
          */
         public LocalStatus(Repository repository) : base(repository)
         {
-            this.Command = "status";
+            this.Command = "status --untracked-files=all";
         }
 
         /*
@@ -94,7 +94,7 @@ namespace NexusGit.Git.RepositoryActions
                 }
 
                 // Write untracked files (includes the header).
-                if (writeUntrackedFiles && line != "" && !line.Contains("include in what will be committed") && !line.Contains("nothing added to commit but untracked files present"))
+                if (writeUntrackedFiles && line != "" && !line.Contains("include in what will be committed") && !line.Contains("nothing added to commit but untracked files present") && !line.Contains("no changes added to commit"))
                 {
                     newResponse.AddResponse(line);
                 }
