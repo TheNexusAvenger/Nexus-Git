@@ -36,7 +36,7 @@ namespace NexusGit.NexusGit.Projects
         {
             // Get the project to use.
             IProject currentProject = null;
-            string currentDirectory = Directory.GetCurrentDirectory();
+            string currentDirectory = Directory.GetCurrentDirectory().Replace("\\","/") + "/";
             while (currentDirectory != null)
             {
                 // Iterate through the projects and determine if the project is valid.
