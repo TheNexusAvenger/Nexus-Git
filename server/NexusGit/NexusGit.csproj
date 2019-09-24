@@ -68,6 +68,7 @@
     <Compile Include="NexusGit\GetHandlers\ProjectPartitions.cs" />
     <Compile Include="NexusGit\GetHandlers\LocalPull.cs" />
     <Compile Include="NexusGit\GetHandlers\RemotePull.cs" />
+    <Compile Include="NexusGit\GetHandlers\VersionInfo.cs" />
     <Compile Include="NexusGit\NexusGitServer.cs" />
     <Compile Include="NexusGit\PostHandlers\GitAdd.cs" />
     <Compile Include="NexusGit\PostHandlers\GitCommit.cs" />
