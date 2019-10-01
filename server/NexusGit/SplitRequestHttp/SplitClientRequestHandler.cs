@@ -68,8 +68,8 @@ namespace NexusGit.SplitRequestHttp
             {
                 // Handle sending a split request.
                 int requestId = -1;
-                int packetId = 0;
-                int maxPackets = 1;
+                int packetId = -1;
+                int maxPackets = -1;
                 PartialHttpRequest completeRequest;
 
                 // Get the packet info.
@@ -84,6 +84,15 @@ namespace NexusGit.SplitRequestHttp
                 if (url.ParameterExists("maxpackets"))
                 {
                     maxPackets = int.Parse(url.GetParameter("maxpackets"));
+                }
+                
+                // Treat the request as standalone if the parameters aren't specified.
+                if (requestId == -1 && packetId == -1 && maxPackets == -1) {
+                    return GetCompleteResponseData(request);
+                }
+                else {
+                    packetId = 0;
+                    maxPackets = 1;
                 }
 
                 // Get the split request to use.
