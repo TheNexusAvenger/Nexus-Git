@@ -4,7 +4,7 @@ TheNexusAvenger
 Runs functional tests.
 """
 
-import imp
+import importlib.machinery
 import os
 import sys
 import unittest
@@ -23,8 +23,8 @@ def importFromFile(filePath):
 
 	# Local the source or compiled.
 	if fileExtension.lower() == ".py":
-		print(moduleName)
-		pythonModule = imp.load_source(moduleName,filePath)
+		loader = importlib.machinery.SourceFileLoader(moduleName,filePath)
+		pythonModule = loader.load_module()
 
 	# Return the module.
 	return pythonModule
