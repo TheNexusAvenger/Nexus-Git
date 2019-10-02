@@ -76,7 +76,7 @@ class NexusGitFunctionalTest(unittest.TestCase):
 	"""
 	def setUp(self):
 		if self.verbose:
-			print("Setting up " + type(self).__name__)
+			print("Setting up " + type(self).__name__ + " using " + self.workspace.workspaceDirectory)
 
 		# Call the setup method.
 		self.setupTest()
@@ -89,7 +89,7 @@ class NexusGitFunctionalTest(unittest.TestCase):
 	"""
 	def tearDown(self):
 		if self.verbose:
-			print("Tearing down " + type(self).__name__)
+			print("Tearing down " + type(self).__name__ + "\n\r\n\r\n\r")
 
 		# End the server thread.
 		self.serverProcess.kill()

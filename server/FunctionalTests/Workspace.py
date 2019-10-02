@@ -5,6 +5,7 @@ TheNexusAvenger
 """
 
 import os
+import subprocess
 import tempfile
 
 
@@ -58,3 +59,9 @@ class Workspace():
 	def createDirectory(self,fileLocation):
 		fileLocation = self.workspaceDirectory + fileLocation
 		os.mkdir(fileLocation)
+
+	"""
+	Runs a command in the workspace and waits for it to complete.
+	"""
+	def runCommand(self,command):
+		subprocess.Popen(command,cwd=self.workspaceDirectory).wait()
