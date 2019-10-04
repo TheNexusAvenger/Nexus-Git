@@ -240,6 +240,8 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
          */
         public Instance ReadRobloxInstance(string directory)
         {
+            directory = directory.Replace("\\", "/");
+            
             if (Directory.Exists(directory))
             {
                 // Get the instance.
@@ -298,8 +300,9 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
                 
                 // Return the new instance.
                 return newInstance;
-            } else if (File.Exists(directory))
+            } else if (File.Exists(directory) && !directory.EndsWith("/init.lua") && !directory.EndsWith("/init.server.lua") && !directory.EndsWith("/init.client.lua"))
             {
+                Console.WriteLine(directory);
                 // Get the class name.
                 string className = null;
                 
