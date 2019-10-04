@@ -17,7 +17,7 @@ class Rojo04TestGitStatusAsStandaloneRequest(NexusGitFunctionalTest.NexusGitFunc
     """
     def setupTest(self):
         # Set up several files.
-        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 30000,\"partitions\": {\"src\": {\"path\": \"client/src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"client/test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
+        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 30000,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
         self.workspace.writeFile("file1.txt","Test file 1")
         self.workspace.writeFile("file2.txt","Test file 2")
         self.workspace.writeFile("file3.txt","Test file 3")

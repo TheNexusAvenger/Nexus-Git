@@ -16,7 +16,7 @@ class Rojo04TestVersionAsSplitRequest(NexusGitFunctionalTest.NexusGitFunctionalT
 	Setup for the test.
 	"""
 	def setupTest(self):
-		self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 30000,\"partitions\": {\"src\": {\"path\": \"client/src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"client/test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
+		self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 30000,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
 
 	"""
 	Runs the test.
