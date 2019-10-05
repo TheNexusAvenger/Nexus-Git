@@ -77,7 +77,6 @@ namespace NexusGit.Http.Request
             // Set up the response.
             HttpListenerResponse httpResponse = requestContext.Response;
             httpResponse.ContentEncoding = Encoding.UTF8;
-            httpResponse.ContentLength64 = this.ResponseData.Length;
             httpResponse.StatusCode = this.Status;
 
             // Send the data.
