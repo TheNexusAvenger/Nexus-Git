@@ -91,8 +91,15 @@ namespace NexusGit.SplitRequestHttp
                     return GetCompleteResponseData(request);
                 }
                 else {
-                    packetId = 0;
-                    maxPackets = 1;
+                    if (requestId == -1)
+                    {
+                        packetId = 0;
+                    }
+
+                    if (maxPackets == -1)
+                    {
+                        maxPackets = 1;
+                    }
                 }
 
                 // Get the split request to use.
