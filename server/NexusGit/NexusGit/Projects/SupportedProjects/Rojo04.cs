@@ -302,7 +302,6 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
                 return newInstance;
             } else if (File.Exists(directory) && !directory.EndsWith("/init.lua") && !directory.EndsWith("/init.server.lua") && !directory.EndsWith("/init.client.lua"))
             {
-                Console.WriteLine(directory);
                 // Get the class name.
                 string className = null;
                 
