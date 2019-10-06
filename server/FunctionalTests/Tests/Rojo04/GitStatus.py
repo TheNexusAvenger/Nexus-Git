@@ -45,5 +45,4 @@ class Rojo04TestGitStatusAsStandaloneRequest(NexusGitFunctionalTest.NexusGitFunc
         self.workspace.runCommand("git commit file1.txt -m Commit")
         self.workspace.writeFile("file1.txt","Test file 4")
         response = self.sendGETRequest("/gitstatus")
-        print(response)
         self.assertEquals(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: file2.txt\",\"Modified: file1.txt\",\"Untracked files:\",\"file3.txt\",\"rojo.json\"]")

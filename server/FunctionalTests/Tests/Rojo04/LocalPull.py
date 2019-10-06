@@ -12,7 +12,7 @@ import NexusGitFunctionalTest
 """
 Tests the local pull as a standalone request with several files.
 """
-class Rojo04TestVersionAsStandaloneRequestMultipleFile(NexusGitFunctionalTest.NexusGitFunctionalTest):
+class Rojo04TestLocalPullAsStandaloneRequestMultipleFile(NexusGitFunctionalTest.NexusGitFunctionalTest):
     """
     Setup for the test.
     """
@@ -70,7 +70,7 @@ class Rojo04TestVersionAsStandaloneRequestMultipleFile(NexusGitFunctionalTest.Ne
 """
 Tests the local pull as a standalone request with directories.
 """
-class Rojo04TestVersionAsStandaloneRequestDirectories(NexusGitFunctionalTest.NexusGitFunctionalTest):
+class Rojo04TestLocalPullAsStandaloneRequestDirectories(NexusGitFunctionalTest.NexusGitFunctionalTest):
     """
     Setup for the test.
     """
@@ -134,7 +134,7 @@ class Rojo04TestVersionAsStandaloneRequestDirectories(NexusGitFunctionalTest.Nex
 """
 Tests the local pull as a standalone request with a model file.
 """
-class Rojo04TestVersionAsStandaloneRequestModelFile(NexusGitFunctionalTest.NexusGitFunctionalTest):
+class Rojo04TestLocalPullAsStandaloneRequestModelFile(NexusGitFunctionalTest.NexusGitFunctionalTest):
     """
     Setup for the test.
     """
