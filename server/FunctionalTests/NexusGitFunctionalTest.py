@@ -49,7 +49,7 @@ class NexusGitFunctionalTest(unittest.TestCase):
 	"""
 	Sends a POST request and return the contents.
 	"""
-	def sendPOStRequest(self,URL,body):
+	def sendPOSTRequest(self,URL,body):
 		response = requests.post("http://localhost:" + str(self.port) + URL,body)
 		return response.content.decode()
 
