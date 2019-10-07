@@ -60,6 +60,7 @@
     <Compile Include="Git\RepositoryActions\LocalBranches.cs" />
     <Compile Include="Git\RepositoryActions\LocalCommit.cs" />
     <Compile Include="Git\RepositoryActions\LocalStatus.cs" />
+    <Compile Include="Git\RepositoryActions\RemoteBranches.cs" />
     <Compile Include="Git\RepositoryActions\RemotePull.cs" />
     <Compile Include="Git\RepositoryActions\RemotePush.cs" />
     <Compile Include="Git\RepositoryActions\RepositoryAction.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="NexusGit\GetHandlers\LocalBranches.cs" />
     <Compile Include="NexusGit\GetHandlers\ProjectPartitions.cs" />
     <Compile Include="NexusGit\GetHandlers\LocalPull.cs" />
+    <Compile Include="NexusGit\GetHandlers\RemoteBranches.cs" />
     <Compile Include="NexusGit\GetHandlers\RemotePull.cs" />
     <Compile Include="NexusGit\GetHandlers\VersionInfo.cs" />
     <Compile Include="NexusGit\NexusGitServer.cs" />

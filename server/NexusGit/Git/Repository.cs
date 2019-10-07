@@ -99,5 +99,13 @@ namespace NexusGit.Git
         {
             return new LocalBranches(this).PerformAction();
         }
+        
+        /*
+         * Gets the remote branches. Returns a response object.
+         */
+        public GitResponse RemoteBranches()
+        {
+            return new RemoteBranches(this).PerformAction();
+        }
     }
 }
