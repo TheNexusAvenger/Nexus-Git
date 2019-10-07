@@ -91,5 +91,13 @@ namespace NexusGit.Git
         {
             return new LocalStatus(this).PerformAction();
         }
+        
+        /*
+         * Gets the local branches. Returns a response object.
+         */
+        public GitResponse LocalBranches()
+        {
+            return new LocalBranches(this).PerformAction();
+        }
     }
 }
