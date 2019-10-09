@@ -23,8 +23,6 @@ class Rojo04TestRemoteBranchesAsStandaloneRequest(NexusGitFunctionalTest.NexusGi
         self.workspace.runCommand("git remote add origin https://github.com/TheNexusAvenger/Nexus-Instance")
         self.workspace.runCommand("git checkout -b master")
         self.workspace.runCommand("git pull origin master")
-        self.workspace.runCommand("git checkout -b gh-pages")
-        self.workspace.runCommand("git pull origin gh-pages")
 
     """
     Runs the test.
@@ -36,4 +34,4 @@ class Rojo04TestRemoteBranchesAsStandaloneRequest(NexusGitFunctionalTest.NexusGi
 
         # Assert the branches are correct.
         response = self.sendGETRequest("/remotebranches")
-        self.assertEquals(response,"[\"origin/gh-pages\",\"origin/master\"]")
+        self.assertEquals(response,"[\"gh-pages\",\"master\"]")
