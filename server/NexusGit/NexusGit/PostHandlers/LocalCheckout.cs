@@ -4,7 +4,6 @@
  * Handles checkout for local branches.
  */
 
-using Newtonsoft.Json;
 using NexusGit.Git;
 using NexusGit.Http.Request;
 using NexusGit.SplitRequestHttp;

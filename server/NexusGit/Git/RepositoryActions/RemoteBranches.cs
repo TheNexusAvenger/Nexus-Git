@@ -20,7 +20,7 @@ namespace NexusGit.Git.RepositoryActions
          */
         public RemoteBranches(Repository repository) : base(repository)
         {
-            this.Command = "branch -r";
+            this.Command = "ls-remote --heads";
         }
 
         /*
@@ -42,9 +42,10 @@ namespace NexusGit.Git.RepositoryActions
             // Add the branches.
             foreach (string line in executableOutput)
             {
-                if (line != "")
+                int branchNameStart = line.IndexOf("refs/heads/");
+                if (branchNameStart != -1)
                 {
-                    response.AddResponse(line);
+                    response.AddResponse(line.Substring(branchNameStart + 11));
                 }
             }
 
