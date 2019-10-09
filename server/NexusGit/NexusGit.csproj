@@ -58,6 +58,7 @@
     <Compile Include="Git\Repository.cs" />
     <Compile Include="Git\RepositoryActions\LocalAdd.cs" />
     <Compile Include="Git\RepositoryActions\LocalBranches.cs" />
+    <Compile Include="Git\RepositoryActions\LocalCheckout.cs" />
     <Compile Include="Git\RepositoryActions\LocalCommit.cs" />
     <Compile Include="Git\RepositoryActions\LocalStatus.cs" />
     <Compile Include="Git\RepositoryActions\RemoteBranches.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="NexusGit\NexusGitServer.cs" />
     <Compile Include="NexusGit\PostHandlers\GitAdd.cs" />
     <Compile Include="NexusGit\PostHandlers\GitCommit.cs" />
+    <Compile Include="NexusGit\PostHandlers\LocalCheckout.cs" />
     <Compile Include="NexusGit\PostHandlers\LocalPush.cs" />
     <Compile Include="NexusGit\PostHandlers\RemotePush.cs" />
     <Compile Include="NexusGit\Projects\IProject.cs" />

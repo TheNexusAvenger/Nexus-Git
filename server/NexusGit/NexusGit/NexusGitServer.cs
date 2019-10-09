@@ -38,6 +38,7 @@ namespace NexusGit.NexusGit
             requestHandler.RegisterHandler("POST","GitCommit",new GitCommit());
             requestHandler.RegisterHandler("POST","RemotePush",new RemotePush());
             requestHandler.RegisterHandler("POST","LocalPush",new LocalPush(project));
+            requestHandler.RegisterHandler("POST","LocalCheckout",new LocalCheckout());
             
             // Create the server.
             this.Port = port;
