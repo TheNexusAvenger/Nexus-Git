@@ -20,7 +20,7 @@ namespace NexusGit.Git.RepositoryActions
          */
         public RemoteCheckout(Repository repository,string localBranch,string remote,string branch) : base(repository)
         {
-            this.GitRepository.ExecuteCommand("fetch");
+            this.GetRepository().ExecuteCommand("fetch");
             this.Command = "checkout -b " + localBranch + " " + remote + "/" + branch;
         }
 

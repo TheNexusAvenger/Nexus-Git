@@ -22,6 +22,14 @@ namespace NexusGit.Git.RepositoryActions
         {
             this.GitRepository = repository;
         }
+        
+        /*
+         * Returns the repository used.
+         */
+        public Repository GetRepository()
+        {
+            return this.GitRepository;
+        }
 
         /*
          * Creates a common response if one exists.
