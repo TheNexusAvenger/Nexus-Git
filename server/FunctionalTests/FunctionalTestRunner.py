@@ -66,7 +66,7 @@ def runFunctionalTests(executableLocation):
 	suite = unittest.TestSuite()
 	for testClass in getFunctionalTests():
 		workspace = Workspace.Workspace()
-		suite.addTest(testClass(executableLocation,workspace))
+		suite.addTest(testClass(executableLocation=executableLocation,workspace=workspace))
 
 	# Run the tests.
 	runner = unittest.TextTestRunner()
