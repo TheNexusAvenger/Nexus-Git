@@ -56,6 +56,7 @@
     <Compile Include="Git\FileList.cs" />
     <Compile Include="Git\GitResponse.cs" />
     <Compile Include="Git\Repository.cs" />
+    <Compile Include="Git\RepositoryActions\ListRemotes.cs" />
     <Compile Include="Git\RepositoryActions\LocalAdd.cs" />
     <Compile Include="Git\RepositoryActions\LocalBranches.cs" />
     <Compile Include="Git\RepositoryActions\LocalCheckout.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Http\Request\Response.cs" />
     <Compile Include="Http\Request\URL.cs" />
     <Compile Include="NexusGit\GetHandlers\GitStatus.cs" />
+    <Compile Include="NexusGit\GetHandlers\ListRemotes.cs" />
     <Compile Include="NexusGit\GetHandlers\LocalBranches.cs" />
     <Compile Include="NexusGit\GetHandlers\ProjectPartitions.cs" />
     <Compile Include="NexusGit\GetHandlers\LocalPull.cs" />

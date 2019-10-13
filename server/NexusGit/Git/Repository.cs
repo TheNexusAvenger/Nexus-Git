@@ -121,5 +121,13 @@ namespace NexusGit.Git
         public GitResponse RemoteCheckout(string localBranch,string remote,string branch) {
             return new RemoteCheckout(this,localBranch,remote,branch).PerformAction();
         }
+        
+        /*
+         * Gets the remotes. Returns a response object.
+         */
+        public GitResponse ListRemotes()
+        {
+            return new ListRemotes(this).PerformAction();
+        }
     }
 }
