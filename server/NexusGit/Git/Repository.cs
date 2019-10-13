@@ -129,5 +129,13 @@ namespace NexusGit.Git
         {
             return new ListRemotes(this).PerformAction();
         }
+        
+        /*
+         * Gets the commits. Returns a response object.
+         */
+        public GitResponse ListCommits(string remote,string branch)
+        {
+            return new ListCommits(this,remote,branch).PerformAction();
+        }
     }
 }

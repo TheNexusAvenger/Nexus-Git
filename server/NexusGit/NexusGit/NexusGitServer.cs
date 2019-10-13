@@ -34,6 +34,7 @@ namespace NexusGit.NexusGit
             requestHandler.RegisterHandler("GET","Version",new VersionInfo(project));
             requestHandler.RegisterHandler("GET","LocalBranches",new LocalBranches());
             requestHandler.RegisterHandler("GET","RemoteBranches",new RemoteBranches());
+            requestHandler.RegisterHandler("GET","ListCommits",new ListCommits());
             requestHandler.RegisterHandler("GET","ListRemotes",new ListRemotes());
             requestHandler.RegisterHandler("POST","GitAdd",new GitAdd());
             requestHandler.RegisterHandler("POST","GitCommit",new GitCommit());
