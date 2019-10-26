@@ -4,6 +4,7 @@
         <PublishSingleFile>true</PublishSingleFile>
         <PublishTrimmed>true</PublishTrimmed>
         <UseAppHost>true</UseAppHost>
+	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <TargetFramework>netcoreapp3.0</TargetFramework>
         <OutputType>Exe</OutputType>
     </PropertyGroup>
