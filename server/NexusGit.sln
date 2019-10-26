@@ -1,11 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2041
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NexusGit", "NexusGit\NexusGit.csproj", "{0E60D531-CE77-4DF8-A528-5B211A5588E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NexusGit", "NexusGit\NexusGit.csproj", "{5C7954DA-9BAE-4146-A6B4-C1634574D1D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NexusGitTests", "NexusGitTests\NexusGitTests.csproj", "{9A5A0758-14DD-48BB-84A2-FC0365F1010C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NexusGitTests", "NexusGitTests\NexusGitTests.csproj", "{3337A095-A57D-44CE-9B38-4829B2052F0C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,19 +10,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0E60D531-CE77-4DF8-A528-5B211A5588E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E60D531-CE77-4DF8-A528-5B211A5588E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E60D531-CE77-4DF8-A528-5B211A5588E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E60D531-CE77-4DF8-A528-5B211A5588E0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A5A0758-14DD-48BB-84A2-FC0365F1010C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A5A0758-14DD-48BB-84A2-FC0365F1010C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A5A0758-14DD-48BB-84A2-FC0365F1010C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A5A0758-14DD-48BB-84A2-FC0365F1010C}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7C08269A-BDDF-481A-99BA-416DFD185BB1}
+		{5C7954DA-9BAE-4146-A6B4-C1634574D1D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C7954DA-9BAE-4146-A6B4-C1634574D1D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C7954DA-9BAE-4146-A6B4-C1634574D1D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C7954DA-9BAE-4146-A6B4-C1634574D1D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3337A095-A57D-44CE-9B38-4829B2052F0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3337A095-A57D-44CE-9B38-4829B2052F0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3337A095-A57D-44CE-9B38-4829B2052F0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3337A095-A57D-44CE-9B38-4829B2052F0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
