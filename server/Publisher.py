@@ -41,7 +41,7 @@ def publishVersion(platform,compiledFileName,compiler,solutionFile,projectDirect
 
 if __name__ == '__main__':
     # Get the parameters.
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 2:
         print("Usage: Publisher compiler")
         exit(0)
 
