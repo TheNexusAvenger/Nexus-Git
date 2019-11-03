@@ -16,14 +16,14 @@ class Rojo04TestProjectPartitionsAsStandaloneRequestMultipleFile(NexusGitFunctio
     Setup for the test.
     """
     def setupTest(self):
-        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 30000,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
+        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 20011,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
 
     """
     Runs the test.
     """
     def runTest(self):
         # Wait for it to initialize.
-        self.setPortNumber(30000)
+        self.setPortNumber(20011)
         self.waitForInitialization()
 
         # Send a standalone request and get the response.

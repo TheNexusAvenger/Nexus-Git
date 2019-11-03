@@ -16,7 +16,7 @@ class Rojo04TestGitCommitAsStandaloneRequest(NexusGitFunctionalTest.NexusGitFunc
     Setup for the test.
     """
     def setupTest(self):
-        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 30000,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
+        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 20002,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
         self.workspace.createDirectory("src")
         self.workspace.createDirectory("test")
         self.workspace.writeFile("src/testscript1.server.lua","print(\"Hello world 1!\")")
@@ -33,7 +33,7 @@ class Rojo04TestGitCommitAsStandaloneRequest(NexusGitFunctionalTest.NexusGitFunc
     """
     def runTest(self):
         # Wait for it to initialize.
-        self.setPortNumber(30000)
+        self.setPortNumber(20002)
         self.waitForInitialization()
 
         # Send a standalone request and get the response.
