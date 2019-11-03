@@ -34,4 +34,4 @@ class Rojo04TestRemoteBranchesAsStandaloneRequest(NexusGitFunctionalTest.NexusGi
 
         # Assert the branches are correct.
         response = self.sendGETRequest("/remotebranches")
-        self.assertEquals(response,"[\"gh-pages\",\"master\"]")
+        self.assertEquals(response,"[\"origin/gh-pages\",\"origin/master\"]")
