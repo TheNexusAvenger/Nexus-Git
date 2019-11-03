@@ -13,8 +13,7 @@ import Workspace
 FILE_LOCATION = os.path.realpath(__file__)
 DELETE_FILE_TIMEOUT_MILLISECONDS = 5000
 EXECUTABLE_LOCATIONS = [
-	FILE_LOCATION + "/../../NexusGit/bin/Release/NexusGit.exe",
-	FILE_LOCATION + "/../../NexusGit/bin/Debug/NexusGit.exe"
+	FILE_LOCATION + "/../../bin/NexusGit-win-x64.exe"
 ]
 
 
