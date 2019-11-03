@@ -49,12 +49,23 @@ namespace NexusGit.Git.RepositoryActions
             // Create the response.
             GitResponse response = new GitResponse();
             
+            // Get the tracked remote branch.
+            string trackingBranch = this.GetRepository().ExecuteCommand("rev-parse --abbrev-ref --symbolic-full-name @{u}")[0];
+            
             // Add the branches.
             foreach (string line in executableOutput)
             {
                 if (line != "")
                 {
-                    response.AddResponse(line);
+                    if (line == trackingBranch)
+                    {
+                        response.AddResponse("* " + line);
+                    }
+                    else
+                    {
+                        response.AddResponse(line);
+                    }
+                    
                 }
             }
 
