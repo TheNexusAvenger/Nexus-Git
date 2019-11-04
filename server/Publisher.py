@@ -14,17 +14,41 @@ import sys
 
 DOTNET_CORE_VERSION = "netcoreapp3.0"
 PLATFORMS = [
-    ["win-x64","NexusGit.exe","NexusGit-win-x64.exe"],
-    ["osx-x64","NexusGit","NexusGit-osx-x64"],
-    ["linux-x64","NexusGit","NexusGit-linux-x64"],
+    "win-x64",
+    "osx-x64",
+    "linux-x64",
 ]
 
 
 
 """
+Returns the path to the executable for the platform.
+"""
+def getExecutablePath(projectDirectory,platform):
+    # Create the base path.
+    publishDirectory = projectDirectory + "bin\\Release\\" + DOTNET_CORE_VERSION + "\\" + platform + "\\publish\\"
+
+    # Return the first non-pdb file.
+    for fileName in os.listdir(publishDirectory):
+        if fileName[-4:] != ".pdb":
+            return publishDirectory + fileName
+
+"""
+Returns the new file name for a platform.
+"""
+def getNewFileName(fileLocation,platform):
+    # Get the file name.
+    splitLocation = fileLocation.split("\\")
+    fileName = splitLocation[len(splitLocation) - 1]
+
+    # Return the name.
+    splitName = os.path.splitext(fileName)
+    return splitName[0] + "-" + platform + splitName[1]
+
+"""
 Creates a release for a platform version.
 """
-def publishVersion(platform,compiledFileName,compiler,solutionFile,projectDirectory,destinationFile):
+def publishVersion(platform,compiler,solutionFile,projectDirectory,destinationDirectory):
     # Create the destination directory if needed.
     if not os.path.exists(destinationDirectory):
         os.mkdir(destinationDirectory)
@@ -34,15 +58,15 @@ def publishVersion(platform,compiledFileName,compiler,solutionFile,projectDirect
     subprocess.call([compiler,"publish","-r",platform,"-c","Release",solutionFile])
 
     # Copy the compiled file to central directory.
-    executableLocation = projectDirectory + "bin\\Release\\" + DOTNET_CORE_VERSION + "\\" + platform + "\\publish\\" + compiledFileName
+    executableLocation = getExecutablePath(projectDirectory,platform)
+    destinationFile = destinationDirectory + getNewFileName(executableLocation,platform)
     shutil.copyfile(executableLocation,destinationFile)
-
 
 
 if __name__ == '__main__':
     # Get the parameters.
     if len(sys.argv) < 2:
-        print("Usage: Publisher compiler")
+        print("Usage: Publisher.py Compiler (TargetPlatform)")
         exit(0)
 
     # Get the directories.
@@ -53,5 +77,9 @@ if __name__ == '__main__':
     destinationDirectory = workspaceDirectory + "\\bin\\"
 
     # Build the platforms.
-    for platformData in PLATFORMS:
-        publishVersion(platformData[0],platformData[1],compiler,solutionFile,projectDirectory,destinationDirectory + platformData[2])
+    if len(sys.argv) >= 3:
+        publishVersion(sys.argv[2],compiler,solutionFile,projectDirectory,destinationDirectory)
+    else:
+        print("No custom platform defined. Compiling for: " + str(PLATFORMS))
+        for platformData in PLATFORMS:
+            publishVersion(platformData,compiler,solutionFile,projectDirectory,destinationDirectory)
