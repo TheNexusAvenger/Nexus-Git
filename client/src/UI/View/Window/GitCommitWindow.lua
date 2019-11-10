@@ -40,14 +40,14 @@ function GitCommitWindow.OpenWindow(Host)
 	--Display an error message if the request failed.
 	if not Worked then
 		warn("Get status failed because \""..tostring(Status).."\"")
-		return MessageWindow.new("Unable to get the files to add (is Nexus Git set up?)","Error",300)
+		return MessageWindow.new("Unable to get the files to ocommit (is Nexus Git set up?)","Error",300)
 	end
 	
-	--Display a message if there are no files to add.
+	--Display a message if there are no files to commit.
 	local Files = Status.Files
 	local FilterdFiles = Directory.FilterFiles(Files,{NexusEnums.FileStatus.Untracked,NexusEnums.FileStatus.Created,NexusEnums.FileStatus.Deleted,NexusEnums.FileStatus.Modified,NexusEnums.FileStatus.Renamed})
 	if #FilterdFiles == 0 then
-		return MessageWindow.new("There are no untracked files.","No Untracked Files",250)
+		return MessageWindow.new("There are no uncommitted files.","No Uncommitted Files",250)
 	end
 	
 	--Create the window.
