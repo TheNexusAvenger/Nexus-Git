@@ -111,10 +111,13 @@ function GetGitStatusRequest:GetStatus()
 			--Read the line.
 			if CurrentReadMode == "CurrentBranch" then
 				CurrentBranch = Line
+				CurrentReadMode = "ChangesToCommit"
 			elseif CurrentReadMode == "RemoteBranch" then
 				RemoteBranch = Line
+				CurrentReadMode = "ChangesToCommit"
 			elseif CurrentReadMode == "AheadBy" then
 				AheadBy = tonumber(Line)
+				CurrentReadMode = "ChangesToCommit"
 			elseif CurrentReadMode == "ChangesToCommit" then
 				--Get the table to add to.
 				local TableToAddTo = FileStrings.Modified
