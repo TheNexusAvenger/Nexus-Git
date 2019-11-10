@@ -20,7 +20,7 @@ namespace NexusGitTests.SplitRequestHttp
         public void SplitResponseTest()
         {
             // Create the first component under testing.
-            PartialResponse CuT1 = PartialResponse.SplitResponse(Response.CreateSuccessResponse("Hello world!"),4);
+            var CuT1 = PartialResponse.SplitResponse(Response.CreateSuccessResponse("Hello world!"),4);
 
             // Assert reading the responses.
             Assert.AreEqual(CuT1.GetNumberOfResponses(),3);
@@ -32,7 +32,7 @@ namespace NexusGitTests.SplitRequestHttp
             Assert.IsTrue(CuT1.AllResponsesSent());
 
             // Create the first component under testing.
-            PartialResponse CuT2 = PartialResponse.SplitResponse(Response.CreateSuccessResponse("Hello world!!!"),4);
+            var CuT2 = PartialResponse.SplitResponse(Response.CreateSuccessResponse("Hello world!!!"),4);
 
             // Assert reading the responses.
             Assert.AreEqual(CuT2.GetNumberOfResponses(),4);

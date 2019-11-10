@@ -20,10 +20,10 @@ namespace NexusGitTests.RobloxInstance
         public void DeserializeTest()
         {
             // Create the component under testing.
-            PropertyBuilder<bool> CuT = new PropertyBuilder<bool>();
+            var CuT = new PropertyBuilder<bool>();
 
             // Assert it deserializes JSON correctly.
-            Property<bool> property = (Property<bool>) CuT.Deserialize("{\"Type\":\"Bool\",\"Value\":true}");
+            var property = (Property<bool>) CuT.Deserialize("{\"Type\":\"Bool\",\"Value\":true}");
             Assert.AreEqual(property.Value,true);
         }
     }
@@ -38,10 +38,10 @@ namespace NexusGitTests.RobloxInstance
         public void SerializeTest()
         {
             // Create the component under testing.
-            Property<bool> CuT = new Property<bool>("Bool",true);
+            var CuT = new Property<bool>("Bool",true);
 
             // Assert it is serialized correctly.
-            string correctSerialization = "{\"Type\":\"Bool\",\"Value\":true}";
+            var correctSerialization = "{\"Type\":\"Bool\",\"Value\":true}";
             Assert.AreEqual(correctSerialization,CuT.Serialize());
         }
     }

@@ -19,7 +19,7 @@ namespace NexusGitTests.FileIO
         public void OutputContainsTest()
         {
             // Create the component under testing.
-            ExecutableOutput CuT = new ExecutableOutput();
+            var CuT = new ExecutableOutput();
             CuT.Add("Test 1");
             CuT.Add("Test 2");
             CuT.Add("Test 3");
@@ -39,7 +39,7 @@ namespace NexusGitTests.FileIO
         public void OutputContainsAtLineTest()
         {
             // Create the component under testing.
-            ExecutableOutput CuT = new ExecutableOutput();
+            var CuT = new ExecutableOutput();
             CuT.Add("Test 1");
             CuT.Add("Test 2");
             CuT.Add("Test 3");

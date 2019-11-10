@@ -16,7 +16,7 @@ namespace NexusGitTests.SplitRequestHttp
         public void StoreTest()
         {
             // Create the component under testing.
-            TemporaryStorage<string> CuT = new TemporaryStorage<string>();
+            var CuT = new TemporaryStorage<string>();
 
             // Assert adding strings.
             Assert.AreEqual(CuT.Store("Test1"),0);
@@ -28,7 +28,7 @@ namespace NexusGitTests.SplitRequestHttp
         public void GetTest()
         {
             // Create the component under testing.
-            TemporaryStorage<string> CuT = new TemporaryStorage<string>();
+            var CuT = new TemporaryStorage<string>();
 
             // Assert adding strings.
             Assert.AreEqual(CuT.Store("Test1"),0);
@@ -45,7 +45,7 @@ namespace NexusGitTests.SplitRequestHttp
         public void RemoveTest()
         {
             // Create the component under testing.
-            TemporaryStorage<string> CuT = new TemporaryStorage<string>();
+            var CuT = new TemporaryStorage<string>();
 
             // Assert adding strings.
             Assert.AreEqual(CuT.Store("Test1"),0);
