@@ -1,0 +1,14 @@
+{
+	"name": "Nexus Git Repository",
+	"servePort": 8000,
+	"partitions": {
+ 		"src": {
+			"path": "client/src",
+			"target": "ServerStorage.NexusGit"
+		},
+		"test": {
+			"path": "client/test",
+			"target": "ServerStorage.NexusGitTests"
+		}
+	}
+}
