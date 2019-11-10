@@ -27,8 +27,8 @@ namespace NexusGit.Http
         public IClientRequestHandler GetRequestHandler(HttpRequest request)
         {
             // Get the type and base url.
-            string requestType = request.GetRequestType().ToLower();
-            string baseURL = request.GetURL().GetBaseURL().ToLower();
+            var requestType = request.GetRequestType().ToLower();
+            var baseURL = request.GetURL().GetBaseURL().ToLower();
 
             // Return if no handler for the type exists.
             if (!this.Handlers.ContainsKey(requestType))
@@ -37,7 +37,7 @@ namespace NexusGit.Http
             }
 
             // Return if no handler for the request exists.
-            Dictionary<string,IClientRequestHandler> typeRequests = this.Handlers[requestType];
+            var typeRequests = this.Handlers[requestType];
             if (!typeRequests.ContainsKey(baseURL))
             {
                 return null;
@@ -53,7 +53,7 @@ namespace NexusGit.Http
         public Response GetResponse(HttpRequest request)
         {
             // Get the handler.
-            IClientRequestHandler handler = this.GetRequestHandler(request);
+            var handler = this.GetRequestHandler(request);
 
             // If the handler exists, return the response.
             if (handler != null)

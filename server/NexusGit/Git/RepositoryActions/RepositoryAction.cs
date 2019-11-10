@@ -71,13 +71,13 @@ namespace NexusGit.Git.RepositoryActions
         public GitResponse PerformAction()
         {
             // Get the command to run.
-            string command = this.GetCommand();
+            var command = this.GetCommand();
 
             // Perform the command.
-            ExecutableOutput executableOutput = this.GitRepository.ExecuteCommand(command);
+            var executableOutput = this.GitRepository.ExecuteCommand(command);
 
             // If a common response exists, return the common response.
-            GitResponse commonResponse = this.GetCommonResponse(executableOutput);
+            var commonResponse = this.GetCommonResponse(executableOutput);
             if (commonResponse != null)
             {
                 return commonResponse;

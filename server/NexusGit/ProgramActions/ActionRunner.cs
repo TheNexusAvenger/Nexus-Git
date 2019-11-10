@@ -37,8 +37,8 @@ namespace NexusGit.ProgramActions
             IProgramAction action = null;
             if (arguments.Count >= 1)
             {
-                string command = arguments[0];
-                foreach (IProgramAction newAction in this.Actions)
+                var command = arguments[0];
+                foreach (var newAction in this.Actions)
                 {
                     if (newAction.CanProgramRun(command))
                     {

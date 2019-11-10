@@ -37,14 +37,14 @@ namespace NexusGit.Http
         private HttpRequest GetClientRequest()
         {
             // Get the base request information.
-            HttpListenerRequest request = this.HttpRequestContext.Request;
-            string requestType = request.HttpMethod;
-            string url = request.RawUrl;
-            string host = request.UserHostName;
+            var request = this.HttpRequestContext.Request;
+            var requestType = request.HttpMethod;
+            var url = request.RawUrl;
+            var host = request.UserHostName;
 
             // Get the request body.
-            StreamReader bodyReader = new StreamReader(request.InputStream,request.ContentEncoding);
-            string body = bodyReader.ReadToEnd();
+            var bodyReader = new StreamReader(request.InputStream,request.ContentEncoding);
+            var body = bodyReader.ReadToEnd();
             bodyReader.Close();
 
             // Return the request.
@@ -57,10 +57,10 @@ namespace NexusGit.Http
         private void Handle()
         {
             // Get the request.
-            HttpRequest request = this.GetClientRequest();
+            var request = this.GetClientRequest();
             
             // Get and send the response.
-            Response response = this.Handlers.GetResponse(request);
+            var response = this.Handlers.GetResponse(request);
             response.SendResponse(this.HttpRequestContext);
         }
 

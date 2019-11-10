@@ -20,10 +20,10 @@ namespace NexusGit.Git
         public string GetFilesAsString()
         {
             // Create the string builder.
-            StringBuilder fileList = new StringBuilder();
+            var fileList = new StringBuilder();
             
             // Add the files.
-            foreach (string file in this)
+            foreach (var file in this)
             {
                 fileList.Append("\"" + file.Replace("\"","\\\"") + "\" ");
             }

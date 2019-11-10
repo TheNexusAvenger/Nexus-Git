@@ -32,8 +32,8 @@ namespace NexusGit.NexusGit.PostHandlers
         public override Response GetCompleteResponseData(HttpRequest request)
         {
             // Parse the project structure.
-            PartitionsBuilder builder = new PartitionsBuilder();
-            Partitions partitions = (Partitions) builder.Deserialize(request.GetBody());
+            var builder = new PartitionsBuilder();
+            var partitions = (Partitions) builder.Deserialize(request.GetBody());
             
             // Write the project structure.
             this.Project.WriteProjectStructure(partitions);

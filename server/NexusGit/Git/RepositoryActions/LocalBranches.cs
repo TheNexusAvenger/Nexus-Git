@@ -37,10 +37,10 @@ namespace NexusGit.Git.RepositoryActions
         public override GitResponse CompleteAction(ExecutableOutput executableOutput)
         {
             // Create the response.
-            GitResponse response = new GitResponse();
+            var response = new GitResponse();
             
             // Add the branches.
-            foreach (string line in executableOutput)
+            foreach (var line in executableOutput)
             {
                 if (line != "")
                 {

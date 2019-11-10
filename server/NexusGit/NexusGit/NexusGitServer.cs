@@ -26,7 +26,7 @@ namespace NexusGit.NexusGit
         private NexusGitServer(int port,IProject project)
         {
             // Create the request handlers.
-            SplitRequestHandler requestHandler = new SplitRequestHandler();
+            var requestHandler = new SplitRequestHandler();
             requestHandler.RegisterHandler("GET","GetGitStatus",new GitStatus());
             requestHandler.RegisterHandler("GET","RemotePull",new RemotePull());
             requestHandler.RegisterHandler("GET","GetProjectPartitions",new ProjectPartitions(project));
@@ -54,10 +54,10 @@ namespace NexusGit.NexusGit
         public static NexusGitServer GetServer()
         {
             // Create a project manager.
-            ProjectManager projectManager = new ProjectManager();
+            var projectManager = new ProjectManager();
             
             // Get the project to use.
-            IProject project = projectManager.GetProject();
+            var project = projectManager.GetProject();
             
             // Return null if the project does not exist.
             if (project == null)

@@ -37,8 +37,8 @@ namespace NexusGit.Git.RepositoryActions
         public override GitResponse CompleteAction(ExecutableOutput executableOutput)
         {
             // Format the response.
-            GitResponse newResponse = new GitResponse();
-            bool writeUntrackedFiles = false;
+            var newResponse = new GitResponse();
+            var writeUntrackedFiles = false;
             foreach (string line in executableOutput)
             {
                 // Handle the current local branch.
@@ -51,8 +51,8 @@ namespace NexusGit.Git.RepositoryActions
                 // Handle the remote branch with no commits.
                 if (line.Length >= 32 && line.Substring(0, 30) == "Your branch is up to date with")
                 {
-                    int remoteStart = line.IndexOf("'");
-                    int remoteEnd = line.LastIndexOf("'");
+                    var remoteStart = line.IndexOf("'");
+                    var remoteEnd = line.LastIndexOf("'");
 
                     newResponse.AddResponse("Remote branch:");
                     newResponse.AddResponse(line.Substring(remoteStart + 1, remoteEnd - remoteStart - 1));
@@ -63,8 +63,8 @@ namespace NexusGit.Git.RepositoryActions
                 // Handle the remote branch with commits.
                 if (line.Length >= 32 && line.Substring(0, 23) == "Your branch is ahead of")
                 {
-                    int remoteStart = line.IndexOf("'");
-                    int remoteEnd = line.LastIndexOf("'");
+                    var remoteStart = line.IndexOf("'");
+                    var remoteEnd = line.LastIndexOf("'");
 
                     newResponse.AddResponse("Remote branch:");
                     newResponse.AddResponse(line.Substring(remoteStart + 1, remoteEnd - remoteStart - 1));
@@ -81,8 +81,8 @@ namespace NexusGit.Git.RepositoryActions
                 // Handle tracked file changes.
                 if (line.Contains("renamed") || line.Contains("modified") || line.Contains("new file") || line.Contains("deleted"))
                 {
-                    string command = line.Substring(0, line.IndexOf(":"));
-                    string file = line.Substring(line.IndexOf(":") + 1).Trim();
+                    var command = line.Substring(0, line.IndexOf(":"));
+                    var file = line.Substring(line.IndexOf(":") + 1).Trim();
                     command = command.Substring(0, 1).ToUpper() + command.Substring(1);
                     newResponse.AddResponse(command + ": " + file);
                 }

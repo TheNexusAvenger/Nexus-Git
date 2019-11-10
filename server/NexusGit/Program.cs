@@ -20,10 +20,10 @@ namespace NexusGit
         public static void Main(string[] args)
         {
             // Convert the arguments to a list.
-            List<string> arguments = new List<string>(args);
+            var arguments = new List<string>(args);
             
             // Run the command.
-            ActionRunner actionRunner = new ActionRunner();
+            var actionRunner = new ActionRunner();
             actionRunner.PerformAction(arguments);
         }
     }

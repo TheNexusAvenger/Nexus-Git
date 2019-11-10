@@ -73,12 +73,12 @@ namespace NexusGit.Http.Request
         public static Dictionary<string,string> ParseParameters(string parametersString)
         {
             // Create the parameters dictionary.
-            Dictionary<string,string> parameters = new Dictionary<string,string>();
+            var parameters = new Dictionary<string,string>();
 
             // Parse the parameters.
-            foreach (string parameter in parametersString.Split('&'))
+            foreach (var parameter in parametersString.Split('&'))
             {
-                string[] parameterData = parameter.Split('=');
+                var parameterData = parameter.Split('=');
 
                 // Add the parameter.
                 if (parameterData.Length >= 2)
@@ -121,7 +121,7 @@ namespace NexusGit.Http.Request
         public static URL FromString(string url)
         {
             // Parse the URL.
-            string[] splitURL = url.Split('?');
+            var splitURL = url.Split('?');
 
             // Return the URL object.
             if (splitURL.Length < 2)

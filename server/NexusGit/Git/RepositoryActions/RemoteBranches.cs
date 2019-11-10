@@ -21,7 +21,7 @@ namespace NexusGit.Git.RepositoryActions
         public RemoteBranches(Repository repository) : base(repository)
         {
             // Fetch all the remotes.
-            foreach (string line in this.GetRepository().ExecuteCommand("fetch"))
+            foreach (var line in this.GetRepository().ExecuteCommand("fetch"))
             {
                 if (line != "")
                 {
@@ -47,13 +47,13 @@ namespace NexusGit.Git.RepositoryActions
         public override GitResponse CompleteAction(ExecutableOutput executableOutput)
         {
             // Create the response.
-            GitResponse response = new GitResponse();
+            var response = new GitResponse();
             
             // Get the tracked remote branch.
-            string trackingBranch = this.GetRepository().ExecuteCommand("rev-parse --abbrev-ref --symbolic-full-name @{u}")[0];
+            var trackingBranch = this.GetRepository().ExecuteCommand("rev-parse --abbrev-ref --symbolic-full-name @{u}")[0];
             
             // Add the branches.
-            foreach (string line in executableOutput)
+            foreach (var line in executableOutput)
             {
                 if (line != "")
                 {

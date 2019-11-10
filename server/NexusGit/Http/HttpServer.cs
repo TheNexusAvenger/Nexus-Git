@@ -36,7 +36,7 @@ namespace NexusGit.Http
         public void HandleRequest(HttpListenerContext httpRequestContext)
         {
             // Create and start the handler.
-            ContextHandler handler = new ContextHandler(httpRequestContext,this.Handlers);
+            var handler = new ContextHandler(httpRequestContext,this.Handlers);
             handler.StartHandling();
         }
 
@@ -52,7 +52,7 @@ namespace NexusGit.Http
             // Run a loop to accept client connections.
             while (Running)
             {
-                HttpListenerContext httpRequestContext = this.Listener.GetContext();
+                var httpRequestContext = this.Listener.GetContext();
                 this.HandleRequest(httpRequestContext);
             }
         }

@@ -22,13 +22,13 @@ namespace NexusGit.NexusGit.PostHandlers
         public override Response GetCompleteResponseData(HttpRequest request)
         {
             // Get the body.
-            FileList files = JsonConvert.DeserializeObject<FileList>(request.GetBody());
+            var files = JsonConvert.DeserializeObject<FileList>(request.GetBody());
             
             // Create the repository.
-            Repository repository = new Repository();
+            var repository = new Repository();
             
             // Return the response.
-            GitResponse response = repository.Add(files);
+            var response = repository.Add(files);
             return Response.CreateSuccessResponse(response.ToJson());
         }
     }

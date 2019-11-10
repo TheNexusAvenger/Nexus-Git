@@ -48,8 +48,8 @@ namespace NexusGit.SplitRequestHttp
             }
 
             // Concat the body.
-            StringBuilder requestBody = new StringBuilder();
-            foreach (string packet in this.PartialRequests)
+            var requestBody = new StringBuilder();
+            foreach (var packet in this.PartialRequests)
             {
                 requestBody.Append(packet);
             }

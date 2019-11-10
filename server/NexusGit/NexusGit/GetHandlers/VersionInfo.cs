@@ -42,7 +42,7 @@ namespace NexusGit.NexusGit.GetHandlers
         public override Response GetCompleteResponseData(HttpRequest request)
         {
             // Create the response.
-            VersionInfoResponse info = new VersionInfoResponse();
+            var info = new VersionInfoResponse();
             info.version = "0.1.0 Alpha";
             info.project = this.Project.GetName();
             

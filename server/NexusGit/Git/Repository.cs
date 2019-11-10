@@ -43,7 +43,7 @@ namespace NexusGit.Git
             }
 
             // Create and run the executable.
-            Executable gitExutable = new Executable("git", command);
+            var gitExutable = new Executable("git", command);
             gitExutable.SetWorkingDirectory(GetGitDirectory());
             gitExutable.Start();
             gitExutable.WaitForCompletion();

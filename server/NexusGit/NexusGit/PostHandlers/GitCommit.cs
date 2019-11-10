@@ -31,13 +31,13 @@ namespace NexusGit.NexusGit.PostHandlers
         public override Response GetCompleteResponseData(HttpRequest request)
         {
             // Get the arguments.
-            GitCommitBody gitCommitData = JsonConvert.DeserializeObject<GitCommitBody>(request.GetBody());
+            var gitCommitData = JsonConvert.DeserializeObject<GitCommitBody>(request.GetBody());
             
             // Create the repository.
-            Repository repository = new Repository();
+            var repository = new Repository();
             
             // Return the response.
-            GitResponse response = repository.Commit(gitCommitData.files,gitCommitData.message);
+            var response = repository.Commit(gitCommitData.files,gitCommitData.message);
             return Response.CreateSuccessResponse(response.ToJson());
         }
     }

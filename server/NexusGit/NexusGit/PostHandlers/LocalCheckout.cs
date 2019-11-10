@@ -21,13 +21,13 @@ namespace NexusGit.NexusGit.PostHandlers
         public override Response GetCompleteResponseData(HttpRequest request)
         {
             // Get the body.
-            string branch = request.GetBody();
+            var branch = request.GetBody();
             
             // Create the repository.
-            Repository repository = new Repository();
+            var repository = new Repository();
             
             // Return the response.
-            GitResponse response = repository.LocalCheckout(branch);
+            var response = repository.LocalCheckout(branch);
             return Response.CreateSuccessResponse(response.ToJson());
         }
     }

@@ -30,7 +30,7 @@ namespace NexusGit.ProgramActions
         public void RunCommand(List<string> arguments)
         {
             // Create the server.
-            NexusGitServer server = NexusGitServer.GetServer();
+            var server = NexusGitServer.GetServer();
             
             // Output an error if the server doesn't exist (no project found).
             if (server == null)

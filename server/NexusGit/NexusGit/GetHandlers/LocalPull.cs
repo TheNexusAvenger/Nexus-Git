@@ -32,10 +32,10 @@ namespace NexusGit.NexusGit.GetHandlers
         public override Response GetCompleteResponseData(HttpRequest request)
         {
             // Get the partitions.
-            Partitions partitions = this.Project.ReadProjectStructure();
+            var partitions = this.Project.ReadProjectStructure();
             
             // Serialize the partitions.
-            string partitionData = partitions.Serialize();
+            var partitionData = partitions.Serialize();
 
             // Return a response.
             return Response.CreateSuccessResponse(partitionData);

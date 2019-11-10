@@ -29,7 +29,7 @@ namespace NexusGit.SplitRequestHttp
         private int GetNextIndex()
         {
             // Iterate through the list and find a null object.
-            for (int i = 0; i < this.StoredObjects.Count; i++)
+            for (var i = 0; i < this.StoredObjects.Count; i++)
             {
                 if (this.StoredObjects[i] == null)
                 {
@@ -47,7 +47,7 @@ namespace NexusGit.SplitRequestHttp
         public int Store(T objectToStore)
         {
             // Get the next id and store the object.
-            int nextIndex = this.GetNextIndex();
+            var nextIndex = this.GetNextIndex();
             if (nextIndex > this.StoredObjects.Count - 1)
             {
                 this.StoredObjects.Add(objectToStore);

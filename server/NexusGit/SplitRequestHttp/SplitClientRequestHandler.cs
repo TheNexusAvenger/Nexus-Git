@@ -44,13 +44,13 @@ namespace NexusGit.SplitRequestHttp
          */
         public Response GetResponseData(HttpRequest request)
         {
-            URL url = request.GetURL();
+            var url = request.GetURL();
 
             if (url.ParameterExists("getResponse") && url.GetParameter("getResponse").ToLower() == "true")
             {
                 // Handle reading a split response.
-                int responseId = 0;
-                int packetId = 0;
+                var responseId = 0;
+                var packetId = 0;
 
                 // Get the packet info.
                 if (url.ParameterExists("responseId"))
@@ -67,9 +67,9 @@ namespace NexusGit.SplitRequestHttp
             } else
             {
                 // Handle sending a split request.
-                int requestId = -1;
-                int packetId = -1;
-                int maxPackets = -1;
+                var requestId = -1;
+                var packetId = -1;
+                var maxPackets = -1;
                 PartialHttpRequest completeRequest;
 
                 // Get the packet info.
@@ -119,9 +119,9 @@ namespace NexusGit.SplitRequestHttp
                 if (completeRequest.IsComplete())
                 {
                     this.IncompleteRequests.Remove(requestId);
-                    PartialResponse partialResponse = PartialResponse.SplitResponse(this.GetCompleteResponseData(completeRequest.ToSingleRequest()));
+                    var partialResponse = PartialResponse.SplitResponse(this.GetCompleteResponseData(completeRequest.ToSingleRequest()));
                     
-                    int responseId = this.UnfinishedResponses.Store(partialResponse);
+                    var responseId = this.UnfinishedResponses.Store(partialResponse);
                     return this.GetPartialResponse(responseId,0);
                 } else
                 {
@@ -155,12 +155,12 @@ namespace NexusGit.SplitRequestHttp
         public Response CreateInvalidResponse(string message)
         {
             // Create the request.
-            Dictionary<string,string> requestData = new Dictionary<string,string>();
+            var requestData = new Dictionary<string,string>();
             requestData.Add("status","error");
             requestData.Add("message",message);
             
             // Return the formatted request.
-            string request = JsonConvert.SerializeObject(requestData);
+            var request = JsonConvert.SerializeObject(requestData);
             return Response.CreateBadRequestResponse(request);
         }
 
@@ -178,7 +178,7 @@ namespace NexusGit.SplitRequestHttp
         public Response CreatePartialResponse(int packetId,int currentPacket,int maxPacket,string message)
         {
             // Create the request.
-            PartialResponseData requestData = new PartialResponseData();
+            var requestData = new PartialResponseData();
             requestData.status = "success";
             requestData.id = packetId;
             requestData.currentPacket = currentPacket;
@@ -186,7 +186,7 @@ namespace NexusGit.SplitRequestHttp
             requestData.packet = message;
             
             // Return the formatted request.
-            string request = JsonConvert.SerializeObject(requestData);
+            var request = JsonConvert.SerializeObject(requestData);
             return Response.CreateSuccessResponse(request);
         }
 

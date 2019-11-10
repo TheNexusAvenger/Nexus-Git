@@ -75,12 +75,12 @@ namespace NexusGit.Http.Request
         public void SendResponse(HttpListenerContext requestContext)
         {
             // Set up the response.
-            HttpListenerResponse httpResponse = requestContext.Response;
+            var httpResponse = requestContext.Response;
             httpResponse.ContentEncoding = Encoding.UTF8;
             httpResponse.StatusCode = this.Status;
 
             // Send the data.
-            StreamWriter writer = new StreamWriter(httpResponse.OutputStream);
+            var writer = new StreamWriter(httpResponse.OutputStream);
             writer.Write(this.ResponseData);
             writer.Flush();
             writer.Close();

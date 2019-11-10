@@ -50,14 +50,14 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
         public static Rojo04Instance ConvertInstance(Instance instance)
         {
             // Create the new instance.
-            Rojo04Instance newInstance = new Rojo04Instance();
+            var newInstance = new Rojo04Instance();
             
             // Set the name and class name.
             newInstance.Name = (string) instance.GetProperty("Name").Value;
             newInstance.ClassName = (string) instance.GetProperty("ClassName").Value;
             
             // Add the properties.
-            foreach (string propertyName in instance.Properties.Keys)
+            foreach (var propertyName in instance.Properties.Keys)
             {
                 if (propertyName != "Name" && propertyName != "ClassName" && instance.Properties[propertyName].Type != "TemporaryInstanceReference")
                 {
@@ -66,7 +66,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
             }
             
             // Add the children.
-            foreach (Instance child in instance.GetChildren())
+            foreach (var child in instance.GetChildren())
             {
                 newInstance.Children.Add(ConvertInstance(child));
             }
@@ -81,18 +81,18 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
         public Instance ToRobloxInstance(Rojo04Reader reader)
         {
             // Create the instance.
-            Instance newInstance = reader.CreateNewInstance();
+            var newInstance = reader.CreateNewInstance();
             
             // Add the properties.
             newInstance.Properties.Add("Name",new Property<object>("String",this.Name));
             newInstance.Properties.Add("ClassName",new Property<object>("String",this.ClassName));
-            foreach (string propertyName in this.Properties.Keys)
+            foreach (var propertyName in this.Properties.Keys)
             {
                 newInstance.Properties.Add(propertyName,this.Properties[propertyName]);
             }
             
             // Add the children.
-            foreach (Rojo04Instance child in this.Children)
+            foreach (var child in this.Children)
             {
                 newInstance.Children.Add(child.ToRobloxInstance(reader));
             }
@@ -119,13 +119,13 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
             }
             
             // Delete the directories.
-            foreach (string subdirectory in Directory.GetDirectories(directory))
+            foreach (var subdirectory in Directory.GetDirectories(directory))
             {
                 this.DeleteDirectory(subdirectory);
             }
             
             // Delete the files if they end in the correct extensions.
-            foreach (string file in Directory.GetFiles(directory))
+            foreach (var file in Directory.GetFiles(directory))
             {
                 if (file.ToLower().EndsWith(".lua") || file.ToLower().EndsWith(".model.json"))
                 {
@@ -146,24 +146,24 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
         public void WriteRobloxInstance(Instance instance,string directory)
         {
             // Get the name and class name.
-            string name = (string) instance.GetProperty("Name").Value;
-            string className = (string) instance.GetProperty("ClassName").Value;
+            var name = (string) instance.GetProperty("Name").Value;
+            var className = (string) instance.GetProperty("ClassName").Value;
             
             if (className == "Folder")
             {
                 // Write a directory if it is a folder.
-                string newDirectory = directory + "/" + name;
+                var newDirectory = directory + "/" + name;
                 Directory.CreateDirectory(newDirectory);
                 
                 // Write the children.
-                foreach (Instance subInstance in instance.GetChildren())
+                foreach (var subInstance in instance.GetChildren())
                 {
                     this.WriteRobloxInstance(subInstance,newDirectory);
                 }
             } else if (className == "Script" || className == "LocalScript" || className == "ModuleScript")
             {
                 // Determine the extension for the script.
-                string extension = ".lua";
+                var extension = ".lua";
                 if (className == "Script")
                 {
                     extension = ".server.lua";
@@ -174,7 +174,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
                 }
 
                 // Get the source.
-                string source = (string) instance.GetProperty("Source").Value;
+                var source = (string) instance.GetProperty("Source").Value;
 
                 // Write the file based on if there is any children.
                 if (instance.GetChildren().Count == 0)
@@ -183,13 +183,13 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
                 }
                 else
                 {
-                    string newDirectory = directory + "/" + name;
+                    var newDirectory = directory + "/" + name;
 
                     // Write the directory and the file.
                     Directory.CreateDirectory(newDirectory);
 
                     // Write the children.
-                    foreach (Instance subInstance in instance.GetChildren())
+                    foreach (var subInstance in instance.GetChildren())
                     {
                         this.WriteRobloxInstance(subInstance,newDirectory);
                     }
@@ -200,10 +200,10 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
             } else
             {
                 // Convert the instance to a Rojo instance.
-                Rojo04Instance convertedInstance = Rojo04Instance.ConvertInstance(instance);
+                var convertedInstance = Rojo04Instance.ConvertInstance(instance);
                 
                 // Serialize and store the instance.
-                string instanceData = JsonConvert.SerializeObject(convertedInstance,Formatting.Indented);
+                var instanceData = JsonConvert.SerializeObject(convertedInstance,Formatting.Indented);
                 File.WriteAllText(directory + "/" + name + ".model.json",instanceData);
             }
         }
@@ -229,7 +229,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
          */
         public Instance CreateNewInstance()
         {
-            Instance instance = new Instance(this.currentTempId);
+            var instance = new Instance(this.currentTempId);
             this.currentTempId += 1;
             
             return instance;
@@ -245,8 +245,8 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
             if (Directory.Exists(directory))
             {
                 // Get the instance.
-                Instance newInstance = this.CreateNewInstance();
-                string directoryName = FileFinder.GetUpperDirectoryName(directory);
+                var newInstance = this.CreateNewInstance();
+                var directoryName = FileFinder.GetUpperDirectoryName(directory);
                 if (File.Exists(directory + "/init.lua") || File.Exists(directory + "/init.server.lua") || File.Exists(directory + "/init.client.lua"))
                 {
                     // Get the class name.
@@ -277,20 +277,20 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
                 }
                 
                 // Add the children.
-                foreach (string subDirectory in Directory.GetDirectories(directory))
+                foreach (var subDirectory in Directory.GetDirectories(directory))
                 {
-                    Instance childInstance = this.ReadRobloxInstance(subDirectory);
+                    var childInstance = this.ReadRobloxInstance(subDirectory);
                     if (childInstance != null)
                     {
                         newInstance.AddChild(childInstance);
                     }
                 }
                 
-                foreach (string subFile in Directory.GetFiles(directory))
+                foreach (var subFile in Directory.GetFiles(directory))
                 {
                     if (!subFile.EndsWith("/init.lua") && !subFile.EndsWith("/init.server.lua") && !subFile.EndsWith("/init.client.lua"))
                     {
-                        Instance childInstance = this.ReadRobloxInstance(subFile);
+                        var childInstance = this.ReadRobloxInstance(subFile);
                         if (childInstance != null)
                         {
                             newInstance.AddChild(childInstance);
@@ -320,10 +320,10 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
                 if (className != null)
                 {
                     // Create and return a script instance.
-                    string scriptName = FileFinder.GetUpperDirectoryName(directory).Split('.')[0];
-                    string source = File.ReadAllText(directory);
+                    var scriptName = FileFinder.GetUpperDirectoryName(directory).Split('.')[0];
+                    var source = File.ReadAllText(directory);
                     
-                    Instance scriptInstance = this.CreateNewInstance();
+                    var scriptInstance = this.CreateNewInstance();
                     scriptInstance.Properties.Add("Name",new Property<object>("String",scriptName));
                     scriptInstance.Properties.Add("ClassName",new Property<object>("String",className));
                     scriptInstance.Properties.Add("Source",new Property<object>("String",source));
@@ -332,7 +332,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
                 } else if (directory.ToLower().EndsWith(".model.json"))
                 {
                     // Parse and return the model.
-                    Rojo04Instance newInstance = JsonConvert.DeserializeObject<Rojo04Instance>(File.ReadAllText(directory));
+                    var newInstance = JsonConvert.DeserializeObject<Rojo04Instance>(File.ReadAllText(directory));
                     return newInstance.ToRobloxInstance(this);
                 }
             }
@@ -355,7 +355,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
         public Rojo04Structure GetStructure()
         {
             // Get the JSON file parent directory.
-            string parentDirectory = FileFinder.GetParentDirectoryOfFile(REQUIRED_FILE);
+            var parentDirectory = FileFinder.GetParentDirectoryOfFile(REQUIRED_FILE);
             
             // Display a console error and return null if the parent directory is null.
             if (parentDirectory == null)
@@ -366,7 +366,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
             }
 
             // Read and parse the JSON file.
-            string jsonSource = File.ReadAllText(parentDirectory + REQUIRED_FILE);
+            var jsonSource = File.ReadAllText(parentDirectory + REQUIRED_FILE);
             return JsonConvert.DeserializeObject<Rojo04Structure>(jsonSource);
         }
         
@@ -393,7 +393,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
         public int GetPort()
         {
             // Get the project structure.
-            Rojo04Structure structure = GetStructure();
+            var structure = GetStructure();
             
             // Return the port. 
             return structure.servePort;
@@ -405,15 +405,15 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
         public Dictionary<string,string> GetPartitions()
         {
             // Get the project structure and return null if it doesn't exist.
-            Rojo04Structure structure = this.GetStructure();
+            var structure = this.GetStructure();
             if (structure == null)
             {
                 return null;
             }
             
             // Get the partitions.
-            Dictionary<string,string> partitions = new Dictionary<string,string>();
-            foreach (Dictionary<string,string> partitionData in structure.partitions.Values)
+            var partitions = new Dictionary<string,string>();
+            foreach (var partitionData in structure.partitions.Values)
             {
                 partitions.Add(partitionData["path"],partitionData["target"]);
             }
@@ -428,23 +428,23 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
         public void WriteProjectStructure(Partitions partitions)
         {
             // Create the writer.
-            Rojo04Writer writer = new Rojo04Writer();
+            var writer = new Rojo04Writer();
 
             // Write the structure.
-            string workingDirectory = FileFinder.GetParentDirectoryOfFile(REQUIRED_FILE);
-            foreach (string partitionLocation in partitions.Instances.Keys)
+            var workingDirectory = FileFinder.GetParentDirectoryOfFile(REQUIRED_FILE);
+            foreach (var partitionLocation in partitions.Instances.Keys)
             {
                 // Get the location.
-                string fileLocation = workingDirectory + partitionLocation;
-                string topDirectory = FileFinder.GetUpperDirectoryName(fileLocation);
-                string parentLocation = FileFinder.MoveDirectoryUp(fileLocation);
+                var fileLocation = workingDirectory + partitionLocation;
+                var topDirectory = FileFinder.GetUpperDirectoryName(fileLocation);
+                var parentLocation = FileFinder.MoveDirectoryUp(fileLocation);
                 if (parentLocation == null)
                 {
                     parentLocation = "";
                 }
                 
                 // Get and modify the instance.
-                Instance instance = partitions.GetInstance(partitionLocation);
+                var instance = partitions.GetInstance(partitionLocation);
                 instance.GetProperty("Name").Value = topDirectory;
                 
                 // Write the instance.
@@ -459,23 +459,23 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
         public Partitions ReadProjectStructure()
         {
             // Create the new partitions.
-            Partitions partitions = new Partitions();
+            var partitions = new Partitions();
             
             // Create the reader.
-            Rojo04Reader reader = new Rojo04Reader();
+            var reader = new Rojo04Reader();
             
             // Read the folders.
-            string workingDirectory = FileFinder.GetParentDirectoryOfFile(REQUIRED_FILE);
-            Dictionary<string, string> partitionData = this.GetPartitions();
-            foreach (string partitionLocation in partitionData.Keys)
+            var workingDirectory = FileFinder.GetParentDirectoryOfFile(REQUIRED_FILE);
+            var partitionData = this.GetPartitions();
+            foreach (var partitionLocation in partitionData.Keys)
             {
                 // Get the target instance and new name.
-                string targetInstance = partitionData[partitionLocation];
-                string[] splitTargetName = targetInstance.Split('.');
-                string instanceName = splitTargetName[splitTargetName.Length - 1];
+                var targetInstance = partitionData[partitionLocation];
+                var splitTargetName = targetInstance.Split('.');
+                var instanceName = splitTargetName[splitTargetName.Length - 1];
                 
                 // Get the instance and add it to the partitions if it exists.
-                Instance instance = reader.ReadRobloxInstance(workingDirectory + partitionLocation);
+                var instance = reader.ReadRobloxInstance(workingDirectory + partitionLocation);
                 if (instance != null)
                 {
                     instance.Properties["Name"].Value = instanceName;

@@ -30,7 +30,7 @@ namespace NexusGit.SplitRequestHttp
 
             // Set up tbe bools.
             this.ResponsesRead = new bool[responses.Count];
-            for (int i = 0; i < responses.Count; i++)
+            for (var i = 0; i < responses.Count; i++)
             {
                 this.ResponsesRead[i] = false;
             }
@@ -42,13 +42,13 @@ namespace NexusGit.SplitRequestHttp
         public static PartialResponse SplitResponse(Response response,int maxLength)
         {
             // Get the base response data.
-            int status = response.GetStatus();
-            string mimeType = response.GetMimeType();
-            string completeResponseData = response.GetResponseData();
+            var status = response.GetStatus();
+            var mimeType = response.GetMimeType();
+            var completeResponseData = response.GetResponseData();
 
             // Split the responses.
-            List<Response> splitResponses = new List<Response>();
-            string remainingResponseData = completeResponseData;
+            var splitResponses = new List<Response>();
+            var remainingResponseData = completeResponseData;
             while (remainingResponseData.Length != 0)
             {
                 if (remainingResponseData.Length <= maxLength)

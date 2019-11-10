@@ -21,10 +21,10 @@ namespace NexusGit.NexusGit.GetHandlers
         public override Response GetCompleteResponseData(HttpRequest request)
         {
             // Create the repository.
-            Repository repository = new Repository();
+            var repository = new Repository();
             
             // Return the response.
-            GitResponse response = repository.Status();
+            var response = repository.Status();
             return Response.CreateSuccessResponse(response.ToJson());
         }
     }

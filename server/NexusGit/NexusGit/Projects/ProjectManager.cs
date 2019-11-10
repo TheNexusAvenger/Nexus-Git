@@ -36,11 +36,11 @@ namespace NexusGit.NexusGit.Projects
         {
             // Get the project to use.
             IProject currentProject = null;
-            string currentDirectory = Directory.GetCurrentDirectory().Replace("\\","/") + "/";
+            var currentDirectory = Directory.GetCurrentDirectory().Replace("\\","/") + "/";
             while (currentDirectory != null)
             {
                 // Iterate through the projects and determine if the project is valid.
-                foreach (IProject project in this.Projects)
+                foreach (var project in this.Projects)
                 {
                     // If the project is valid, set it as the current and break the loop.
                     if (project.IsDirectoryValid(currentDirectory))
@@ -70,11 +70,11 @@ namespace NexusGit.NexusGit.Projects
         public static string GetSupportedProjects()
         {
             // Create a project manager.
-            ProjectManager projectManager = new ProjectManager();
+            var projectManager = new ProjectManager();
             
             // Create the string of the projects.
-            string supportedProjects = "";
-            for (int i = 0; i < projectManager.Projects.Count; i++)
+            var supportedProjects = "";
+            for (var i = 0; i < projectManager.Projects.Count; i++)
             {
                 supportedProjects += projectManager.Projects[i].GetName();
                 if (i != projectManager.Projects.Count - 1)

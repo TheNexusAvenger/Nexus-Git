@@ -22,7 +22,7 @@ namespace NexusGit.FileIO
         public bool OutputContains(string contents)
         {
             // Return true if a line contains the contents.
-            foreach (string line in this) {
+            foreach (var line in this) {
                 if (line.Contains(contents))
                 {
                     return true;
@@ -76,40 +76,42 @@ namespace NexusGit.FileIO
             this.Output = new StringBuilder();
             this.Error = new StringBuilder();
 
-            using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
-            using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
+            using (var outputWaitHandle = new AutoResetEvent(false))
             {
-                // Add output logging.
-                this.Process.OutputDataReceived += (sender, e) =>
+                using (var errorWaitHandle = new AutoResetEvent(false))
                 {
-                    if (e.Data == null)
+                    // Add output logging.
+                    this.Process.OutputDataReceived += (sender, e) =>
                     {
-                        if (!this.Process.HasExited)
+                        if (e.Data == null)
                         {
-                            outputWaitHandle.Set();
+                            if (!this.Process.HasExited)
+                            {
+                                outputWaitHandle.Set();
+                            }
                         }
-                    }
-                    else
-                    {
-                        this.Output.AppendLine(e.Data);
-                    }
-                };
-                
-                // Add error logging.
-                this.Process.ErrorDataReceived += (sender, e) =>
-                {
-                    if (e.Data == null)
-                    {
-                        if (!this.Process.HasExited)
+                        else
                         {
-                            errorWaitHandle.Set();
+                            this.Output.AppendLine(e.Data);
                         }
-                    }
-                    else
+                    };
+
+                    // Add error logging.
+                    this.Process.ErrorDataReceived += (sender, e) =>
                     {
-                        this.Error.AppendLine(e.Data);
-                    }
-                };
+                        if (e.Data == null)
+                        {
+                            if (!this.Process.HasExited)
+                            {
+                                errorWaitHandle.Set();
+                            }
+                        }
+                        else
+                        {
+                            this.Error.AppendLine(e.Data);
+                        }
+                    };
+                }
             }
         }
         
@@ -145,13 +147,13 @@ namespace NexusGit.FileIO
         public ExecutableOutput GetOutput()
         {
             // Store the output.
-            ExecutableOutput output = new ExecutableOutput();
-            foreach (string line in this.Output.ToString().Split('\n'))
+            var output = new ExecutableOutput();
+            foreach (var line in this.Output.ToString().Split('\n'))
             {
                 output.Add(line.Trim());
             }
             
-            foreach (string line in this.Error.ToString().Split('\n'))
+            foreach (var line in this.Error.ToString().Split('\n'))
             {
                 output.Add(line.Trim());
             }

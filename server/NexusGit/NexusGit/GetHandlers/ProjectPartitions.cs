@@ -33,10 +33,10 @@ namespace NexusGit.NexusGit.GetHandlers
         public override Response GetCompleteResponseData(HttpRequest request)
         {
             // Get the partitions.
-            Dictionary<string,string> partitions = this.Project.GetPartitions();
+            var partitions = this.Project.GetPartitions();
             
             // Return the partitions as a response.
-            string partitionsJson = JsonConvert.SerializeObject(partitions);
+            var partitionsJson = JsonConvert.SerializeObject(partitions);
             return Response.CreateSuccessResponse(partitionsJson);
         }
     }

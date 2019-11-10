@@ -44,13 +44,13 @@ namespace NexusGit.Git.RepositoryActions
             }
 
             // Get the modified, created, and deleted files.
-            HashSet<string> modifiedFiles = new HashSet<string>();
-            HashSet<string> createdFiles = new HashSet<string>();
-            HashSet<string> deletedFiles = new HashSet<string>();
+            var modifiedFiles = new HashSet<string>();
+            var createdFiles = new HashSet<string>();
+            var deletedFiles = new HashSet<string>();
             foreach (string line in executableOutput)
             {
                 // Add the modified file.
-                int barIndex = line.LastIndexOf("| ");
+                var barIndex = line.LastIndexOf("| ");
                 if (barIndex > 1)
                 {
                     modifiedFiles.Add(line.Substring(0,barIndex).Trim());
@@ -73,8 +73,8 @@ namespace NexusGit.Git.RepositoryActions
                     // Add the file.
                     if (listToAddTo != null)
                     {
-                        string idSection = line.Substring(13);
-                        string fileName = idSection.Substring(idSection.IndexOf(" ") + 1);
+                        var idSection = line.Substring(13);
+                        var fileName = idSection.Substring(idSection.IndexOf(" ") + 1);
                         modifiedFiles.Remove(fileName);
                         listToAddTo.Add(fileName);
                     }
@@ -82,19 +82,19 @@ namespace NexusGit.Git.RepositoryActions
             }
 
             // Format the response.
-            GitResponse newResponse = new GitResponse();
+            var newResponse = new GitResponse();
             newResponse.AddResponse("Modified:");
-            foreach (string fileName in modifiedFiles)
+            foreach (var fileName in modifiedFiles)
             {
                 newResponse.AddResponse(fileName);
             }
             newResponse.AddResponse("Created:");
-            foreach (string fileName in createdFiles)
+            foreach (var fileName in createdFiles)
             {
                 newResponse.AddResponse(fileName);
             }
             newResponse.AddResponse("Deleted:");
-            foreach (string fileName in deletedFiles)
+            foreach (var fileName in deletedFiles)
             {
                 newResponse.AddResponse(fileName);
             }

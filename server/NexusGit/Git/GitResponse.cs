@@ -19,7 +19,7 @@ namespace NexusGit.Git
          */
         public static GitResponse CreateSingleLineResponse(string line)
         {
-            GitResponse response = new GitResponse();
+            var response = new GitResponse();
             response.AddResponse(line);
             return response;
         }

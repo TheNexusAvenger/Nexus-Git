@@ -21,7 +21,7 @@ namespace NexusGit.FileIO
         public static string GetUpperDirectoryName(string directory)
         {
             // Get the current directory and split the parts.
-            List<string> directoryParts = directory.Split('\\').ToList();
+            var directoryParts = directory.Split('\\').ToList();
             if (directoryParts.Count == 1)
             {
                 directoryParts = directory.Split('/').ToList();
@@ -37,7 +37,7 @@ namespace NexusGit.FileIO
         public static string MoveDirectoryUp(string directory)
         {
             // Get the current directory and split the parts.
-            List<string> directoryParts = directory.Split('\\').ToList();
+            var directoryParts = directory.Split('\\').ToList();
             if (directoryParts.Count == 1)
             {
                 directoryParts = directory.Split('/').ToList();
@@ -56,8 +56,8 @@ namespace NexusGit.FileIO
             }
             
             // Create the parent directory.
-            string newDirectory = "";
-            for (int i = 0; i < directoryParts.Count - 1; i++)
+            var newDirectory = "";
+            for (var i = 0; i < directoryParts.Count - 1; i++)
             {
                 newDirectory += directoryParts[i] + "/";
             }
@@ -73,8 +73,8 @@ namespace NexusGit.FileIO
         private static string GetParentDirectory(string fileName,bool isDirectory)
         {
             // Get the current directory and split the parts.
-            string currentDirectory = Directory.GetCurrentDirectory();
-            List<string> directoryParts = currentDirectory.Split('\\').ToList();
+            var currentDirectory = Directory.GetCurrentDirectory();
+            var directoryParts = currentDirectory.Split('\\').ToList();
             if (directoryParts.Count == 1)
             {
                 directoryParts = currentDirectory.Split('/').ToList();
@@ -84,14 +84,14 @@ namespace NexusGit.FileIO
             while (directoryParts.Count > 0)
             {
                 // Concat the current directory.
-                string newDirectory = "";
-                foreach (string directory in directoryParts)
+                var newDirectory = "";
+                foreach (var directory in directoryParts)
                 {
                     newDirectory += directory + "/";
                 }
 
                 // Return the location if the file exists.
-                string requiredFile = newDirectory + fileName;
+                var requiredFile = newDirectory + fileName;
                 if ((isDirectory && Directory.Exists(requiredFile)) || (!isDirectory && File.Exists(requiredFile)))
                 {
                     return newDirectory;

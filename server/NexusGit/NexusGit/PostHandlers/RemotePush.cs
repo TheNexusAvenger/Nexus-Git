@@ -21,27 +21,27 @@ namespace NexusGit.NexusGit.PostHandlers
         public override Response GetCompleteResponseData(HttpRequest request)
         {
             // Get the arguments.
-            string remote = request.GetURL().GetParameter("remote");
+            var remote = request.GetURL().GetParameter("remote");
             if (remote == null)
             {
                 remote = "origin";
             }
-            string branch = request.GetURL().GetParameter("branch");
+            var branch = request.GetURL().GetParameter("branch");
             if (branch == null)
             {
                 branch = "master";
             }
-            string force = request.GetURL().GetParameter("force");
+            var force = request.GetURL().GetParameter("force");
             if (force == null)
             {
                 force = "false";
             }
             
             // Create the repository.
-            Repository repository = new Repository();
+            var repository = new Repository();
             
             // Return the response.
-            GitResponse response = repository.RemotePush(remote,branch,force.ToLower() == "true");
+            var response = repository.RemotePush(remote,branch,force.ToLower() == "true");
             return Response.CreateSuccessResponse(response.ToJson());
         }
     }

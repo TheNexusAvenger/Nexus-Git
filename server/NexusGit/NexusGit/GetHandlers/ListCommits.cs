@@ -32,13 +32,13 @@ namespace NexusGit.NexusGit.GetHandlers
         public override Response GetCompleteResponseData(HttpRequest request)
         {
             // Create the repository.
-            Repository repository = new Repository();
+            var repository = new Repository();
             
             // Get and parse response.
-            GitResponse response = repository.ListCommits(request.GetURL().GetParameter("remote"),request.GetURL().GetParameter("branch"));
-            List<Commit> commits = new List<Commit>();
+            var response = repository.ListCommits(request.GetURL().GetParameter("remote"),request.GetURL().GetParameter("branch"));
+            var commits = new List<Commit>();
             Commit currentCommit = null;
-            foreach (string line in response)
+            foreach (var line in response)
             {
                 if (line.Length > 8 && line.Substring(0, 6) == "commit")
                 {

@@ -21,22 +21,22 @@ namespace NexusGit.NexusGit.GetHandlers
         public override Response GetCompleteResponseData(HttpRequest request)
         {
             // Get the arguments.
-            string remote = request.GetURL().GetParameter("remote");
+            var remote = request.GetURL().GetParameter("remote");
             if (remote == null)
             {
                 remote = "origin";
             }
-            string branch = request.GetURL().GetParameter("branch");
+            var branch = request.GetURL().GetParameter("branch");
             if (branch == null)
             {
                 branch = "master";
             }
             
             // Create the repository.
-            Repository repository = new Repository();
+            var repository = new Repository();
             
             // Return the response.
-            GitResponse response = repository.RemotePull(remote,branch);
+            var response = repository.RemotePull(remote,branch);
             return Response.CreateSuccessResponse(response.ToJson());
         }
     }

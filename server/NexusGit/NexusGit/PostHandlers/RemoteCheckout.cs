@@ -32,13 +32,13 @@ namespace NexusGit.NexusGit.PostHandlers
         public override Response GetCompleteResponseData(HttpRequest request)
         {
             // Get the arguments.
-            RemoteCheckoutBody gitCommitData = JsonConvert.DeserializeObject<RemoteCheckoutBody>(request.GetBody());
+            var gitCommitData = JsonConvert.DeserializeObject<RemoteCheckoutBody>(request.GetBody());
             
             // Create the repository.
-            Repository repository = new Repository();
+            var repository = new Repository();
             
             // Return the response.
-            GitResponse response = repository.RemoteCheckout(gitCommitData.localBranch,gitCommitData.remote,gitCommitData.branch);
+            var response = repository.RemoteCheckout(gitCommitData.localBranch,gitCommitData.remote,gitCommitData.branch);
             return Response.CreateSuccessResponse(response.ToJson());
         }
     }

@@ -53,7 +53,7 @@ namespace NexusGit.Git.RepositoryActions
             }
 
             // Format the response.
-            GitResponse newResponse = new GitResponse();
+            var newResponse = new GitResponse();
             if (executableOutput.OutputContains("(forced update)"))
             {
                 newResponse.AddResponse("Force push complete.");

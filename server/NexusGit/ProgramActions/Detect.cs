@@ -30,10 +30,10 @@ namespace NexusGit.ProgramActions
         public void RunCommand(List<string> arguments)
         {
             // Create a project manager.
-            ProjectManager projectManager = new ProjectManager();
+            var projectManager = new ProjectManager();
             
             // Detect the project and output the project.
-            IProject project = projectManager.GetProject();
+            var project = projectManager.GetProject();
             if (project == null)
             {
                 Console.WriteLine("No project detected.");
