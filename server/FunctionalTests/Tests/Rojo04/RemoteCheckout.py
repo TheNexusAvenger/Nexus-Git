@@ -36,5 +36,5 @@ class Rojo04TestRemoteCheckoutAsStandaloneRequest(NexusGitFunctionalTest.NexusGi
         self.sendPOSTRequest("/remotecheckout","{\"localBranch\":\"test_branch\",\"remote\":\"origin\",\"branch\":\"gh-pages\"}")
         self.assertTrue(self.workspace.fileExists("index.html"))
         self.assertFalse(self.workspace.fileExists("README.md"))
-        response = self.sendGETRequest("/localbranches")
+        response = self.sendGETRequest("/listlocalbranches")
         self.assertEquals(response,"[\"master\",\"* test_branch\"]")

@@ -42,5 +42,5 @@ class Rojo04TestGitCommitAsStandaloneRequest(NexusGitFunctionalTest.NexusGitFunc
         self.assertEquals(response,"[\"Commit successful.\"]")
 
         # Assert the status is correct.
-        response = self.sendGETRequest("/gitstatus")
+        response = self.sendGETRequest("/getgitstatus")
         self.assertEquals(response,"[\"Current branch:\",\"master\",\"Untracked files:\",\"rojo.json\",\"src/testscript2.client.lua\"]")

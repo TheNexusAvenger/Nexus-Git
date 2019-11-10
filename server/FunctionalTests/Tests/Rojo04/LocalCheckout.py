@@ -41,7 +41,7 @@ class Rojo04TestGitLocalCheckoutAsStandaloneRequest(NexusGitFunctionalTest.Nexus
 
         # Assert the branches are correct.
         self.sendPOSTRequest("/localcheckout","second_branch")
-        response = self.sendGETRequest("/localbranches")
+        response = self.sendGETRequest("/listlocalbranches")
         self.assertEquals(response,"[\"master\",\"* second_branch\"]")
 
         # Write files to the branch.
@@ -53,7 +53,7 @@ class Rojo04TestGitLocalCheckoutAsStandaloneRequest(NexusGitFunctionalTest.Nexus
 
         # Change branches back and assert the files are back.
         self.sendPOSTRequest("/localcheckout","master")
-        response = self.sendGETRequest("/localbranches")
+        response = self.sendGETRequest("/listlocalbranches")
         self.assertEquals(response,"[\"* master\",\"second_branch\"]")
         self.assertEqual(self.workspace.readFile("src/testscript1.server.lua"),"print(\"Hello world 1!\")")
         self.assertEqual(self.workspace.readFile("src/testscript2.client.lua"),"print(\"Hello world 2!\")")
@@ -64,7 +64,7 @@ class Rojo04TestGitLocalCheckoutAsStandaloneRequest(NexusGitFunctionalTest.Nexus
 
         # Change the branch to the second and assert the files are correct.
         self.sendPOSTRequest("/localcheckout","second_branch")
-        response = self.sendGETRequest("/localbranches")
+        response = self.sendGETRequest("/listlocalbranches")
         self.assertEquals(response,"[\"master\",\"* second_branch\"]")
         self.assertEqual(self.workspace.readFile("src/testscript1.server.lua"),"print(\"Hello world 4!\")")
         self.assertEqual(self.workspace.readFile("src/testscript2.client.lua"),"print(\"Hello world 5!\")")

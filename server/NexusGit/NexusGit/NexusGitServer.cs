@@ -27,13 +27,13 @@ namespace NexusGit.NexusGit
         {
             // Create the request handlers.
             SplitRequestHandler requestHandler = new SplitRequestHandler();
-            requestHandler.RegisterHandler("GET","GitStatus",new GitStatus());
+            requestHandler.RegisterHandler("GET","GetGitStatus",new GitStatus());
             requestHandler.RegisterHandler("GET","RemotePull",new RemotePull());
-            requestHandler.RegisterHandler("GET","ProjectPartitions",new ProjectPartitions(project));
+            requestHandler.RegisterHandler("GET","GetProjectPartitions",new ProjectPartitions(project));
             requestHandler.RegisterHandler("GET","LocalPull",new LocalPull(project));
-            requestHandler.RegisterHandler("GET","Version",new VersionInfo(project));
-            requestHandler.RegisterHandler("GET","LocalBranches",new LocalBranches());
-            requestHandler.RegisterHandler("GET","RemoteBranches",new RemoteBranches());
+            requestHandler.RegisterHandler("GET","GetVersion",new VersionInfo(project));
+            requestHandler.RegisterHandler("GET","ListLocalBranches",new LocalBranches());
+            requestHandler.RegisterHandler("GET","ListRemoteBranches",new RemoteBranches());
             requestHandler.RegisterHandler("GET","ListCommits",new ListCommits());
             requestHandler.RegisterHandler("GET","ListRemotes",new ListRemotes());
             requestHandler.RegisterHandler("POST","GitAdd",new GitAdd());
