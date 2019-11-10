@@ -13,8 +13,8 @@ local HTTP_RESPONSE_STATUSES = {
 
 local HttpService = game:GetService("HttpService")
 
-local Root = script.Parent.Parent
-local NexusInstance = require(Root:WaitForChild("NexusInstance"):WaitForChild("NexusInstance"))
+local NexusGit = require(script.Parent.Parent):GetContext(script)
+local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
 
 local HttpResponse = NexusInstance:Extend()
 HttpResponse:SetClassName("HttpResponse")

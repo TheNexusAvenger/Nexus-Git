@@ -4,9 +4,9 @@ TheNexusAvenger
 Determines the attributes of instances.
 --]]
 
-local Root = script.Parent.Parent
-local NexusInstance = require(Root:WaitForChild("NexusInstance"):WaitForChild("NexusInstance"))
-local ApiDump = require(script.Parent:WaitForChild("ApiDump"))
+local NexusGit = require(script.Parent.Parent):GetContext(script)
+local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
+local ApiDump = NexusGit:GetResource("Serialization.ApiDump")
 
 local RobloxAPI = NexusInstance:Extend()
 RobloxAPI:SetClassName("RobloxAPI")

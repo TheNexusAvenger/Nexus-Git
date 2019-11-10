@@ -10,10 +10,10 @@ local IGNORED_PROPERTIES = {
 
 
 
-local Root = script.Parent.Parent
-local NexusInstance = require(Root:WaitForChild("NexusInstance"):WaitForChild("NexusInstance"))
-local RobloxAPI = require(script.Parent:WaitForChild("RobloxAPI"))
-local UserdataSerializier = require(script.Parent:WaitForChild("UserdataSerializier"))
+local NexusGit = require(script.Parent.Parent):GetContext(script)
+local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
+local RobloxAPI = NexusGit:GetResource("Serialization.RobloxAPI")
+local UserdataSerializier = NexusGit:GetResource("Serialization.UserdataSerializier")
 
 local InstanceSerializier = NexusInstance:Extend()
 InstanceSerializier:SetClassName("InstanceSerializier")

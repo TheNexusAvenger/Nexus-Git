@@ -2,25 +2,26 @@
 TheNexusAvenger
 
 Multiple HTTP requests to the server.
+This is for the case where over 1MB needs to be sent.
 --]]
 
-local MAX_BODY_LENGTH = 64000
+local MAX_BODY_LENGTH = 1000000
 local PARALLIZE_SEQUENTIAL_REQUESTS = true
 
 
 
-local Root = script.Parent.Parent
-local NexusInstance = require(Root:WaitForChild("NexusInstance"):WaitForChild("NexusInstance"))
-local HttpRequest = require(script.Parent:WaitForChild("HttpRequest"))
-local PartialHttpRequest = require(script.Parent:WaitForChild("PartialHttpRequest"))
-local PartialHttpResponseRequest = require(script.Parent:WaitForChild("PartialHttpResponseRequest"))
-local MultiHttpResponse = require(script.Parent:WaitForChild("MultiHttpResponse"))
+local NexusGit = require(script.Parent.Parent):GetContext(script)
+local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
+local HttpRequest = NexusGit:GetResource("SplitHttp.HttpRequest")
+local PartialHttpRequest = NexusGit:GetResource("SplitHttp.PartialHttpRequest")
+local PartialHttpResponseRequest = NexusGit:GetResource("SplitHttp.PartialHttpResponseRequest")
+local MultiHttpResponse = NexusGit:GetResource("SplitHttp.MultiHttpResponse")
+
+local HttpService = game:GetService("HttpService")
 
 local MultiHttpRequest = NexusInstance:Extend()
 MultiHttpRequest:Implements(HttpRequest)
 MultiHttpRequest:SetClassName("MultiHttpRequest")
-
-local HttpService = game:GetService("HttpService")
 
 
 

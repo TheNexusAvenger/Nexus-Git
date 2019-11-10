@@ -4,8 +4,8 @@ TheNexusAvenger
 Serializes and deserializes userdata.
 --]]
 
-local Root = script.Parent.Parent
-local NexusInstance = require(Root:WaitForChild("NexusInstance"):WaitForChild("NexusInstance"))
+local NexusGit = require(script.Parent.Parent):GetContext(script)
+local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
 
 local UserdataSerializier = NexusInstance:Extend()
 UserdataSerializier:SetClassName("UserdataSerializier")

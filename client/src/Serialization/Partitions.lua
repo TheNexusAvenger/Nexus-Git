@@ -4,10 +4,11 @@ TheNexusAvenger
 Stores partitions of instances.
 --]]
 
-local Root = script.Parent.Parent
-local NexusInstance = require(Root:WaitForChild("NexusInstance"):WaitForChild("NexusInstance"))
-local RobloxAPI = require(script.Parent:WaitForChild("RobloxAPI"))
-local InstanceSerializier = require(script.Parent:WaitForChild("InstanceSerializier"))
+local NexusGit = require(script.Parent.Parent):GetContext(script)
+local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
+local RobloxAPI = NexusGit:GetResource("Serialization.RobloxAPI")
+local InstanceSerializier = NexusGit:GetResource("Serialization.InstanceSerializier")
+
 local HttpService = game:GetService("HttpService")
 
 local Partitions = NexusInstance:Extend()

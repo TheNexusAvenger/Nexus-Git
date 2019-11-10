@@ -4,16 +4,16 @@ TheNexusAvenger
 Sends HTTP requests to a server to get partial responses.
 --]]
 
-local Root = script.Parent.Parent
-local NexusInstance = require(Root:WaitForChild("NexusInstance"):WaitForChild("NexusInstance"))
-local HttpRequest = require(script.Parent:WaitForChild("HttpRequest"))
-local HttpResponse = require(script.Parent:WaitForChild("HttpResponse"))
+local NexusGit = require(script.Parent.Parent):GetContext(script)
+local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
+local HttpRequest = NexusGit:GetResource("SplitHttp.HttpRequest")
+local HttpResponse = NexusGit:GetResource("SplitHttp.HttpResponse")
+
+local HttpService = game:GetService("HttpService")
 
 local PartialHttpResponseRequest = NexusInstance:Extend()
 PartialHttpResponseRequest:Implements(HttpRequest)
 PartialHttpResponseRequest:SetClassName("PartialHttpResponseRequest")
-
-local HttpService = game:GetService("HttpService")
 
 
 

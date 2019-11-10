@@ -6,8 +6,8 @@ Stores responses from the server.
 
 local HttpService = game:GetService("HttpService")
 
-local Root = script.Parent.Parent
-local HttpResponse = require(script.Parent:WaitForChild("HttpResponse"))
+local NexusGit = require(script.Parent.Parent):GetContext(script)
+local HttpResponse = NexusGit:GetResource("SplitHttp.HttpResponse")
 
 local MultiHttpResponse = HttpResponse:Extend()
 MultiHttpResponse:SetClassName("MultiHttpResponse")
