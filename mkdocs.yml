@@ -11,6 +11,8 @@ theme:
 
 nav:
   - Home: index.md
+  - Getting Started:
+    - Overview: getting-started/overview.md
   - Building: building.md
   - Contributing: contributing.md
 
