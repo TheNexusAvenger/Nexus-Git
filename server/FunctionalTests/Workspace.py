@@ -45,6 +45,21 @@ class Workspace():
 			file.truncate()
 
 	"""
+	Deletes a file.
+	"""
+	def deleteFile(self,fileLocation):
+		fileLocation = self.workspaceDirectory + fileLocation
+		os.remove(fileLocation)
+
+	"""
+	Renames a file.
+	"""
+	def renameFile(self,oldFileLocation,newFileLocation):
+		oldFileLocation = self.workspaceDirectory + oldFileLocation
+		newFileLocation = self.workspaceDirectory + newFileLocation
+		os.rename(oldFileLocation,newFileLocation)
+
+	"""
 	Reads a file.
 	"""
 	def readFile(self,fileLocation):
