@@ -133,7 +133,12 @@ function GetGitStatusRequest:GetStatus()
 					StartIndex = 11
 				elseif string.sub(Line,1,8) == "Renamed:" then
 					TableToAddTo = FileStrings.Renamed
-					StartIndex = 10
+					StartIndex = 1
+					
+					local ArrowIndex = string.find(Line,"->")
+					local OldName,NewName = string.sub(Line,10,ArrowIndex - 2),string.sub(Line,ArrowIndex + 3)
+					Line = NewName
+					table.insert(FileStrings.Deleted,OldName)
 				end
 				
 				--Add the line.

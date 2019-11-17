@@ -27,7 +27,7 @@ function MockGitStatusRequest:SendRequest()
 				.."\"Modified: Directory1/TestFile3.lua\","
 				.."\"New file: Directory1/TestFile4.lua\","
 				.."\"Modified: Directory1/Directory2/TestFile5.lua\","
-				.."\"Renamed: Directory1/Directory2/TestFile6.lua\","
+				.."\"Renamed: Directory1/Directory2/TestFile10.lua -> Directory1/Directory2/TestFile6.lua\","
 				.."\"Deleted: Directory1/Directory2/TestFile7.lua\","
 				.."\"Untracked files:\","
 				.."\"TestFile8.lua\","
@@ -147,6 +147,7 @@ NexusUnitTesting:RegisterUnitTest("GetStatus",function(UnitTest)
 	
 	--Assert the deleted files are correct.
 	UnitTest:AssertTrue(NexusEnums.FileStatus.Deleted:Equals(GetFile("Directory1"):GetFile("Directory2"):GetFile("TestFile7.lua"):GetStatus()),"File status is incorrect.")
+	UnitTest:AssertTrue(NexusEnums.FileStatus.Deleted:Equals(GetFile("Directory1"):GetFile("Directory2"):GetFile("TestFile10.lua"):GetStatus()),"File status is incorrect.")
 	
 	--Assert the untracked files are correct.
 	UnitTest:AssertTrue(NexusEnums.FileStatus.Untracked:Equals(GetFile("TestFile8.lua"):GetStatus()),"File status is incorrect.")
