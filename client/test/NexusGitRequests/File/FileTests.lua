@@ -22,7 +22,7 @@ NexusUnitTesting:RegisterUnitTest("Constructor",function(UnitTest)
 	UnitTest:AssertEquals(CuT:GetPreviousFileName(),nil,"Previous file name is incorrect.")
 	UnitTest:AssertTrue(NexusEnums.FileStatus.Untracked:Equals(CuT:GetStatus()),"Default status is incorrect.")
 	
-	local CuT = File.new("TestFileName1.lua -> TestFileName2.lua")
+	local CuT = File.new("TestFileName2.lua","TestFileName1.lua")
 	UnitTest:AssertEquals(CuT.ClassName,"File","Class name is incorrect.")
 	UnitTest:AssertEquals(CuT:GetFileName(),"TestFileName2.lua","File name is incorrect.")
 	UnitTest:AssertEquals(CuT:GetPreviousFileName(),"TestFileName1.lua","Previous file name is incorrect.")

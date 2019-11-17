@@ -16,19 +16,11 @@ File:SetClassName("File")
 --[[
 Creates a file object.
 --]]
-function File:__new(FileName)
+function File:__new(FileName,PreviousFileName)
 	self:InitializeSuper()
+	self.FileName = FileName
+	self.PreviousFileName = PreviousFileName
 	self.Status = NexusEnums.FileStatus.Untracked
-	
-	--Set the file name.
-	local ChangedNameIndex = string.find(FileName,"->")
-	if ChangedNameIndex then
-		self.FileName = string.sub(FileName,ChangedNameIndex + 3)
-		self.PreviousFileName = string.sub(FileName,1,ChangedNameIndex - 2)
-	else
-		self.FileName = FileName
-		self.PreviousFileName = nil
-	end
 end
 
 --[[
