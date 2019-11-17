@@ -16,10 +16,9 @@ File:SetClassName("File")
 --[[
 Creates a file object.
 --]]
-function File:__new(FileName,PreviousFileName)
+function File:__new(FileName)
 	self:InitializeSuper()
 	self.FileName = FileName
-	self.PreviousFileName = PreviousFileName
 	self.Status = NexusEnums.FileStatus.Untracked
 end
 
