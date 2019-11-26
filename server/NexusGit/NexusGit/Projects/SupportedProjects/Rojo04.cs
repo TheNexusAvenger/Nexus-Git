@@ -434,22 +434,25 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects
             var workingDirectory = FileFinder.GetParentDirectoryOfFile(REQUIRED_FILE);
             foreach (var partitionLocation in partitions.Instances.Keys)
             {
-                // Get the location.
-                var fileLocation = workingDirectory + partitionLocation;
-                var topDirectory = FileFinder.GetUpperDirectoryName(fileLocation);
-                var parentLocation = FileFinder.MoveDirectoryUp(fileLocation);
-                if (parentLocation == null)
-                {
-                    parentLocation = "";
-                }
-                
-                // Get and modify the instance.
                 var instance = partitions.GetInstance(partitionLocation);
-                instance.GetProperty("Name").Value = topDirectory;
-                
-                // Write the instance.
-                writer.DeleteDirectory(fileLocation);
-                writer.WriteRobloxInstance(instance,parentLocation);
+                if (instance != null)
+                {
+                    // Get the location.
+                    var fileLocation = workingDirectory + partitionLocation;
+                    var topDirectory = FileFinder.GetUpperDirectoryName(fileLocation);
+                    var parentLocation = FileFinder.MoveDirectoryUp(fileLocation);
+                    if (parentLocation == null)
+                    {
+                        parentLocation = "";
+                    }
+
+                    // Get and modify the instance.
+                    instance.GetProperty("Name").Value = topDirectory;
+
+                    // Write the instance.
+                    writer.DeleteDirectory(fileLocation);
+                    writer.WriteRobloxInstance(instance, parentLocation);
+                }
             }
         }
         
