@@ -7,7 +7,7 @@
 using System.Collections.Generic;
 using System.IO;
 using NexusGit.FileIO;
-using NexusGit.NexusGit.Projects.SupportedProjects;
+using NexusGit.NexusGit.Projects.SupportedProjects.Rojo;
 
 namespace NexusGit.NexusGit.Projects
 {
