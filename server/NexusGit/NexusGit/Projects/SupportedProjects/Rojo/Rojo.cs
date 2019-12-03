@@ -19,14 +19,53 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
     public class RojoFile
     {
         public List<RojoFile> SubFiles;
+        public string Name;
         public string Contents;
         
         /*
          * Creates a Rojo file.
          */
-        public RojoFile()
-        {
+        public RojoFile(string name) {
+            this.Name = name;
             this.SubFiles = new List<RojoFile>();
+        }
+        
+        /*
+         * Returns the file for a given name.
+         */
+        public RojoFile GetFile(string name) {
+            name = name.ToLower();
+            
+            // Return the file if it exists.
+            foreach (var file in this.SubFiles) {
+                if (file.Name.ToLower() == name) {
+                    return file;
+                }
+            }
+            
+            // Return null (not found).
+            return null;
+        }
+        
+        /*
+         * Returns if a file exists.
+         */
+        public bool FileExists(string name) {
+            return this.GetFile(name) != null;
+        }
+        
+        /*
+         * Removes a file.
+         */
+        public RojoFile RemoveFile(string name) {
+            // Get the file.
+            var file = this.GetFile(name);
+            
+            // Remove and return the file.
+            if (file != null) {
+                this.SubFiles.Remove(file);
+            }
+            return file;
         }
         
         /*
@@ -35,7 +74,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
         public static RojoFile FromFile(string location)
         {
             // Create the base file.
-            var file = new RojoFile();
+            var file = new RojoFile(Path.GetFileName(location));
             
             // Handle the file being a file or a directory.
             if (Directory.Exists(location))

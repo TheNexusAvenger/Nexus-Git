@@ -84,7 +84,78 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
          */
         public override RojoInstance GetFromFile(RojoFile file)
         {
-            return null;
+            // Create the base instance.
+            var newInstance = new RojoInstance();
+            
+            // Parse the file as a directory or as a file based on if it has contents.
+            if (file.Contents == null) {
+                // Get the contents and class name.
+                var className = "Folder";
+                RojoFile initFile = null;
+                if (file.FileExists("init.lua")) {
+                    className = "ModuleScript";
+                    initFile = file.RemoveFile("init.server.lua");
+                } else if (file.FileExists("init.server.lua")) {
+                    className = "Script";
+                    initFile = file.RemoveFile("init.server.lua");
+                } else if (file.FileExists("init.client.lua")) {
+                    className = "LocalScript";
+                    initFile = file.RemoveFile("init.client.lua");
+                } else if (file.FileExists("init.model.json")) {
+                    className = null;
+                    initFile = file.RemoveFile("init.model.json");
+                }
+                
+                // Populate the name and class name or replace the instance with a file.
+                if (className != null) {
+                    newInstance.ClassName = className;
+                    newInstance.Name = file.Name;
+
+                    // Add the source.
+                    if (initFile != null) {
+                        newInstance.Properties.Add("Source",new Property<object>("String",initFile.Contents));
+                    }
+                } else {
+                    newInstance = this.GetFromFile(initFile);
+                }
+                
+                // Add the child objects.
+                foreach (var subFile in file.SubFiles) {
+                    var subInstance = this.GetFromFile(subFile);
+                    if (subInstance != null) {
+                        newInstance.Children.Add(subInstance);
+                    }
+                }
+            } else {
+                // Get the contents and class name.
+                string className = null;
+                string name = null;
+                if (file.Name.ToLower().EndsWith(".server.lua")) {
+                    className = "Script";
+                    name = file.Name.Remove(file.Name.Length - 11);
+                } else if (file.Name.ToLower().EndsWith(".client.lua")) {
+                    className = "LocalScript";
+                    name = file.Name.Remove(file.Name.Length - 11);
+                } else if (file.Name.ToLower().EndsWith(".lua")) {
+                    className = "ModuleScript";
+                    name = file.Name.Remove(file.Name.Length - 4);
+                } else if (file.Name.ToLower().EndsWith(".model.json")) {
+                    return JsonConvert.DeserializeObject<RojoInstance>(file.Contents);
+                }
+                
+                // Return null if a class name doesn't exist.
+                if (className == null) {
+                    return null;
+                }
+                
+                // Populate the properties.
+                newInstance.ClassName = className;
+                newInstance.Name = name;
+                newInstance.Properties.Add("Source",new Property<object>("String",file.Contents));
+            }
+            
+            // Return the instance.
+            return newInstance;
         }
         
         /*
