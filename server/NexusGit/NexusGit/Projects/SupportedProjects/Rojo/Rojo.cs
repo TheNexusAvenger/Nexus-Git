@@ -267,9 +267,8 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 
                 // Get the instance and add it to the partitions if it exists.
                 var instance = this.GetFromFile(workingDirectory + partitionLocation);
-                if (instance != null)
-                {
-                    instance.Properties["Name"].Value = instanceName;
+                if (instance != null) {
+                    instance.Name = instanceName;
                     partitions.AddInstance(partitionLocation,instance.ToRobloxInstance(incrementer));
                 }
             }
