@@ -230,30 +230,6 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             // Create the new partitions.
             var partitions = new Partitions();
             
-            /*
-            // Create the reader.
-            var reader = new Rojo04Reader();
-            
-            // Read the folders.
-            var workingDirectory = FileFinder.GetParentDirectoryOfFile(this.GetRequiredFile());
-            var partitionData = this.GetPartitions();
-            foreach (var partitionLocation in partitionData.Keys)
-            {
-                // Get the target instance and new name.
-                var targetInstance = partitionData[partitionLocation];
-                var splitTargetName = targetInstance.Split('.');
-                var instanceName = splitTargetName[splitTargetName.Length - 1];
-                
-                // Get the instance and add it to the partitions if it exists.
-                var instance = reader.ReadRobloxInstance(workingDirectory + partitionLocation);
-                if (instance != null)
-                {
-                    instance.Properties["Name"].Value = instanceName;
-                    partitions.AddInstance(partitionLocation,instance);
-                }
-            }
-            */
-            
             // Read the folders.
             var incrementer = new TemporaryIdIncrementer();
             var workingDirectory = FileFinder.GetParentDirectoryOfFile(this.GetRequiredFile());
