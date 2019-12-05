@@ -227,58 +227,21 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
         /*
          * Returns the partitions to use.
          */
-        public override Dictionary<string,string> GetPartitions()
-        {
+        public override Dictionary<string, string> GetPartitions() {
             // Get the project structure and return null if it doesn't exist.
             var structure = this.GetStructure();
-            if (structure == null)
-            {
+            if (structure == null) {
                 return null;
             }
-            
+
             // Get the partitions.
-            var partitions = new Dictionary<string,string>();
-            foreach (var partitionData in structure.partitions.Values)
-            {
-                partitions.Add(partitionData["path"],partitionData["target"]);
+            var partitions = new Dictionary<string, string>();
+            foreach (var partitionData in structure.partitions.Values) {
+                partitions.Add(partitionData["path"], partitionData["target"]);
             }
-            
+
             // Return the partitions.
             return partitions;
-        }
-        
-        /*
-         * Writes the partitions to the file system.
-         */
-        public override void WriteProjectStructure(Partitions partitions)
-        {
-            // Create the writer.
-            var writer = new Rojo04Writer();
-
-            // Write the structure.
-            var workingDirectory = FileFinder.GetParentDirectoryOfFile(this.GetRequiredFile());
-            foreach (var partitionLocation in partitions.Instances.Keys)
-            {
-                var instance = partitions.GetInstance(partitionLocation);
-                if (instance != null)
-                {
-                    // Get the location.
-                    var fileLocation = workingDirectory + partitionLocation;
-                    var topDirectory = FileFinder.GetUpperDirectoryName(fileLocation);
-                    var parentLocation = FileFinder.MoveDirectoryUp(fileLocation);
-                    if (parentLocation == null)
-                    {
-                        parentLocation = "";
-                    }
-
-                    // Get and modify the instance.
-                    instance.GetProperty("Name").Value = topDirectory;
-
-                    // Write the instance.
-                    writer.DeleteDirectory(fileLocation);
-                    writer.WriteRobloxInstance(instance, parentLocation);
-                }
-            }
         }
     }
 }

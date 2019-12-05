@@ -93,6 +93,51 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             // Return the file.
             return file;
         }
+        
+        /*
+         * Writes a Rojo file.
+         */
+        public void WriteFile(string location,List<string> extensionsToRemove) {
+            if (this.Contents == null) {
+                // Create the directory if it doesn't exist.
+                if (!Directory.Exists(location)) {
+                    Directory.CreateDirectory(location);
+                }
+                
+                // Write the children.
+                foreach (var child in this.SubFiles) {
+                    child.WriteFile(Path.Combine(location, child.Name), extensionsToRemove);
+                }
+                
+                // Clear the old files.
+                foreach (var subFilePath in Directory.GetFiles(location)) {
+                    var subFileName = Path.GetFileName(subFilePath);
+                    if (File.Exists(subFilePath) && !this.FileExists(subFileName)) {
+                        foreach (var extension in extensionsToRemove) {
+                            if (subFilePath.ToLower().EndsWith(extension.ToLower())) {
+                                File.Delete(subFilePath);
+                            }
+                        }
+                    } else if (Directory.Exists(subFilePath) && Directory.GetDirectories(subFilePath).Length == 0 && Directory.GetFiles(subFilePath).Length == 0) {
+                        Directory.Delete(subFilePath);
+                    }
+                }
+                
+                // Clear the directory if it is empty.
+                if (Directory.GetFiles(location).Length == 0) {
+                    Directory.Delete(location);
+                }
+            } else {
+                File.WriteAllText(location,this.Contents);
+            }
+        }
+
+        /*
+         * Writes a Rojo file.
+         */
+        public void WriteFile(string location) {
+            this.WriteFile(location,new List<string>());
+        }
     }
     
     /*
@@ -252,7 +297,24 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             // Return the partitions.
             return partitions;
         }
-        
+
+        /*
+         * Writes the partitions to the file system.
+         */
+        public void WriteProjectStructure(Partitions partitions) {
+            // Get and write the files.
+            var workingDirectory = FileFinder.GetParentDirectoryOfFile(this.GetRequiredFile());
+            foreach (var partitionLocation in partitions.Instances.Keys) {
+                var instance = partitions.GetInstance(partitionLocation);
+                if (instance != null) {
+                    var rojoInstance = RojoInstance.ConvertInstance(instance);
+                    var files = this.GetFile(rojoInstance);
+
+                    files.WriteFile(Path.Combine(workingDirectory, partitionLocation));
+                }
+            }
+        }
+
         /*
          * Returns a Roblox instance for a given file or directory.
          */
@@ -282,10 +344,5 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
          * Returns the partitions to use.
          */
         public abstract Dictionary<string,string> GetPartitions();
-        
-        /*
-         * Writes the partitions to the file system.
-         */
-        public abstract void WriteProjectStructure(Partitions partitions);
     }
 }
