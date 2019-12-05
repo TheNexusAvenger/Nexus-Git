@@ -4,6 +4,7 @@
  * Tests Rojo 0.4 support.
  */
 
+using Newtonsoft.Json;
 using NexusGit.NexusGit.Projects.SupportedProjects.Rojo;
 using NexusGit.RobloxInstance;
 using NUnit.Framework;
@@ -128,7 +129,7 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo {
             var subInstance5 = new RojoInstance();
             subInstance5.Name = "TestPart";
             subInstance5.ClassName = "Part";
-            subInstance5.Properties.Add("Source",new Property<object>("Anchored",false));
+            subInstance5.Properties.Add("Anchored",new Property<object>("bool",false));
             subInstance4.Children.Add(subInstance5);
             
             // Create the component under testing.
@@ -148,6 +149,12 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo {
             Assert.AreEqual(rootFile.SubFiles[2].Name,"module.client.lua");
             Assert.AreEqual(rootFile.SubFiles[2].Contents,null);
             Assert.AreEqual(rootFile.SubFiles[2].SubFiles.Count,2);
+            Assert.AreEqual(rootFile.SubFiles[2].SubFiles[0].Name,"Script.client.lua");
+            Assert.AreEqual(rootFile.SubFiles[2].SubFiles[0].Contents,"print(\"Hello world 3!\")");
+            Assert.AreEqual(rootFile.SubFiles[2].SubFiles[0].SubFiles.Count,0);
+            Assert.AreEqual(rootFile.SubFiles[2].SubFiles[1].Name,"TestModel.model.json");
+            Assert.AreEqual(rootFile.SubFiles[2].SubFiles[1].Contents,JsonConvert.SerializeObject(JsonConvert.DeserializeObject<RojoInstance>(TEST_MODEL_JSON),Formatting.Indented));
+            Assert.AreEqual(rootFile.SubFiles[2].SubFiles[1].SubFiles.Count,0);
         }
     }
 }
