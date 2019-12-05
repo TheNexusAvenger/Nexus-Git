@@ -259,6 +259,11 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
         public abstract RojoInstance GetFromFile(RojoFile file);
         
         /*
+         * Returns a Roblox instance for a given file or directory.
+         */
+        public abstract RojoFile GetFile(RojoInstance instance);
+        
+        /*
          * Returns the file required for the Rojo project.
          */
         public abstract string GetRequiredFile();

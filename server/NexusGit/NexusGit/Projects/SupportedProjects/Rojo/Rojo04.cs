@@ -159,6 +159,72 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
         }
         
         /*
+         * Returns a Roblox instance for a given file or directory.
+         */
+        public override RojoFile GetFile(RojoInstance instance) {
+            // Return a file for a script.
+            if (instance.ClassName == "Script" || instance.ClassName == "LocalScript" || instance.ClassName == "ModuleScript") {
+                if (instance.Children.Count != 0) {
+                    // Create the directory.
+                    var newDirectory = new RojoFile(instance.Name);
+                    
+                    // Create the child file.
+                    RojoFile newFile = null;
+                    if (instance.ClassName == "Script") {
+                        newFile = new RojoFile("init.server.lua");
+                    } else if (instance.ClassName == "LocalScript") {
+                        newFile = new RojoFile("init.client.lua");
+                    } else {
+                        newFile = new RojoFile("init.lua");
+                    }
+                    
+                    // Add the child file.
+                    newFile.Contents = (string) instance.Properties["Source"].Value;
+                    newDirectory.SubFiles.Add(newFile);
+                    
+                    // Add the child instances.
+                    foreach (var subInstance in instance.Children) {
+                        newDirectory.SubFiles.Add(this.GetFile(subInstance));
+                    }
+                    
+                    // Return the directory.
+                    return newDirectory;
+                } else {
+                    // Create the file.
+                    RojoFile newFile = null;
+                    if (instance.ClassName == "Script") {
+                        newFile = new RojoFile(instance.Name + ".server.lua");
+                    } else if (instance.ClassName == "LocalScript") {
+                        newFile = new RojoFile(instance.Name + ".client.lua");
+                    } else {
+                        newFile = new RojoFile(instance.Name + ".lua");
+                    }
+                    
+                    // Return the file with contents.
+                    newFile.Contents = (string) instance.Properties["Source"].Value;
+                    return newFile;
+                }
+            } else if (instance.ClassName == "Folder") {
+                // Create the directory.
+                var newDirectory = new RojoFile(instance.Name);
+                    
+                // Add the child instances.
+                foreach (var subInstance in instance.Children) {
+                    newDirectory.SubFiles.Add(this.GetFile(subInstance));
+                }
+                    
+                // Return the directory.
+                return newDirectory;
+            }
+            
+            // Serialize and store the instance.
+            var instanceData = JsonConvert.SerializeObject(instance,Formatting.Indented);
+            var file = new RojoFile(instance.Name + ".model.json");
+            file.Contents = instanceData;
+            return file;
+        }
+        
+        /*
          * Returns the partitions to use.
          */
         public override Dictionary<string,string> GetPartitions()
