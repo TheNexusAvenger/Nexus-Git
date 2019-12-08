@@ -20,7 +20,7 @@ class Rojo04TestRemoteCheckoutAsStandaloneRequest(NexusGitFunctionalTest.NexusGi
 
         # Initialize the git repository.
         self.workspace.runCommand("git init")
-        self.workspace.runCommand("git remote add origin https://github.com/TheNexusAvenger/Nexus-Instance")
+        self.workspace.runCommand("git remote add origin https://github.com/TheBotAvenger/Initialized-Dummy-Repository.git")
         self.workspace.runCommand("git checkout -b master")
         self.workspace.runCommand("git pull origin master")
 
@@ -33,8 +33,8 @@ class Rojo04TestRemoteCheckoutAsStandaloneRequest(NexusGitFunctionalTest.NexusGi
         self.waitForInitialization()
 
         # Checkout the gh-pages branch and assert the files are correct.
-        self.sendPOSTRequest("/remotecheckout","{\"localBranch\":\"test_branch\",\"remote\":\"origin\",\"branch\":\"gh-pages\"}")
-        self.assertTrue(self.workspace.fileExists("index.html"))
-        self.assertFalse(self.workspace.fileExists("README.md"))
+        self.sendPOSTRequest("/remotecheckout","{\"localBranch\":\"test_branch\",\"remote\":\"origin\",\"branch\":\"dummy-branch-2\"}")
+        self.assertTrue(self.workspace.fileExists("DummyFile6"))
+        self.assertFalse(self.workspace.fileExists("DummyFile3"))
         response = self.sendGETRequest("/listlocalbranches")
         self.assertEquals(response,"[\"master\",\"* test_branch\"]")

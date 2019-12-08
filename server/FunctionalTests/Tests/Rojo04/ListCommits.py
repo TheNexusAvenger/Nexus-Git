@@ -26,7 +26,7 @@ class Rojo04TestListCommitsAsStandaloneRequest(NexusGitFunctionalTest.NexusGitFu
 
         # Initialize the git repository.
         self.workspace.runCommand("git init")
-        self.workspace.runCommand("git remote add origin https://github.com/TheNexusAvenger/Nexus-Instance")
+        self.workspace.runCommand("git remote add origin https://github.com/TheBotAvenger/Initialized-Dummy-Repository.git")
         self.workspace.runCommand("git fetch")
         self.workspace.runCommand("git config user.email \"john@doe.com\"")
         self.workspace.runCommand("git config user.name \"John Doe\"")

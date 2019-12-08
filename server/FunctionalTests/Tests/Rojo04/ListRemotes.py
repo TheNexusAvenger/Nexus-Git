@@ -20,8 +20,8 @@ class Rojo04TestListRemotesAsStandaloneRequest(NexusGitFunctionalTest.NexusGitFu
 
         # Initialize the git repository.
         self.workspace.runCommand("git init")
-        self.workspace.runCommand("git remote add origin1 https://github.com/TheNexusAvenger/Nexus-Instance")
-        self.workspace.runCommand("git remote add origin2 https://github.com/TheNexusAvenger/Nexus-Instance")
+        self.workspace.runCommand("git remote add origin1 https://github.com/TheBotAvenger/Initialized-Dummy-Repository.git")
+        self.workspace.runCommand("git remote add origin2 https://github.com/TheBotAvenger/Initialized-Dummy-Repository.git")
 
     """
     Runs the test.

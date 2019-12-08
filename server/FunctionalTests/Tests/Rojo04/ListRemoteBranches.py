@@ -20,7 +20,7 @@ class Rojo04TestRemoteBranchesAsStandaloneRequest(NexusGitFunctionalTest.NexusGi
 
         # Initialize the git repository.
         self.workspace.runCommand("git init")
-        self.workspace.runCommand("git remote add origin https://github.com/TheNexusAvenger/Nexus-Instance")
+        self.workspace.runCommand("git remote add origin https://github.com/TheBotAvenger/Initialized-Dummy-Repository.git")
         self.workspace.runCommand("git checkout -b master")
         self.workspace.runCommand("git pull origin master")
 
@@ -34,7 +34,7 @@ class Rojo04TestRemoteBranchesAsStandaloneRequest(NexusGitFunctionalTest.NexusGi
 
         # Assert the branches are correct.
         response = self.sendGETRequest("/listremotebranches")
-        self.assertEquals(response,"[\"origin/gh-pages\",\"origin/master\"]")
+        self.assertEquals(response,"[\"origin/dummy-branch-1\",\"origin/dummy-branch-2\",\"origin/master\"]")
 
 """
 Tests the remote branches with remote tracking as a standalone request.
@@ -48,7 +48,7 @@ class Rojo04TestRemoteBranchesWithTrackingAsStandaloneRequest(NexusGitFunctional
 
         # Initialize the git repository.
         self.workspace.runCommand("git init")
-        self.workspace.runCommand("git remote add origin https://github.com/TheNexusAvenger/Nexus-Instance")
+        self.workspace.runCommand("git remote add origin https://github.com/TheBotAvenger/Initialized-Dummy-Repository.git")
         self.workspace.runCommand("git checkout -b master")
         self.workspace.runCommand("git pull origin master")
         self.workspace.runCommand("git branch -u origin/master")
@@ -63,4 +63,4 @@ class Rojo04TestRemoteBranchesWithTrackingAsStandaloneRequest(NexusGitFunctional
 
         # Assert the branches are correct.
         response = self.sendGETRequest("/listremotebranches")
-        self.assertEquals(response,"[\"origin/gh-pages\",\"* origin/master\"]")
+        self.assertEquals(response,"[\"origin/dummy-branch-1\",\"origin/dummy-branch-2\",\"* origin/master\"]")
