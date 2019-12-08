@@ -94,7 +94,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 RojoFile initFile = null;
                 if (file.FileExists("init.lua")) {
                     className = "ModuleScript";
-                    initFile = file.RemoveFile("init.server.lua");
+                    initFile = file.RemoveFile("init.lua");
                 } else if (file.FileExists("init.server.lua")) {
                     className = "Script";
                     initFile = file.RemoveFile("init.server.lua");
