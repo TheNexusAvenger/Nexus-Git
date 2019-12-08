@@ -73,6 +73,12 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
          */
         public static RojoFile FromFile(string location)
         {
+            // Return null if the file doesn't exist.
+            if (!File.Exists(location) && !Directory.Exists(location))
+            {
+                return null;
+            }
+            
             // Create the base file.
             var file = new RojoFile(Path.GetFileName(location));
             
@@ -88,7 +94,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 {
                     file.SubFiles.Add(FromFile(subFile));
                 }
-            } else if (File.Exists(location))
+            } else
             {
                 // Add the contents.
                 file.Contents = File.ReadAllText(location);
@@ -268,7 +274,13 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             var rojoFile = RojoFile.FromFile(file);
             
             // Return the instances.
-            return this.GetFromFile(rojoFile);
+            if (rojoFile != null)
+            {
+                return this.GetFromFile(rojoFile);
+            }
+            
+            // Return null (file doesn't exist).
+            return null;
         }
         
         /*
