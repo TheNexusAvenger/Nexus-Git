@@ -144,6 +144,7 @@ class NexusGitFunctionalTest(unittest.TestCase):
 
 		# End the server thread.
 		self.serverProcess.kill()
+		self.serverProcess.wait()
 
 		# Call the teardown method.
 		self.teardownTest()
