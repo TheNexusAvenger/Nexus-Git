@@ -80,6 +80,10 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             if (Directory.Exists(location))
             {
                 // Add the children.
+                foreach (var subFile in Directory.GetDirectories(location))
+                {
+                    file.SubFiles.Add(FromFile(subFile));
+                }
                 foreach (var subFile in Directory.GetFiles(location))
                 {
                     file.SubFiles.Add(FromFile(subFile));
