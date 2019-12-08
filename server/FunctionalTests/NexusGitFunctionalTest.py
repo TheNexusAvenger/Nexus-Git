@@ -18,10 +18,6 @@ EXECUTABLE_LOCATIONS = [
 
 
 
-portsUsedByTests = []
-
-
-
 """
 Returns the path to the executable.
 """
@@ -75,13 +71,7 @@ class NexusGitFunctionalTest(unittest.TestCase):
 	Sets the port number.
 	"""
 	def setPortNumber(self,port):
-		# Raise an error if the port was used.
-		global portsUsedByTests
-		if port in portsUsedByTests:
-			raise RuntimeError("Port already used by another test: " + str(port))
-
 		# Add the port.
-		portsUsedByTests.append(port)
 		self.port = port
 
 	"""

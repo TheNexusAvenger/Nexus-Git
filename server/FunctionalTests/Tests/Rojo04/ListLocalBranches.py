@@ -16,7 +16,7 @@ class Rojo04TestLocalBranchesAsStandaloneRequest(NexusGitFunctionalTest.NexusGit
     Setup for the test.
     """
     def setupTest(self):
-        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 20006,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
+        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 20001,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
 
         # Initialize the git repository.
         self.workspace.runCommand("git init")
@@ -33,7 +33,7 @@ class Rojo04TestLocalBranchesAsStandaloneRequest(NexusGitFunctionalTest.NexusGit
     """
     def runTest(self):
         # Wait for it to initialize.
-        self.setPortNumber(20006)
+        self.setPortNumber(20001)
         self.waitForInitialization()
 
         # Assert the branches are correct.

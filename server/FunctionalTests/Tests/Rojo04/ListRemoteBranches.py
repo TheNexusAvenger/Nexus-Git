@@ -16,7 +16,7 @@ class Rojo04TestRemoteBranchesAsStandaloneRequest(NexusGitFunctionalTest.NexusGi
     Setup for the test.
     """
     def setupTest(self):
-        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 20012,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
+        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 20001,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
 
         # Initialize the git repository.
         self.workspace.runCommand("git init")
@@ -29,7 +29,7 @@ class Rojo04TestRemoteBranchesAsStandaloneRequest(NexusGitFunctionalTest.NexusGi
     """
     def runTest(self):
         # Wait for it to initialize.
-        self.setPortNumber(20012)
+        self.setPortNumber(20001)
         self.waitForInitialization()
 
         # Assert the branches are correct.
@@ -44,7 +44,7 @@ class Rojo04TestRemoteBranchesWithTrackingAsStandaloneRequest(NexusGitFunctional
     Setup for the test.
     """
     def setupTest(self):
-        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 20016,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
+        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 20001,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
 
         # Initialize the git repository.
         self.workspace.runCommand("git init")
@@ -58,7 +58,7 @@ class Rojo04TestRemoteBranchesWithTrackingAsStandaloneRequest(NexusGitFunctional
     """
     def runTest(self):
         # Wait for it to initialize.
-        self.setPortNumber(20016)
+        self.setPortNumber(20001)
         self.waitForInitialization()
 
         # Assert the branches are correct.

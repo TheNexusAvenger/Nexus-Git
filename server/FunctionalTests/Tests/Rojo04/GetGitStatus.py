@@ -17,7 +17,7 @@ class Rojo04TestGitStatusAsStandaloneRequest(NexusGitFunctionalTest.NexusGitFunc
     """
     def setupTest(self):
         # Set up several files.
-        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 20003,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
+        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 20001,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
         self.workspace.writeFile("file1.txt","Test file 1")
         self.workspace.writeFile("file2.txt","Test file 2")
         self.workspace.writeFile("file3.txt","Test file 3")
@@ -34,7 +34,7 @@ class Rojo04TestGitStatusAsStandaloneRequest(NexusGitFunctionalTest.NexusGitFunc
     """
     def runTest(self):
         # Wait for it to initialize.
-        self.setPortNumber(20003)
+        self.setPortNumber(20001)
         self.waitForInitialization()
 
         # Send a split request and get the response.
@@ -56,7 +56,7 @@ class Rojo04TestGitStatusRenamedFilesAsStandaloneRequest(NexusGitFunctionalTest.
     """
     def setupTest(self):
         # Set up several files.
-        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 20017,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
+        self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 20001,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
         self.workspace.createDirectory("directory")
         self.workspace.writeFile("directory/file1.txt","Test file 1")
         self.workspace.writeFile("directory/file2.txt","Test file 2")
@@ -74,7 +74,7 @@ class Rojo04TestGitStatusRenamedFilesAsStandaloneRequest(NexusGitFunctionalTest.
     """
     def runTest(self):
         # Wait for it to initialize.
-        self.setPortNumber(20017)
+        self.setPortNumber(20001)
         self.waitForInitialization()
 
         # Send a split request and get the response.
