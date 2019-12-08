@@ -84,64 +84,164 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
          */
         public override RojoInstance GetFromFile(RojoFile file)
         {
-            return null;
+            // Create the base instance.
+            var newInstance = new RojoInstance();
+            
+            // Parse the file as a directory or as a file based on if it has contents.
+            if (file.Contents == null) {
+                // Get the contents and class name.
+                var className = "Folder";
+                RojoFile initFile = null;
+                if (file.FileExists("init.lua")) {
+                    className = "ModuleScript";
+                    initFile = file.RemoveFile("init.server.lua");
+                } else if (file.FileExists("init.server.lua")) {
+                    className = "Script";
+                    initFile = file.RemoveFile("init.server.lua");
+                } else if (file.FileExists("init.client.lua")) {
+                    className = "LocalScript";
+                    initFile = file.RemoveFile("init.client.lua");
+                } else if (file.FileExists("init.model.json")) {
+                    className = null;
+                    initFile = file.RemoveFile("init.model.json");
+                }
+                
+                // Populate the name and class name or replace the instance with a file.
+                if (className != null) {
+                    newInstance.ClassName = className;
+                    newInstance.Name = file.Name;
+
+                    // Add the source.
+                    if (initFile != null) {
+                        newInstance.Properties.Add("Source",new Property<object>("String",initFile.Contents));
+                    }
+                } else {
+                    newInstance = this.GetFromFile(initFile);
+                }
+                
+                // Add the child objects.
+                foreach (var subFile in file.SubFiles) {
+                    var subInstance = this.GetFromFile(subFile);
+                    if (subInstance != null) {
+                        newInstance.Children.Add(subInstance);
+                    }
+                }
+            } else {
+                // Get the contents and class name.
+                string className = null;
+                string name = null;
+                if (file.Name.ToLower().EndsWith(".server.lua")) {
+                    className = "Script";
+                    name = file.Name.Remove(file.Name.Length - 11);
+                } else if (file.Name.ToLower().EndsWith(".client.lua")) {
+                    className = "LocalScript";
+                    name = file.Name.Remove(file.Name.Length - 11);
+                } else if (file.Name.ToLower().EndsWith(".lua")) {
+                    className = "ModuleScript";
+                    name = file.Name.Remove(file.Name.Length - 4);
+                } else if (file.Name.ToLower().EndsWith(".model.json")) {
+                    return JsonConvert.DeserializeObject<RojoInstance>(file.Contents);
+                }
+                
+                // Return null if a class name doesn't exist.
+                if (className == null) {
+                    return null;
+                }
+                
+                // Populate the properties.
+                newInstance.ClassName = className;
+                newInstance.Name = name;
+                newInstance.Properties.Add("Source",new Property<object>("String",file.Contents));
+            }
+            
+            // Return the instance.
+            return newInstance;
+        }
+        
+        /*
+         * Returns a Roblox instance for a given file or directory.
+         */
+        public override RojoFile GetFile(RojoInstance instance) {
+            // Return a file for a script.
+            if (instance.ClassName == "Script" || instance.ClassName == "LocalScript" || instance.ClassName == "ModuleScript") {
+                if (instance.Children.Count != 0) {
+                    // Create the directory.
+                    var newDirectory = new RojoFile(instance.Name);
+                    
+                    // Create the child file.
+                    RojoFile newFile = null;
+                    if (instance.ClassName == "Script") {
+                        newFile = new RojoFile("init.server.lua");
+                    } else if (instance.ClassName == "LocalScript") {
+                        newFile = new RojoFile("init.client.lua");
+                    } else {
+                        newFile = new RojoFile("init.lua");
+                    }
+                    
+                    // Add the child file.
+                    newFile.Contents = (string) instance.Properties["Source"].Value;
+                    newDirectory.SubFiles.Add(newFile);
+                    
+                    // Add the child instances.
+                    foreach (var subInstance in instance.Children) {
+                        newDirectory.SubFiles.Add(this.GetFile(subInstance));
+                    }
+                    
+                    // Return the directory.
+                    return newDirectory;
+                } else {
+                    // Create the file.
+                    RojoFile newFile = null;
+                    if (instance.ClassName == "Script") {
+                        newFile = new RojoFile(instance.Name + ".server.lua");
+                    } else if (instance.ClassName == "LocalScript") {
+                        newFile = new RojoFile(instance.Name + ".client.lua");
+                    } else {
+                        newFile = new RojoFile(instance.Name + ".lua");
+                    }
+                    
+                    // Return the file with contents.
+                    newFile.Contents = (string) instance.Properties["Source"].Value;
+                    return newFile;
+                }
+            } else if (instance.ClassName == "Folder") {
+                // Create the directory.
+                var newDirectory = new RojoFile(instance.Name);
+                    
+                // Add the child instances.
+                foreach (var subInstance in instance.Children) {
+                    newDirectory.SubFiles.Add(this.GetFile(subInstance));
+                }
+                    
+                // Return the directory.
+                return newDirectory;
+            }
+            
+            // Serialize and store the instance.
+            var instanceData = JsonConvert.SerializeObject(instance,Formatting.Indented);
+            var file = new RojoFile(instance.Name + ".model.json");
+            file.Contents = instanceData;
+            return file;
         }
         
         /*
          * Returns the partitions to use.
          */
-        public override Dictionary<string,string> GetPartitions()
-        {
+        public override Dictionary<string, string> GetPartitions() {
             // Get the project structure and return null if it doesn't exist.
             var structure = this.GetStructure();
-            if (structure == null)
-            {
+            if (structure == null) {
                 return null;
             }
-            
+
             // Get the partitions.
-            var partitions = new Dictionary<string,string>();
-            foreach (var partitionData in structure.partitions.Values)
-            {
-                partitions.Add(partitionData["path"],partitionData["target"]);
+            var partitions = new Dictionary<string, string>();
+            foreach (var partitionData in structure.partitions.Values) {
+                partitions.Add(partitionData["path"], partitionData["target"]);
             }
-            
+
             // Return the partitions.
             return partitions;
-        }
-        
-        /*
-         * Writes the partitions to the file system.
-         */
-        public override void WriteProjectStructure(Partitions partitions)
-        {
-            // Create the writer.
-            var writer = new Rojo04Writer();
-
-            // Write the structure.
-            var workingDirectory = FileFinder.GetParentDirectoryOfFile(this.GetRequiredFile());
-            foreach (var partitionLocation in partitions.Instances.Keys)
-            {
-                var instance = partitions.GetInstance(partitionLocation);
-                if (instance != null)
-                {
-                    // Get the location.
-                    var fileLocation = workingDirectory + partitionLocation;
-                    var topDirectory = FileFinder.GetUpperDirectoryName(fileLocation);
-                    var parentLocation = FileFinder.MoveDirectoryUp(fileLocation);
-                    if (parentLocation == null)
-                    {
-                        parentLocation = "";
-                    }
-
-                    // Get and modify the instance.
-                    instance.GetProperty("Name").Value = topDirectory;
-
-                    // Write the instance.
-                    writer.DeleteDirectory(fileLocation);
-                    writer.WriteRobloxInstance(instance, parentLocation);
-                }
-            }
         }
     }
 }

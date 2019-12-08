@@ -19,14 +19,53 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
     public class RojoFile
     {
         public List<RojoFile> SubFiles;
+        public string Name;
         public string Contents;
         
         /*
          * Creates a Rojo file.
          */
-        public RojoFile()
-        {
+        public RojoFile(string name) {
+            this.Name = name;
             this.SubFiles = new List<RojoFile>();
+        }
+        
+        /*
+         * Returns the file for a given name.
+         */
+        public RojoFile GetFile(string name) {
+            name = name.ToLower();
+            
+            // Return the file if it exists.
+            foreach (var file in this.SubFiles) {
+                if (file.Name.ToLower() == name) {
+                    return file;
+                }
+            }
+            
+            // Return null (not found).
+            return null;
+        }
+        
+        /*
+         * Returns if a file exists.
+         */
+        public bool FileExists(string name) {
+            return this.GetFile(name) != null;
+        }
+        
+        /*
+         * Removes a file.
+         */
+        public RojoFile RemoveFile(string name) {
+            // Get the file.
+            var file = this.GetFile(name);
+            
+            // Remove and return the file.
+            if (file != null) {
+                this.SubFiles.Remove(file);
+            }
+            return file;
         }
         
         /*
@@ -35,7 +74,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
         public static RojoFile FromFile(string location)
         {
             // Create the base file.
-            var file = new RojoFile();
+            var file = new RojoFile(Path.GetFileName(location));
             
             // Handle the file being a file or a directory.
             if (Directory.Exists(location))
@@ -53,6 +92,51 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             
             // Return the file.
             return file;
+        }
+        
+        /*
+         * Writes a Rojo file.
+         */
+        public void WriteFile(string location,List<string> extensionsToRemove) {
+            if (this.Contents == null) {
+                // Create the directory if it doesn't exist.
+                if (!Directory.Exists(location)) {
+                    Directory.CreateDirectory(location);
+                }
+                
+                // Write the children.
+                foreach (var child in this.SubFiles) {
+                    child.WriteFile(Path.Combine(location, child.Name), extensionsToRemove);
+                }
+                
+                // Clear the old files.
+                foreach (var subFilePath in Directory.GetFiles(location)) {
+                    var subFileName = Path.GetFileName(subFilePath);
+                    if (File.Exists(subFilePath) && !this.FileExists(subFileName)) {
+                        foreach (var extension in extensionsToRemove) {
+                            if (subFilePath.ToLower().EndsWith(extension.ToLower())) {
+                                File.Delete(subFilePath);
+                            }
+                        }
+                    } else if (Directory.Exists(subFilePath) && Directory.GetDirectories(subFilePath).Length == 0 && Directory.GetFiles(subFilePath).Length == 0) {
+                        Directory.Delete(subFilePath);
+                    }
+                }
+                
+                // Clear the directory if it is empty.
+                if (Directory.GetFiles(location).Length == 0) {
+                    Directory.Delete(location);
+                }
+            } else {
+                File.WriteAllText(location,this.Contents);
+            }
+        }
+
+        /*
+         * Writes a Rojo file.
+         */
+        public void WriteFile(string location) {
+            this.WriteFile(location,new List<string>());
         }
     }
     
@@ -191,30 +275,6 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             // Create the new partitions.
             var partitions = new Partitions();
             
-            /*
-            // Create the reader.
-            var reader = new Rojo04Reader();
-            
-            // Read the folders.
-            var workingDirectory = FileFinder.GetParentDirectoryOfFile(this.GetRequiredFile());
-            var partitionData = this.GetPartitions();
-            foreach (var partitionLocation in partitionData.Keys)
-            {
-                // Get the target instance and new name.
-                var targetInstance = partitionData[partitionLocation];
-                var splitTargetName = targetInstance.Split('.');
-                var instanceName = splitTargetName[splitTargetName.Length - 1];
-                
-                // Get the instance and add it to the partitions if it exists.
-                var instance = reader.ReadRobloxInstance(workingDirectory + partitionLocation);
-                if (instance != null)
-                {
-                    instance.Properties["Name"].Value = instanceName;
-                    partitions.AddInstance(partitionLocation,instance);
-                }
-            }
-            */
-            
             // Read the folders.
             var incrementer = new TemporaryIdIncrementer();
             var workingDirectory = FileFinder.GetParentDirectoryOfFile(this.GetRequiredFile());
@@ -228,9 +288,8 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 
                 // Get the instance and add it to the partitions if it exists.
                 var instance = this.GetFromFile(workingDirectory + partitionLocation);
-                if (instance != null)
-                {
-                    instance.Properties["Name"].Value = instanceName;
+                if (instance != null) {
+                    instance.Name = instanceName;
                     partitions.AddInstance(partitionLocation,instance.ToRobloxInstance(incrementer));
                 }
             }
@@ -238,11 +297,33 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             // Return the partitions.
             return partitions;
         }
-        
+
+        /*
+         * Writes the partitions to the file system.
+         */
+        public void WriteProjectStructure(Partitions partitions) {
+            // Get and write the files.
+            var workingDirectory = FileFinder.GetParentDirectoryOfFile(this.GetRequiredFile());
+            foreach (var partitionLocation in partitions.Instances.Keys) {
+                var instance = partitions.GetInstance(partitionLocation);
+                if (instance != null) {
+                    var rojoInstance = RojoInstance.ConvertInstance(instance);
+                    var files = this.GetFile(rojoInstance);
+
+                    files.WriteFile(Path.Combine(workingDirectory, partitionLocation));
+                }
+            }
+        }
+
         /*
          * Returns a Roblox instance for a given file or directory.
          */
         public abstract RojoInstance GetFromFile(RojoFile file);
+        
+        /*
+         * Returns a Roblox instance for a given file or directory.
+         */
+        public abstract RojoFile GetFile(RojoInstance instance);
         
         /*
          * Returns the file required for the Rojo project.
@@ -263,10 +344,5 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
          * Returns the partitions to use.
          */
         public abstract Dictionary<string,string> GetPartitions();
-        
-        /*
-         * Writes the partitions to the file system.
-         */
-        public abstract void WriteProjectStructure(Partitions partitions);
     }
 }
