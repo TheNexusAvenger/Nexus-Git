@@ -39,11 +39,11 @@ class Rojo04TestGitCommitAsStandaloneRequest(NexusGitFunctionalTest.NexusGitFunc
         # Send a standalone request and get the response.
         self.sendPOSTRequest("/gitadd","[\"src/testscript1.server.lua\",\"test/testscript3.lua\"]")
         response = self.sendPOSTRequest("/gitcommit","{\"message\":\"Test commit\",\"files\":[\"src/testscript1.server.lua\",\"test/testscript3.lua\"]}")
-        self.assertEquals(response,"[\"Commit successful.\"]")
+        self.assertEqual(response,"[\"Commit successful.\"]")
 
         # Assert the status is correct.
         response = self.sendGETRequest("/getgitstatus")
-        self.assertEquals(response,"[\"Current branch:\",\"master\",\"Untracked files:\",\"rojo.json\",\"src/testscript2.client.lua\"]")
+        self.assertEqual(response,"[\"Current branch:\",\"master\",\"Untracked files:\",\"rojo.json\",\"src/testscript2.client.lua\"]")
 
 """
 Tests the git commit with renamed files as a standalone request.
@@ -76,7 +76,7 @@ class Rojo04TestGitCommitRenamedFilesAsStandaloneRequest(NexusGitFunctionalTest.
 
         # Send a split request and get the response.
         response = self.sendGETRequest("/getgitstatus")
-        self.assertEquals(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: file1.txt\",\"New file: file2.txt\",\"Untracked files:\",\"file3.txt\",\"rojo.json\"]")
+        self.assertEqual(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: file1.txt\",\"New file: file2.txt\",\"Untracked files:\",\"file3.txt\",\"rojo.json\"]")
 
         # Modify a file and assert it was modified.
         self.workspace.runCommand("git commit file1.txt -m Commit")
@@ -85,6 +85,6 @@ class Rojo04TestGitCommitRenamedFilesAsStandaloneRequest(NexusGitFunctionalTest.
 
         # Send a standalone request and get the response.
         response = self.sendPOSTRequest("/gitcommit","{\"message\":\"Test commit\",\"files\":[\"file1.txt\",\"file4.txt\"]}")
-        self.assertEquals(response,"[\"Commit successful.\"]")
+        self.assertEqual(response,"[\"Commit successful.\"]")
         response = self.sendGETRequest("/getgitstatus")
-        self.assertEquals(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: file2.txt\",\"New file: file3.txt\",\"New file: rojo.json\"]")
+        self.assertEqual(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: file2.txt\",\"New file: file3.txt\",\"New file: rojo.json\"]")

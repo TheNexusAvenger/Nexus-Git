@@ -121,12 +121,12 @@ class Rojo04TestLocalPushAsStandaloneRequestMultipleFile(NexusGitFunctionalTest.
 
         # Send a standalone request and get the response.
         response = self.sendPOSTRequest("/localpush",requestJson)
-        self.assertEquals(response,"Local push successful.","Response message is incorrect.")
+        self.assertEqual(response,"Local push successful.","Response message is incorrect.")
 
         # Assert the files are correct.
-        self.assertEquals(self.workspace.readFile("src/testscript1.server.lua"),"print(\"Hello world 1!\")","Body is incorrect.")
-        self.assertEquals(self.workspace.readFile("src/testscript2.client.lua"),"print(\"Hello world 2!\")","Body is incorrect.")
-        self.assertEquals(self.workspace.readFile("test/testscript3.lua"),"print(\"Hello world 3!\")","Body is incorrect.")
+        self.assertEqual(self.workspace.readFile("src/testscript1.server.lua"),"print(\"Hello world 1!\")","Body is incorrect.")
+        self.assertEqual(self.workspace.readFile("src/testscript2.client.lua"),"print(\"Hello world 2!\")","Body is incorrect.")
+        self.assertEqual(self.workspace.readFile("test/testscript3.lua"),"print(\"Hello world 3!\")","Body is incorrect.")
 
 """
 Tests the local push as a standalone request with a missing partition.
@@ -193,7 +193,7 @@ class Rojo04TestLocalPushAsStandaloneRequestMissingPartition(NexusGitFunctionalT
 
         # Send a standalone request and get the response.
         response = self.sendPOSTRequest("/localpush",requestJson)
-        self.assertEquals(response,"Local push successful.","Response message is incorrect.")
+        self.assertEqual(response,"Local push successful.","Response message is incorrect.")
 
         # Assert the files are correct.
-        self.assertEquals(self.workspace.readFile("test/testscript3.lua"),"print(\"Hello world 3!\")","Body is incorrect.")
+        self.assertEqual(self.workspace.readFile("test/testscript3.lua"),"print(\"Hello world 3!\")","Body is incorrect.")

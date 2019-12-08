@@ -38,4 +38,4 @@ class Rojo04TestLocalBranchesAsStandaloneRequest(NexusGitFunctionalTest.NexusGit
 
         # Assert the branches are correct.
         response = self.sendGETRequest("/listlocalbranches")
-        self.assertEquals(response,"[\"branch_1\",\"branch_2\",\"branch_3\",\"* master\"]")
+        self.assertEqual(response,"[\"branch_1\",\"branch_2\",\"branch_3\",\"* master\"]")

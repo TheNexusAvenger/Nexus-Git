@@ -34,7 +34,7 @@ class Rojo04TestRemoteBranchesAsStandaloneRequest(NexusGitFunctionalTest.NexusGi
 
         # Assert the branches are correct.
         response = self.sendGETRequest("/listremotebranches")
-        self.assertEquals(response,"[\"origin/dummy-branch-1\",\"origin/dummy-branch-2\",\"origin/master\"]")
+        self.assertEqual(response,"[\"origin/dummy-branch-1\",\"origin/dummy-branch-2\",\"origin/master\"]")
 
 """
 Tests the remote branches with remote tracking as a standalone request.
@@ -63,4 +63,4 @@ class Rojo04TestRemoteBranchesWithTrackingAsStandaloneRequest(NexusGitFunctional
 
         # Assert the branches are correct.
         response = self.sendGETRequest("/listremotebranches")
-        self.assertEquals(response,"[\"origin/dummy-branch-1\",\"origin/dummy-branch-2\",\"* origin/master\"]")
+        self.assertEqual(response,"[\"origin/dummy-branch-1\",\"origin/dummy-branch-2\",\"* origin/master\"]")

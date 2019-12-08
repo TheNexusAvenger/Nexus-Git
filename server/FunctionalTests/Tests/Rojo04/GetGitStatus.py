@@ -39,13 +39,13 @@ class Rojo04TestGitStatusAsStandaloneRequest(NexusGitFunctionalTest.NexusGitFunc
 
         # Send a split request and get the response.
         response = self.sendGETRequest("/getgitstatus")
-        self.assertEquals(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: file1.txt\",\"New file: file2.txt\",\"Untracked files:\",\"file3.txt\",\"rojo.json\"]")
+        self.assertEqual(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: file1.txt\",\"New file: file2.txt\",\"Untracked files:\",\"file3.txt\",\"rojo.json\"]")
 
         # Modify a file and assert it was modified.
         self.workspace.runCommand("git commit file1.txt -m Commit")
         self.workspace.writeFile("file1.txt","Test file 4")
         response = self.sendGETRequest("/getgitstatus")
-        self.assertEquals(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: file2.txt\",\"Modified: file1.txt\",\"Untracked files:\",\"file3.txt\",\"rojo.json\"]")
+        self.assertEqual(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: file2.txt\",\"Modified: file1.txt\",\"Untracked files:\",\"file3.txt\",\"rojo.json\"]")
 
 """
 Tests the git status with renamed files as a standalone request.
@@ -79,11 +79,11 @@ class Rojo04TestGitStatusRenamedFilesAsStandaloneRequest(NexusGitFunctionalTest.
 
         # Send a split request and get the response.
         response = self.sendGETRequest("/getgitstatus")
-        self.assertEquals(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: directory/file1.txt\",\"New file: directory/file2.txt\",\"Untracked files:\",\"directory/file3.txt\",\"rojo.json\"]")
+        self.assertEqual(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: directory/file1.txt\",\"New file: directory/file2.txt\",\"Untracked files:\",\"directory/file3.txt\",\"rojo.json\"]")
 
         # Rename a file and assert it was modified.
         self.workspace.runCommand("git commit directory/file1.txt -m Commit")
         self.workspace.renameFile("directory/file1.txt","directory/file4.txt")
         self.workspace.runCommand("git add .")
         response = self.sendGETRequest("/getgitstatus")
-        self.assertEquals(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: directory/file2.txt\",\"New file: directory/file3.txt\",\"Renamed: directory/file1.txt -> directory/file4.txt\",\"New file: rojo.json\"]")
+        self.assertEqual(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: directory/file2.txt\",\"New file: directory/file3.txt\",\"Renamed: directory/file1.txt -> directory/file4.txt\",\"New file: rojo.json\"]")

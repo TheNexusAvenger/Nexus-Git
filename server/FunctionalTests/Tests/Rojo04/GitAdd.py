@@ -36,8 +36,8 @@ class Rojo04TestGitAddAsStandaloneRequest(NexusGitFunctionalTest.NexusGitFunctio
 
         # Send a standalone request and get the response.
         response = self.sendPOSTRequest("/gitadd","[\"src/testscript1.server.lua\",\"test/testscript3.lua\"]")
-        self.assertEquals(response,"[\"Add complete.\"]")
+        self.assertEqual(response,"[\"Add complete.\"]")
 
         # Assert the status is correct.
         response = self.sendGETRequest("/getgitstatus")
-        self.assertEquals(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: src/testscript1.server.lua\",\"New file: test/testscript3.lua\",\"Untracked files:\",\"rojo.json\",\"src/testscript2.client.lua\"]")
+        self.assertEqual(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: src/testscript1.server.lua\",\"New file: test/testscript3.lua\",\"Untracked files:\",\"rojo.json\",\"src/testscript2.client.lua\"]")

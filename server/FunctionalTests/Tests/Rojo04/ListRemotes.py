@@ -33,4 +33,4 @@ class Rojo04TestListRemotesAsStandaloneRequest(NexusGitFunctionalTest.NexusGitFu
 
         # Assert the remotes are correct.
         response = self.sendGETRequest("/listremotes")
-        self.assertEquals(response,"[\"origin1\",\"origin2\"]")
+        self.assertEqual(response,"[\"origin1\",\"origin2\"]")
