@@ -25,7 +25,7 @@ namespace NexusGit.NexusGit.Projects
         {
             // Create the projects.
             this.Projects = new List<IProject>();
-            // this.Projects.Add(new Rojo()); // TODO: Add support for Rojo 0.5 Alpha and newer
+            this.Projects.Add(new Rojo05());
             this.Projects.Add(new Rojo04());
         }
         

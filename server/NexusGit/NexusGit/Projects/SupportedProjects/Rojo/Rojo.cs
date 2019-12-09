@@ -282,54 +282,6 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             // Return null (file doesn't exist).
             return null;
         }
-        
-        /*
-         * Returns the partitions of the project.
-         */
-        public Partitions ReadProjectStructure()
-        {
-            // Create the new partitions.
-            var partitions = new Partitions();
-            
-            // Read the folders.
-            var incrementer = new TemporaryIdIncrementer();
-            var workingDirectory = FileFinder.GetParentDirectoryOfFile(this.GetRequiredFile());
-            var partitionData = this.GetPartitions();
-            foreach (var partitionLocation in partitionData.Keys)
-            {
-                // Get the target instance and new name.
-                var targetInstance = partitionData[partitionLocation];
-                var splitTargetName = targetInstance.Split('.');
-                var instanceName = splitTargetName[splitTargetName.Length - 1];
-                
-                // Get the instance and add it to the partitions if it exists.
-                var instance = this.GetFromFile(workingDirectory + partitionLocation);
-                if (instance != null) {
-                    instance.Name = instanceName;
-                    partitions.AddInstance(partitionLocation,instance.ToRobloxInstance(incrementer));
-                }
-            }
-            
-            // Return the partitions.
-            return partitions;
-        }
-
-        /*
-         * Writes the partitions to the file system.
-         */
-        public void WriteProjectStructure(Partitions partitions) {
-            // Get and write the files.
-            var workingDirectory = FileFinder.GetParentDirectoryOfFile(this.GetRequiredFile());
-            foreach (var partitionLocation in partitions.Instances.Keys) {
-                var instance = partitions.GetInstance(partitionLocation);
-                if (instance != null) {
-                    var rojoInstance = RojoInstance.ConvertInstance(instance);
-                    var files = this.GetFile(rojoInstance);
-
-                    files.WriteFile(Path.Combine(workingDirectory, partitionLocation));
-                }
-            }
-        }
 
         /*
          * Returns a Roblox instance for a given file or directory.
@@ -355,6 +307,16 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
          * Returns the port to serve for the server.
          */
         public abstract int GetPort();
+        
+        /*
+         * Returns the partitions of the project.
+         */
+        public abstract Partitions ReadProjectStructure();
+
+        /*
+         * Writes the partitions to the file system.
+         */
+        public abstract void WriteProjectStructure(Partitions partitions);
         
         /*
          * Returns the partitions to use.
