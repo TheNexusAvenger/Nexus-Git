@@ -36,6 +36,24 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
         public RojoFile GetFile(string name) {
             name = name.ToLower();
             
+            // Return a subfile if a slash exists.
+            name = name.Replace("\\","/");
+            if (name.Contains("/"))
+            {
+                // Split the string.
+                var splitElements = name.Split("/",2);
+                
+                // Get the file and return null if it doesn't exist.
+                var subFile = this.GetFile(splitElements[0]);
+                if (subFile == null)
+                {
+                    return null;
+                }
+                
+                // Return the sub-file's result.
+                return subFile.GetFile(splitElements[1]);
+            }
+            
             // Return the file if it exists.
             foreach (var file in this.SubFiles) {
                 if (file.Name.ToLower() == name) {
