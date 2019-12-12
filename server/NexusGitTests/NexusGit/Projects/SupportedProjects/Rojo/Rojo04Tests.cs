@@ -139,21 +139,27 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo {
             var rootFile = CuT.GetFile(rootInstance);
             Assert.AreEqual(rootFile.Name,"TestObject");
             Assert.AreEqual(rootFile.Contents,null);
+            Assert.AreEqual(rootFile.Parent,null);
             Assert.AreEqual(rootFile.SubFiles.Count,3);
             Assert.AreEqual(rootFile.SubFiles[0].Name,"init.server.lua");
             Assert.AreEqual(rootFile.SubFiles[0].Contents,"print(\"Hello world 1!\")");
+            Assert.AreEqual(rootFile.SubFiles[0].Parent,rootFile);
             Assert.AreEqual(rootFile.SubFiles[0].SubFiles.Count,0);
             Assert.AreEqual(rootFile.SubFiles[1].Name,"client.lua");
             Assert.AreEqual(rootFile.SubFiles[1].Contents,"print(\"Hello world 2!\")");
+            Assert.AreEqual(rootFile.SubFiles[1].Parent,rootFile);
             Assert.AreEqual(rootFile.SubFiles[1].SubFiles.Count,0);
             Assert.AreEqual(rootFile.SubFiles[2].Name,"module.client.lua");
             Assert.AreEqual(rootFile.SubFiles[2].Contents,null);
+            Assert.AreEqual(rootFile.SubFiles[2].Parent,rootFile);
             Assert.AreEqual(rootFile.SubFiles[2].SubFiles.Count,2);
             Assert.AreEqual(rootFile.SubFiles[2].SubFiles[0].Name,"Script.client.lua");
             Assert.AreEqual(rootFile.SubFiles[2].SubFiles[0].Contents,"print(\"Hello world 3!\")");
+            Assert.AreEqual(rootFile.SubFiles[2].SubFiles[0].Parent,rootFile.SubFiles[2]);
             Assert.AreEqual(rootFile.SubFiles[2].SubFiles[0].SubFiles.Count,0);
             Assert.AreEqual(rootFile.SubFiles[2].SubFiles[1].Name,"TestModel.model.json");
             Assert.AreEqual(rootFile.SubFiles[2].SubFiles[1].Contents,JsonConvert.SerializeObject(JsonConvert.DeserializeObject<RojoInstance>(TEST_MODEL_JSON),Formatting.Indented));
+            Assert.AreEqual(rootFile.SubFiles[2].SubFiles[1].Parent,rootFile.SubFiles[2]);
             Assert.AreEqual(rootFile.SubFiles[2].SubFiles[1].SubFiles.Count,0);
         }
     }

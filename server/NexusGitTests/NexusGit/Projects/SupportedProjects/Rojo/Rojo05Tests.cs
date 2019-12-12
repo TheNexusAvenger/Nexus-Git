@@ -92,5 +92,59 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo
             Assert.AreEqual(CuT.Children[1].Children[1].Properties.Count,0);
             Assert.AreEqual(CuT.Children[1].Children[1].Children.Count,0);
         }
+        
+        /*
+         * Tests the GetRojoInstance method of Rojo05TreeObject.
+         */
+        [Test]
+        [Ignore("Test will be implemented later. The code for it has dependencies.")]
+        public void TestGetRojoInstance()
+        {
+            // Create a project structure tree.
+            var tree = new Dictionary<string, object>()
+            {
+                {"$className", "DataModel"},
+                {
+                    "Lighting", new Dictionary<string, object>()
+                    {
+                        {"$className", "Lighting"},
+                        {"$properties", new Dictionary<string, object>()
+                        {
+                            {"TimeOfDay", "12:00:00"},
+                        }}
+                    }
+                },
+                {
+                    "ReplicatedStorage", new Dictionary<string, object>()
+                    {
+                        {"$className", "ReplicatedStorage"},
+                        {
+                            "NexusButton", new Dictionary<string, object>()
+                            {
+                                {"$path", "src"},
+                                {
+                                    "NexusInstance", new Dictionary<string, object>()
+                                    {
+                                        {"$path", "module/NexusInstance/src"},
+                                    }
+                                },
+                            }
+                        },
+                        {
+                            "NexusButtonTests", new Dictionary<string, object>()
+                            {
+                                {"$path", "test"},
+                            }
+                        },
+                    }
+                },
+            };
+            
+            // Create the component under testing.
+            var treeObject = Rojo05TreeObject.CreateFromStructure(tree,"game");
+            // var CuT = treeObject.GetRojoInstance();
+            
+            
+        }
     }
 }

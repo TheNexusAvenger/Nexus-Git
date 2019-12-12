@@ -21,7 +21,8 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
         public List<RojoFile> SubFiles;
         public string Name;
         public string Contents;
-        
+        public RojoFile Parent;
+
         /*
          * Creates a Rojo file.
          */
@@ -80,7 +81,9 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             var file = this.GetFile(name);
             
             // Remove and return the file.
-            if (file != null) {
+            if (file != null)
+            {
+                file.Parent = null;
                 this.SubFiles.Remove(file);
             }
             return file;
@@ -106,11 +109,15 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 // Add the children.
                 foreach (var subFile in Directory.GetDirectories(location))
                 {
-                    file.SubFiles.Add(FromFile(subFile));
+                    var subFileObject = FromFile(subFile);
+                    file.SubFiles.Add(subFileObject);
+                    subFileObject.Parent = file;
                 }
                 foreach (var subFile in Directory.GetFiles(location))
                 {
-                    file.SubFiles.Add(FromFile(subFile));
+                    var subFileObject = FromFile(subFile);
+                    file.SubFiles.Add(subFileObject);
+                    subFileObject.Parent = file;
                 }
             } else
             {
