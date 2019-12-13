@@ -88,7 +88,44 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
          */
         public RojoInstance GetRojoInstance(RojoFile projectFiles,Rojo05 project)
         {
-            return null;
+            RojoInstance newInstance = null;
+            
+            // Return a file-based object if the path used.
+            if (this.Path != null)
+            {
+                // Get the file.
+                var file = projectFiles.GetFile(this.Path);
+                if (file == null)
+                {
+                    return null;
+                }
+                
+                // Create the instance.
+                newInstance = project.GetFromFile(projectFiles);
+            } else {
+                newInstance = new RojoInstance();
+            }
+            
+            // Set the class name.
+            if (this.ClassName != null)
+            {
+                newInstance.ClassName = this.ClassName;
+            }
+            
+            // Add the properties.
+            foreach (var propertyName in this.Properties.Keys)
+            {
+                newInstance.Properties.Add(propertyName,this.Properties[propertyName]);
+            }
+            
+            // Add the children.
+            foreach (var child in this.Children)
+            {
+                newInstance.Children.Add(child.GetRojoInstance(projectFiles,project));
+            }
+            
+            // Return the instance.
+            return newInstance;
         }
     }
     
