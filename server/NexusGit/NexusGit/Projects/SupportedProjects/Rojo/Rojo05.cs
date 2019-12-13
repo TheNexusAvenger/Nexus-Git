@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 using NexusGit.FileIO;
 using NexusGit.RobloxInstance;
@@ -198,8 +199,24 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 // Populate the meta information.
                 if (file.Parent != null && file.Parent.FileExists( "init.meta.json"))
                 {
-                    var metaFile = file.Parent.GetFile("init.meta.json");
-                    // TODO: Implement
+                    var metaFile = file.Parent.RemoveFile("init.meta.json");
+                    var metaData = JsonConvert.DeserializeObject<Dictionary<string,object>>(metaFile.Contents);
+                    
+                    // Set the class name.
+                    if (metaData.Keys.Contains("className"))
+                    {
+                        newInstance.ClassName = (string) metaData["className"];
+                    }
+                    
+                    // Add the properties.
+                    if (metaData.Keys.Contains("properties"))
+                    {
+                        var properties = (Dictionary<string,object>) metaData["properties"];
+                        foreach (var propertyName in properties.Keys)
+                        {
+                            newInstance.Properties.Add(propertyName,new Property<object>("",properties[propertyName]));
+                        }
+                    }
                 }
                 
                 // Add the child objects.
@@ -252,8 +269,18 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 // Populate the meta information.
                 if (file.Parent != null && file.Parent.FileExists(name + ".meta.json"))
                 {
-                    var metaFile = file.Parent.GetFile(name + ".meta.json");
-                    // TODO: Implement
+                    var metaFile = file.Parent.RemoveFile(name + ".meta.json");
+                    var metaData = JsonConvert.DeserializeObject<Dictionary<string,object>>(metaFile.Contents);
+                    
+                    // Add the properties.
+                    if (metaData.Keys.Contains("properties"))
+                    {
+                        var properties = (Dictionary<string,object>) metaData["properties"];
+                        foreach (var propertyName in properties.Keys)
+                        {
+                            newInstance.Properties.Add(propertyName,new Property<object>("",properties[propertyName]));
+                        }
+                    }
                 }
             }
             
