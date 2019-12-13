@@ -6,11 +6,11 @@
 
 using System.Collections.Generic;
 using System.IO;
-using NexusGit.FileIO;
 using NexusGit.RobloxInstance;
 
 namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
 {
+    
     /*
      * Class representing a file or directory. If it is a
      * directory, it will have no contents. This is used instead
@@ -18,6 +18,16 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
      */
     public class RojoFile
     {
+        public static readonly List<string> FILE_ENDINGS = new List<string>()
+        {
+            ".lua",
+            ".json",
+            ".rbxm",
+            ".rbxmx",
+            ".txt",
+            ".cvs"
+        };
+        
         public List<RojoFile> SubFiles;
         public string Name;
         public string Contents;
@@ -94,10 +104,31 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
          */
         public static RojoFile FromFile(string location)
         {
+            location = location.Replace("\\", "/");
+            
             // Return null if the file doesn't exist.
             if (!File.Exists(location) && !Directory.Exists(location))
             {
                 return null;
+            }
+            
+            // Return null if the file ending is invalid.
+            if (File.Exists(location))
+            {
+                var endingFound = false;
+                foreach (var ending in FILE_ENDINGS)
+                {
+                    if (location.ToLower().EndsWith(ending))
+                    {
+                        endingFound = true;
+                        break;
+                    }
+                }
+
+                if (!endingFound)
+                {
+                    return null;
+                }
             }
             
             // Create the base file.
@@ -110,14 +141,20 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 foreach (var subFile in Directory.GetDirectories(location))
                 {
                     var subFileObject = FromFile(subFile);
-                    file.SubFiles.Add(subFileObject);
-                    subFileObject.Parent = file;
+                    if (subFileObject != null)
+                    {
+                        file.SubFiles.Add(subFileObject);
+                        subFileObject.Parent = file;
+                    }
                 }
                 foreach (var subFile in Directory.GetFiles(location))
                 {
                     var subFileObject = FromFile(subFile);
-                    file.SubFiles.Add(subFileObject);
-                    subFileObject.Parent = file;
+                    if (subFileObject != null)
+                    {
+                        file.SubFiles.Add(subFileObject);
+                        subFileObject.Parent = file;
+                    }
                 }
             } else
             {

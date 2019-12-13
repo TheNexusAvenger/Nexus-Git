@@ -75,7 +75,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                     }
                 } else
                 {
-                    treeObject.Children.Add(CreateFromStructure((Dictionary<string,object>) structure[key],key));
+                    treeObject.Children.Add(CreateFromStructure(JsonConvert.DeserializeObject<Dictionary<string,object>>(structure[key].ToString()),key));
                 }
             }
             
