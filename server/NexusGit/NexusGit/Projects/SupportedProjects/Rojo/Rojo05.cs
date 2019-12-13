@@ -344,7 +344,25 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 return null;
             }
 
-            return null;
+            // Create the new partitions.
+            var partitions = new Partitions();
+            
+            // Add the partitions.
+            var incrementer = new TemporaryIdIncrementer();
+            var treeStructure = Rojo05TreeObject.CreateFromStructure(structure.tree,"game");
+            var parentDirectory = FileFinder.GetParentDirectoryOfFile(this.GetRequiredFile());
+            var projectFiles = RojoFile.FromFile(parentDirectory);
+            foreach (var treeItem in treeStructure.Children) {
+                // Get the instance and add it to the partitions if it exists.
+                var instance = treeItem.GetRojoInstance(projectFiles,this);
+                if (instance != null) {
+                    instance.Name = treeItem.Name;
+                    partitions.AddInstance(treeItem.Name,instance.ToRobloxInstance(incrementer));
+                }
+            }
+            
+            // Return the partitions.
+            return partitions;
         }
 
         /*
