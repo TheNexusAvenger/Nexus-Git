@@ -18,6 +18,7 @@ namespace NexusGit.NexusGit
     public class NexusGitServer
     {
         private HttpServer Server;
+        private IProject Project;
         private int Port;
         
         /*
@@ -46,6 +47,7 @@ namespace NexusGit.NexusGit
             // Create the server.
             this.Port = port;
             this.Server = new HttpServer(port,requestHandler);
+            this.Project = project;
         }
         
         /*
@@ -75,6 +77,14 @@ namespace NexusGit.NexusGit
         public int GetPort()
         {
             return this.Port;
+        }
+        
+        /*
+         * Returns the project used.
+         */
+        public IProject GetProject()
+        {
+            return this.Project;
         }
         
         /*

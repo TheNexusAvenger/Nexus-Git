@@ -40,7 +40,7 @@ namespace NexusGit.ProgramActions
             }
             
             // Start the server.
-            Console.WriteLine("Serving on port " + server.GetPort());
+            Console.WriteLine("Serving on port " + server.GetPort() + " using " + server.GetProject().GetName());
             server.Start();
         }
     }
