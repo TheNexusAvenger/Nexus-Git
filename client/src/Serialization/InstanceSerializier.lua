@@ -85,7 +85,7 @@ end
 --[[
 Deserializes a table to a Roblox Instance.
 --]]
-function InstanceSerializier:Deserialize(Table)
+function InstanceSerializier:Deserialize(Table,ParentLocation)
 	--Create the base instances.
 	local BaseInstances = {}
 	
@@ -93,9 +93,22 @@ function InstanceSerializier:Deserialize(Table)
 	Creates and registers a base instance.
 	--]]
 	local function CreateBaseInstance(InstanceData,Parent)
+		--Get an existing instance.
+		local Name = InstanceData.Properties.Name.Value
+		local ClassName = InstanceData.Properties.ClassName.Value
+		local NewInstance
+		if Parent then
+			NewInstance = Parent:FindFirstChild(Name)
+			if NewInstance and NewInstance.ClassName ~= ClassName then
+				NewInstance = nil
+			end
+		end
+		
 		--Create and store the instance.
-		local NewInstance = Instance.new(InstanceData.Properties.ClassName.Value)
-		NewInstance.Parent = Parent
+		if not NewInstance then
+			NewInstance = Instance.new(ClassName)
+			NewInstance.Parent = Parent
+		end
 		BaseInstances[InstanceData.TemporaryId] = NewInstance
 		
 		--Create the children.
@@ -132,7 +145,7 @@ function InstanceSerializier:Deserialize(Table)
 	end
 	
 	--Create the base instances.
-	local NewInstance = CreateBaseInstance(Table)
+	local NewInstance = CreateBaseInstance(Table,ParentLocation)
 	Deserializes(Table)
 	return NewInstance
 end

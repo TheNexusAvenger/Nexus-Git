@@ -53,12 +53,7 @@ function LocalPullRequest:PerformLocalPull()
 		
 		--Update the partition.
 		if ParentLocation then
-			local NewInstance = InstanceSerializier:Deserialize(StoredInstanceData)
-			local ExistingInstance = ParentLocation:FindFirstChild(NewInstance.Name)
-			if ExistingInstance then
-				ExistingInstance:Destroy()
-			end
-			NewInstance.Parent = ParentLocation
+			InstanceSerializier:Deserialize(StoredInstanceData,ParentLocation)
 		else
 			MissingParentLocations[Name] = ParentDirectory
 		end

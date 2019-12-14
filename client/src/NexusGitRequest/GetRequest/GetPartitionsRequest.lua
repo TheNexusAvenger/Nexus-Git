@@ -25,6 +25,11 @@ end
 Returns the Roblox instance for a path.
 --]]
 function GetPartitionsRequest:GetInstancePath(Path)
+	--Return game if the path is empty.
+	if Path == "" then
+		return game
+	end
+	
 	--Split the path.
 	local SplitPath = string.split(Path,".")
 	
