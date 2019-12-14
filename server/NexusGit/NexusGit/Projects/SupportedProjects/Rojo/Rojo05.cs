@@ -102,6 +102,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 
                 // Create the instance.
                 newInstance = project.GetFromFile(file);
+                newInstance.Name = this.Name;
             } else {
                 newInstance = new RojoInstance();
             }
