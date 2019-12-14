@@ -20,7 +20,7 @@ namespace NexusGit.Git.RepositoryActions
          */
         public RemotePush(Repository repository,string remoteRepository,string remoteBranch,bool force) : base(repository)
         {
-            this.Command = "push " + remoteRepository + " " + remoteBranch;
+            this.Command = "push " + remoteRepository + " HEAD:" + remoteBranch;
             if (force)
             {
                 this.Command += " --force";
