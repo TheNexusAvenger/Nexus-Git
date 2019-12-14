@@ -121,7 +121,11 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             // Add the children.
             foreach (var child in this.Children)
             {
-                newInstance.Children.Add(child.GetRojoInstance(projectFiles,project));
+                var childInstance = child.GetRojoInstance(projectFiles, project);
+                if (childInstance != null)
+                {
+                    newInstance.Children.Add(childInstance);
+                }
             }
             
             // Return the instance.
