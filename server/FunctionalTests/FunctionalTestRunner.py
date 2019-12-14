@@ -61,7 +61,7 @@ def getFunctionalTests(directory = None):
 """
 Runs the functional tests.
 """
-def runFunctionalTests(executableLocation):
+def runFunctionalTests(executableLocation=None):
 	# Create the tests.
 	suite = unittest.TestSuite()
 	for testClass in getFunctionalTests():
@@ -78,7 +78,9 @@ Runs the script.
 def main():
 	# Error check the argument.
 	if len(sys.argv) < 2:
-		raise RuntimeError("Executable location not given.")
+		print("Executable location not given. All tests will try to detect it.")
+		runFunctionalTests()
+		return
 	elif not os.path.exists(sys.argv[1]):
 		raise RuntimeError("Executable doesn't exist: " + sys.argv[1])
 
