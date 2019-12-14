@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using NexusGit.RobloxInstance;
 
 namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
@@ -182,12 +183,14 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 }
                 
                 // Clear the old files.
-                foreach (var subFilePath in Directory.GetFiles(location)) {
+                var filesList =  Directory.GetFiles(location).Union(Directory.GetDirectories(location)).ToArray();
+                foreach (var subFilePath in filesList) {
                     var subFileName = Path.GetFileName(subFilePath);
                     if (File.Exists(subFilePath) && !this.FileExists(subFileName)) {
                         foreach (var extension in extensionsToRemove) {
                             if (subFilePath.ToLower().EndsWith(extension.ToLower())) {
                                 File.Delete(subFilePath);
+                                break;
                             }
                         }
                     } else if (Directory.Exists(subFilePath) && Directory.GetDirectories(subFilePath).Length == 0 && Directory.GetFiles(subFilePath).Length == 0) {
@@ -196,7 +199,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 }
                 
                 // Clear the directory if it is empty.
-                if (Directory.GetFiles(location).Length == 0) {
+                if (Directory.GetFiles(location).Length == 0 && Directory.GetDirectories(location).Length == 0) {
                     Directory.Delete(location);
                 }
             } else {

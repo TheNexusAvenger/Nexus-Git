@@ -273,7 +273,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                     var rojoInstance = RojoInstance.ConvertInstance(instance);
                     var files = this.GetFile(rojoInstance);
 
-                    files.WriteFile(Path.Combine(workingDirectory, partitionLocation));
+                    files.WriteFile(Path.Combine(workingDirectory, partitionLocation),RojoFile.FILE_ENDINGS);
                 }
             }
         }
