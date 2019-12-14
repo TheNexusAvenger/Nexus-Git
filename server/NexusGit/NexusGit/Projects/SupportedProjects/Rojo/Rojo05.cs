@@ -101,7 +101,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 }
                 
                 // Create the instance.
-                newInstance = project.GetFromFile(projectFiles);
+                newInstance = project.GetFromFile(file);
             } else {
                 newInstance = new RojoInstance();
             }
@@ -298,7 +298,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 // Populate the properties.
                 newInstance.ClassName = className;
                 newInstance.Name = name;
-                if (name.Contains("Script"))
+                if (className.Contains("Script"))
                 {
                     newInstance.Properties.Add("Source", new Property<object>("String", file.Contents));
                 }
