@@ -66,7 +66,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                     treeObject.Path = (string) structure[key];
                 } else if (key.ToLower() == "$properties")
                 {
-                    var properties = (Dictionary<string, object>) structure[key];
+                    var properties = JsonConvert.DeserializeObject<Dictionary<string,object>>(structure[key].ToString());
                     
                     // Add the properties.
                     foreach (var propertyName in properties.Keys)

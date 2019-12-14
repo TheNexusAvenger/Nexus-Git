@@ -4,7 +4,9 @@
  * Tests Rojo 0.5 support.
  */
 
+using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using NexusGit.NexusGit.Projects.SupportedProjects.Rojo;
 using NUnit.Framework;
 
@@ -58,7 +60,9 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo
                     }
                 },
             };
-            
+            Console.WriteLine(JsonConvert.SerializeObject(tree));
+            tree = JsonConvert.DeserializeObject<Dictionary<string,object>>(JsonConvert.SerializeObject(tree));
+
             // Create the component under testing.
             var CuT = Rojo05TreeObject.CreateFromStructure(tree,"game");
             Assert.AreEqual(CuT.Name,"game");
