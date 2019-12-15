@@ -22,7 +22,8 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
         public static readonly List<string> FILE_ENDINGS = new List<string>()
         {
             ".lua",
-            ".json",
+            ".model.json",
+            ".meta.json",
             ".rbxm",
             ".rbxmx",
             ".txt",
