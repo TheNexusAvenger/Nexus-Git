@@ -122,9 +122,10 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             // Add the children.
             foreach (var child in this.Children)
             {
-                var childInstance = child.GetRojoInstance(projectFiles, project);
+                var childInstance = child.GetRojoInstance(projectFiles,project);
                 if (childInstance != null)
                 {
+                    childInstance.Name = child.Name;
                     newInstance.Children.Add(childInstance);
                 }
             }
@@ -239,9 +240,9 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 }
                 
                 // Populate the meta information.
-                if (file.Parent != null && file.Parent.FileExists( "init.meta.json"))
+                if (file.FileExists( "init.meta.json"))
                 {
-                    var metaFile = file.Parent.RemoveFile("init.meta.json");
+                    var metaFile = file.RemoveFile("init.meta.json");
                     var metaData = JsonConvert.DeserializeObject<Dictionary<string,object>>(metaFile.Contents);
                     
                     // Set the class name.
@@ -253,7 +254,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                     // Add the properties.
                     if (metaData.Keys.Contains("properties"))
                     {
-                        var properties = (Dictionary<string,object>) metaData["properties"];
+                        var properties = JsonConvert.DeserializeObject<Dictionary<string,object>>(metaData["properties"].ToString());
                         foreach (var propertyName in properties.Keys)
                         {
                             newInstance.Properties.Add(propertyName,new Property<object>("",properties[propertyName]));
@@ -262,10 +263,14 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 }
                 
                 // Add the child objects.
-                foreach (var subFile in file.SubFiles) {
-                    var subInstance = this.GetFromFile(subFile);
-                    if (subInstance != null) {
-                        newInstance.Children.Add(subInstance);
+                foreach (var subFile in new List<RojoFile>(file.SubFiles))
+                {
+                    if (file.SubFiles.Contains(subFile)) {
+                        var subInstance = this.GetFromFile(subFile);
+                        if (subInstance != null)
+                        {
+                            newInstance.Children.Add(subInstance);
+                        }
                     }
                 }
             } else {
@@ -317,7 +322,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                     // Add the properties.
                     if (metaData.Keys.Contains("properties"))
                     {
-                        var properties = (Dictionary<string,object>) metaData["properties"];
+                        var properties = JsonConvert.DeserializeObject<Dictionary<string,object>>(metaData["properties"].ToString());
                         foreach (var propertyName in properties.Keys)
                         {
                             newInstance.Properties.Add(propertyName,new Property<object>("",properties[propertyName]));
