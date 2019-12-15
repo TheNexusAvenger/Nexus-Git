@@ -245,6 +245,38 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 subFile.CorrectParents();
             }
         }
+        
+        /*
+         * Creates empty files for a given path.
+         */
+        public RojoFile CreateEmptyFilesToPath(string path)
+        {
+            // If the path is empty, return itself.
+            if (path == "")
+            {
+                return this;
+            }
+            
+            // Split the path.
+            var splitSections = path.Replace("\\","/").Split("/",2).ToList();
+            if (splitSections[0] == "")
+            {
+                splitSections.RemoveAt(0);
+            }
+            
+            // Create and return the new file.
+            var newFile = this.GetFile(splitSections[0]);
+            if (newFile == null)
+            {
+                newFile = new RojoFile(splitSections[0]);
+                this.AddFile(newFile);
+            }
+            if (splitSections.Count == 2)
+            {
+                return newFile.CreateEmptyFilesToPath(splitSections[1]);
+            }
+            return newFile;
+        }
     }
     
     /*

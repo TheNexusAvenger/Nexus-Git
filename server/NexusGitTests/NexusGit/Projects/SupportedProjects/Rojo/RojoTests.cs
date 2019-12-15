@@ -144,7 +144,7 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo
          * Tests the CorrectParents method of RojoFile.
          */
         [Test]
-        public void CorrectParents()
+        public void TestCorrectParents()
         {
             // Create several components under testing.
             var CuT1 = new RojoFile("File1");
@@ -162,6 +162,28 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo
             Assert.AreEqual(CuT2.Parent,CuT1);
             Assert.AreEqual(CuT3.Parent,CuT1);
             Assert.AreEqual(CuT4.Parent,CuT3);
+        }
+        
+        /*
+         * Tests the CreateEmptyFilesToPath method of RojoFile.
+         */
+        [Test]
+        public void TestCreateEmptyFilesToPath()
+        {
+            // Create the component under testing and assert adding directories is valid.
+            var CuT = new RojoFile("File1");
+            Assert.AreEqual(CuT.CreateEmptyFilesToPath(""),CuT);
+            Assert.AreEqual(CuT.CreateEmptyFilesToPath("File2").Name,"File2");
+            Assert.AreEqual(CuT.CreateEmptyFilesToPath("File2/File3").Name,"File3");
+            Assert.AreEqual(CuT.CreateEmptyFilesToPath("File2/File4").Name,"File4");
+            
+            // Assert the created files are correct.
+            Assert.AreEqual(CuT.SubFiles.Count,1);
+            Assert.AreEqual(CuT.SubFiles[0].SubFiles.Count,2);
+            Assert.AreEqual(CuT.SubFiles[0].SubFiles[0].SubFiles.Count,0);
+            Assert.AreEqual(CuT.SubFiles[0].SubFiles[0].SubFiles.Count,0);
+            Assert.IsTrue(CuT.FileExists("File2/File3"));
+            Assert.IsTrue(CuT.FileExists("File2/File4"));
         }
     }
 }
