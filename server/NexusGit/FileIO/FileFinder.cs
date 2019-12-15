@@ -4,6 +4,7 @@
  * Helper methods for finding files and directories.
  */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -36,12 +37,18 @@ namespace NexusGit.FileIO
          */
         public static string MoveDirectoryUp(string directory)
         {
-            // Get the current directory and split the parts.
-            var directoryParts = directory.Split('\\').ToList();
-            if (directoryParts.Count == 1)
+            // Determine the separator.
+            var separator = Path.PathSeparator;
+            if (directory.Contains("\\") && !directory.Contains("/"))
             {
-                directoryParts = directory.Split('/').ToList();
+                separator = '\\';
+            } else if (!directory.Contains("\\") && directory.Contains("/"))
+            {
+                separator = '/';
             }
+            
+            // Get the current directory and split the parts.
+            var directoryParts = directory.Replace("\\","/").Split("/").ToList();
             
             // Remove the last item if it is empty.
             if (directoryParts[directoryParts.Count - 1] == "")
@@ -59,7 +66,7 @@ namespace NexusGit.FileIO
             var newDirectory = "";
             for (var i = 0; i < directoryParts.Count - 1; i++)
             {
-                newDirectory += directoryParts[i] + "/";
+                newDirectory += directoryParts[i] + separator;
             }
             
             // Return the directory.
