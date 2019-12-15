@@ -17,22 +17,6 @@ namespace NexusGit.FileIO
     public static class FileFinder
     {
         /*
-         * Returns the name of the most upper level directory.
-         */
-        public static string GetUpperDirectoryName(string directory)
-        {
-            // Get the current directory and split the parts.
-            var directoryParts = directory.Split('\\').ToList();
-            if (directoryParts.Count == 1)
-            {
-                directoryParts = directory.Split('/').ToList();
-            }
-            
-            // Return the top directory.
-            return directoryParts[directoryParts.Count - 1];
-        }
-        
-        /*
          * Returns the parent directory. Returns null if it is already the root.
          */
         public static string MoveDirectoryUp(string directory)
