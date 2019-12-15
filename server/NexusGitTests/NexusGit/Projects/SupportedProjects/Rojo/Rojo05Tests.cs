@@ -60,7 +60,6 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo
                     }
                 },
             };
-            Console.WriteLine(JsonConvert.SerializeObject(tree));
             tree = JsonConvert.DeserializeObject<Dictionary<string,object>>(JsonConvert.SerializeObject(tree));
 
             // Create the component under testing.
@@ -101,7 +100,6 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo
          * Tests the GetRojoInstance method of Rojo05TreeObject.
          */
         [Test]
-        [Ignore("Test will be implemented later. The code for it has dependencies.")]
         public void TestGetRojoInstance()
         {
             // Create a project structure tree.
@@ -129,7 +127,7 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo
                                 {
                                     "NexusInstance", new Dictionary<string, object>()
                                     {
-                                        {"$path", "module/NexusInstance/src"},
+                                        {"$path", "module/NexusInstance"},
                                     }
                                 },
                             }
@@ -143,12 +141,115 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo
                     }
                 },
             };
+            tree = JsonConvert.DeserializeObject<Dictionary<string,object>>(JsonConvert.SerializeObject(tree));
             
+            // Create several files.
+            var rootDirectory = new RojoFile("TestProject")
+            {
+                SubFiles =  new List<RojoFile>()
+                {
+                    new RojoFile("module")
+                    {
+                        SubFiles =  new List<RojoFile>()
+                        {
+                            new RojoFile("NexusInstance")
+                            {
+                                SubFiles =  new List<RojoFile>()
+                                {
+                                    new RojoFile("NexusObject.lua")
+                                    {
+                                        Contents = "print(\"Test source 1\")"
+                                    },
+                                    new RojoFile("NexusInstance.client.lua")
+                                    {
+                                        Contents = "print(\"Test source 2\")"
+                                    },
+                                    new RojoFile("NexusInstance.meta.json")
+                                    {
+                                        Contents = "{\"properties\":{\"Disabled\":true}}"
+                                    },
+                                }
+                            }
+                        }
+                    },
+                    new RojoFile("src")
+                    {
+                        SubFiles =  new List<RojoFile>()
+                        {
+                            new RojoFile("init.lua")
+                            {
+                                Contents = "print(\"Test source 3\")"
+                            },
+                            new RojoFile("CustomFrame.lua")
+                            {
+                                Contents = "print(\"Test source 4\")"
+                            },
+                        }
+                    },
+                    new RojoFile("test")
+                    {
+                        SubFiles =  new List<RojoFile>()
+                        {
+                            new RojoFile("init.server.lua")
+                            {
+                                Contents = "print(\"Test source 5\")"
+                            },
+                            new RojoFile("init.meta.json")
+                            {
+                                Contents = "{\"properties\":{\"Disabled\":true}}"
+                            },
+                            new RojoFile("CustomFrameTests.lua")
+                            {
+                                Contents = "print(\"Test source 6\")"
+                            },
+                        }
+                    },
+                }
+            };
+            rootDirectory.CorrectParents();
+
             // Create the component under testing.
             var treeObject = Rojo05TreeObject.CreateFromStructure(tree,"game");
-            // var CuT = treeObject.GetRojoInstance();
-            
-            
+            var project = new Rojo05();
+            var CuT = treeObject.GetRojoInstance(rootDirectory,project);
+            Assert.AreEqual(CuT.ClassName,"DataModel");
+            Assert.AreEqual(CuT.Children.Count,2);
+            Assert.AreEqual(CuT.Children[0].Name,"Lighting");
+            Assert.AreEqual(CuT.Children[0].ClassName,"Lighting");
+            Assert.AreEqual(CuT.Children[0].Properties["TimeOfDay"].Value,"12:00:00");
+            Assert.AreEqual(CuT.Children[0].Children.Count,0);
+            Assert.AreEqual(CuT.Children[1].Name,"ReplicatedStorage");
+            Assert.AreEqual(CuT.Children[1].ClassName,"ReplicatedStorage");
+            Assert.AreEqual(CuT.Children[1].Children.Count,2);
+            Assert.AreEqual(CuT.Children[1].Children[0].Name,"NexusButton");
+            Assert.AreEqual(CuT.Children[1].Children[0].ClassName,"ModuleScript");
+            Assert.AreEqual(CuT.Children[1].Children[0].Properties["Source"].Value,"print(\"Test source 3\")");
+            Assert.AreEqual(CuT.Children[1].Children[0].Children.Count,2);
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[0].Name,"CustomFrame");
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[0].ClassName,"ModuleScript");
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[0].Properties["Source"].Value,"print(\"Test source 4\")");
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[0].Children.Count,0);
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[1].Name,"NexusInstance");
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[1].ClassName,"Folder");
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[1].Children.Count,2);
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[1].Children[0].Name,"NexusObject");
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[1].Children[0].ClassName,"ModuleScript");
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[1].Children[0].Properties["Source"].Value,"print(\"Test source 1\")");
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[1].Children[0].Children.Count,0);
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[1].Children[1].Name,"NexusInstance");
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[1].Children[1].ClassName,"LocalScript");
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[1].Children[1].Properties["Source"].Value,"print(\"Test source 2\")");
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[1].Children[1].Properties["Disabled"].Value,true);
+            Assert.AreEqual(CuT.Children[1].Children[0].Children[1].Children[1].Children.Count,0);
+            Assert.AreEqual(CuT.Children[1].Children[1].Name,"NexusButtonTests");
+            Assert.AreEqual(CuT.Children[1].Children[1].ClassName,"Script");
+            Assert.AreEqual(CuT.Children[1].Children[1].Properties["Source"].Value,"print(\"Test source 5\")");
+            Assert.AreEqual(CuT.Children[1].Children[1].Properties["Disabled"].Value,true);
+            Assert.AreEqual(CuT.Children[1].Children[1].Children.Count,1);
+            Assert.AreEqual(CuT.Children[1].Children[1].Children[0].Name,"CustomFrameTests");
+            Assert.AreEqual(CuT.Children[1].Children[1].Children[0].ClassName,"ModuleScript");
+            Assert.AreEqual(CuT.Children[1].Children[1].Children[0].Properties["Source"].Value,"print(\"Test source 6\")");
+            Assert.AreEqual(CuT.Children[1].Children[1].Children[0].Children.Count,0);
         }
     }
 }

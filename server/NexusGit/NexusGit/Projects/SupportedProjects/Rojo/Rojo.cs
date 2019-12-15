@@ -102,6 +102,17 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
         }
         
         /*
+         * Adds a file. If a file exists with the same
+         * name, the old file is removed.
+         */
+        public void AddFile(RojoFile file)
+        {
+            this.RemoveFile(file.Name);
+            this.SubFiles.Add(file);
+            file.Parent = this;
+        }
+        
+        /*
          * Creates a Rojo file from a file.
          */
         public static RojoFile FromFile(string location)
@@ -213,6 +224,26 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
          */
         public void WriteFile(string location) {
             this.WriteFile(location,new List<string>());
+        }
+        
+        /*
+         * Corrects the parents of the child files.
+         * Intended to be used for unit tests.
+         */
+        public void CorrectParents()
+        {
+            // Unset the parent if the parent doesn't have the file.
+            if (this.Parent != null && !this.Parent.SubFiles.Contains(this))
+            {
+                this.Parent = null;
+            }
+            
+            // Correct the sub-files.
+            foreach (var subFile in this.SubFiles)
+            {
+                subFile.Parent = this;
+                subFile.CorrectParents();
+            }
         }
     }
     
