@@ -23,8 +23,8 @@ namespace NexusGitTests.FileIO
         {
             Assert.AreEqual(FileFinder.GetPathSeparatorFromPath("C:/Test1/Test2"), '/');
             Assert.AreEqual(FileFinder.GetPathSeparatorFromPath("C:\\Test1\\Test2"), '\\');
-            Assert.AreEqual(FileFinder.GetPathSeparatorFromPath("C:/Test1\\Test2"), Path.PathSeparator);
-            Assert.AreEqual(FileFinder.GetPathSeparatorFromPath(""), Path.PathSeparator);
+            Assert.AreEqual(FileFinder.GetPathSeparatorFromPath("C:/Test1\\Test2"), Path.DirectorySeparatorChar);
+            Assert.AreEqual(FileFinder.GetPathSeparatorFromPath(""), Path.DirectorySeparatorChar);
         }
         
         /*

@@ -4,6 +4,7 @@
  * Helper methods for finding files and directories.
  */
 
+using System;
 using System.IO;
 using System.Linq;
 
@@ -19,7 +20,7 @@ namespace NexusGit.FileIO
          */
         public static char GetPathSeparatorFromPath(string path) {
             // Determine the separator.
-            var separator = Path.PathSeparator;
+            var separator = Path.DirectorySeparatorChar;
             if (path.Contains("\\") && !path.Contains("/"))
             {
                 separator = '\\';
@@ -83,7 +84,7 @@ namespace NexusGit.FileIO
                 var newDirectory = "";
                 foreach (var directory in directoryParts)
                 {
-                    newDirectory += directory + Path.PathSeparator;
+                    newDirectory += directory + Path.DirectorySeparatorChar;
                 }
 
                 // Return the location if the file exists.
