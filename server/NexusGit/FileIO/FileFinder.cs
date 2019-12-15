@@ -4,8 +4,6 @@
  * Helper methods for finding files and directories.
  */
 
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -76,11 +74,7 @@ namespace NexusGit.FileIO
         {
             // Get the current directory and split the parts.
             var currentDirectory = Directory.GetCurrentDirectory();
-            var directoryParts = currentDirectory.Split('\\').ToList();
-            if (directoryParts.Count == 1)
-            {
-                directoryParts = currentDirectory.Split('/').ToList();
-            }
+            var directoryParts = currentDirectory.Replace("\\","/").Split("/").ToList();
 
             // Iterate through the directories to find the file.
             while (directoryParts.Count > 0)
@@ -89,7 +83,7 @@ namespace NexusGit.FileIO
                 var newDirectory = "";
                 foreach (var directory in directoryParts)
                 {
-                    newDirectory += directory + "/";
+                    newDirectory += directory + Path.PathSeparator;
                 }
 
                 // Return the location if the file exists.
