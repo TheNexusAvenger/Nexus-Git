@@ -17,19 +17,30 @@ namespace NexusGit.FileIO
     public static class FileFinder
     {
         /*
+         * Returns the path separator for a path.
+         */
+        public static char GetPathSeparatorFromPath(string path) {
+            // Determine the separator.
+            var separator = Path.PathSeparator;
+            if (path.Contains("\\") && !path.Contains("/"))
+            {
+                separator = '\\';
+            } else if (!path.Contains("\\") && path.Contains("/"))
+            {
+                separator = '/';
+            }
+            
+            // Return the separator.
+            return separator;
+        }
+        
+        /*
          * Returns the parent directory. Returns null if it is already the root.
          */
         public static string MoveDirectoryUp(string directory)
         {
             // Determine the separator.
-            var separator = Path.PathSeparator;
-            if (directory.Contains("\\") && !directory.Contains("/"))
-            {
-                separator = '\\';
-            } else if (!directory.Contains("\\") && directory.Contains("/"))
-            {
-                separator = '/';
-            }
+            var separator = GetPathSeparatorFromPath(directory);
             
             // Get the current directory and split the parts.
             var directoryParts = directory.Replace("\\","/").Split("/").ToList();
