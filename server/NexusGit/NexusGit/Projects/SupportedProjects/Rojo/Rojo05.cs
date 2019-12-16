@@ -443,6 +443,10 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             {
                 properties.Remove("Source");
             }
+            if (properties.ContainsKey("LinkedSource") && ((string) properties["LinkedSource"].Value) == "")
+            {
+                properties.Remove("LinkedSource");
+            }
 
             // Create a file if properties exist.
             if (properties.Count > 0)
@@ -523,8 +527,11 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                     if (instance.Properties.Count > 1)
                     {
                         var metaFile = this.GetMetaFile(instance);
-                        metaFile.Name = "init.meta.json";
-                        newDirectory.AddFile(metaFile);
+                        if (metaFile != null)
+                        {
+                            metaFile.Name = "init.meta.json";
+                            newDirectory.AddFile(metaFile);
+                        }
                     }
                     
                     // Add the child instances.
@@ -535,7 +542,11 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                         // Create a meta file.
                         if (subFile.Contents != "" && subInstance.ClassName.Contains("Script") && subInstance.Properties.Count > 1)
                         {
-                            newDirectory.AddFile(this.GetMetaFile(subInstance));
+                            var metaFile = this.GetMetaFile(subInstance);
+                            if (metaFile != null)
+                            {
+                                newDirectory.AddFile(metaFile);
+                            }
                         }
                     }
                     
@@ -569,7 +580,11 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                     // Create a meta file.
                     if (subFile.Contents != "" && subInstance.ClassName.Contains("Script") && subInstance.Properties.Count > 1)
                     {
-                        newDirectory.AddFile(this.GetMetaFile(subInstance));
+                        var metaFile = this.GetMetaFile(subInstance);
+                        if (metaFile != null)
+                        {
+                            newDirectory.AddFile(metaFile);
+                        }
                     }
                 }
                     
@@ -591,7 +606,11 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                     // Create a meta file.
                     if (subFile.Contents != "" && subInstance.ClassName.Contains("Script") && subInstance.Properties.Count > 1)
                     {
-                        newDirectory.AddFile(this.GetMetaFile(subInstance));
+                        var subMetaFile = this.GetMetaFile(subInstance);
+                        if (subMetaFile != null)
+                        {
+                            newDirectory.AddFile(subMetaFile);
+                        }
                     }
                 }
                 
