@@ -26,6 +26,23 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
     }
     
     /*
+     * Class representing a meta file without a class name.
+     */
+    public class Rojo05MetaFileNoClassName
+    {
+        public Dictionary<string,object> properties = new Dictionary<string,object>(); 
+    }
+    
+    /*
+     * Class representing a meta file.
+     */
+    public class Rojo05MetaFile : Rojo05MetaFileNoClassName
+    {
+        public string className;
+    }
+
+    
+    /*
      * Class for a tree object.
      */
     public class Rojo05TreeObject
@@ -132,6 +149,86 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             
             // Return the instance.
             return newInstance;
+        }
+        
+        /*
+         * Populates the files given the tree node.
+         */
+        public void PopulateRojoFiles(RojoFile rootDirectory,RojoInstance instance,Rojo05 project)
+        {
+            // Populate the files.
+            if (this.Path != null)
+            {
+                // Create the directories to the path.
+                var parentDirectory = rootDirectory;
+                var pathEnding = this.Path.Trim();
+                if (this.Path.Contains("\\") || this.Path.Contains("/"))
+                {
+                    var parentPath = FileFinder.MoveDirectoryUp(this.Path);
+                    parentDirectory = rootDirectory.CreateEmptyFilesToPath(parentPath);
+                    
+                    // Split the path and set the ending.
+                    var splitPath = this.Path.Replace("\\","/").Split("/").ToList();
+                    if (splitPath.Last().Trim() == "")
+                    {
+                        pathEnding = splitPath[splitPath.Count - 2].Trim();
+                    }
+                    else
+                    {
+                        pathEnding = splitPath.Last().Trim();
+                    }
+                }
+                
+                // Remove already defined files.
+                var newRojoFile = project.GetFile(instance);
+                foreach (var subFile in new List<RojoFile>(newRojoFile.SubFiles))
+                {
+                    // Get the tree object.
+                    Rojo05TreeObject treeObject = null;
+                    foreach (var subTreeObject in this.Children)
+                    {
+                        if (subFile.Name.Contains(subTreeObject.Name))
+                        {
+                            treeObject = subTreeObject;
+                            break;
+                        }
+                    }
+                    
+                    // Remove the file if the tree object exists.
+                    if (treeObject != null)
+                    {
+                        newRojoFile.RemoveFile(subFile.Name);
+                    }
+                }
+                
+                // Add the file.
+                if (newRojoFile.SubFiles.Count != 0 || newRojoFile.Contents != null)
+                {
+                    newRojoFile.Name = pathEnding;
+                    parentDirectory.AddFile(newRojoFile);
+                }
+            }
+            
+            // Populate the children.
+            foreach (var subTreeObject in this.Children)
+            {
+                // Get the child.
+                RojoInstance child = null;
+                foreach (var newChild in instance.Children)
+                {
+                    if (newChild.Name == subTreeObject.Name)
+                    {
+                        child = newChild;
+                        break;
+                    }
+                }
+                
+                // Populate the child if it exists.
+                if (child != null)
+                {
+                    subTreeObject.PopulateRojoFiles(rootDirectory,child,project);
+                }
+            }
         }
     }
     
@@ -340,7 +437,132 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
          */
         public override RojoFile GetFile(RojoInstance instance)
         {
-            return null;
+            // Return a file for a script.
+            if (instance.ClassName == "Script" || instance.ClassName == "LocalScript" || instance.ClassName == "ModuleScript") {
+                if (instance.Children.Count != 0) {
+                    // Create the directory.
+                    var newDirectory = new RojoFile(instance.Name);
+                    
+                    // Create the child file.
+                    RojoFile newFile = null;
+                    if (instance.ClassName == "Script") {
+                        newFile = new RojoFile("init.server.lua");
+                    } else if (instance.ClassName == "LocalScript") {
+                        newFile = new RojoFile("init.client.lua");
+                    } else {
+                        newFile = new RojoFile("init.lua");
+                    }
+                    
+                    // Add the child file.
+                    newFile.Contents = (string) instance.Properties["Source"].Value;
+                    newDirectory.AddFile(newFile);
+                    
+                    // Add the meta file.
+                    if (instance.Properties.Count > 1)
+                    {
+                        // Get the properties.
+                        var metaProperties = new  Rojo05MetaFileNoClassName();
+                        foreach (var propertyName in instance.Properties.Keys)
+                        {
+                            if (propertyName != "Source")
+                            {
+                                var property = instance.Properties[propertyName];
+                                metaProperties.properties[propertyName] = property.Value;
+                            }
+                        }
+                        
+                        // Add the file.
+                        var metaContents = JsonConvert.SerializeObject(metaProperties,Formatting.Indented);
+                        var newMetaFile = new RojoFile("init.meta.json");
+                        newMetaFile.Contents = metaContents;
+                        newDirectory.AddFile(newMetaFile);
+                    }
+                    
+                    // Add the child instances.
+                    foreach (var subInstance in instance.Children) {
+                        var subFile = this.GetFile(subInstance);
+                        newDirectory.AddFile(subFile);
+                        
+                        // Create a meta file.
+                        if (subFile.Contents != "" && subInstance.ClassName.Contains("Script") && subInstance.Properties.Count > 1)
+                        {
+                            // Get the properties.
+                            var metaProperties = new  Rojo05MetaFileNoClassName();
+                            foreach (var propertyName in subInstance.Properties.Keys)
+                            {
+                                if (propertyName != "Source")
+                                {
+                                    var property = subInstance.Properties[propertyName];
+                                    metaProperties.properties[propertyName] = property.Value;
+                                }
+                            }
+                        
+                            // Add the file.
+                            var metaContents = JsonConvert.SerializeObject(metaProperties,Formatting.Indented);
+                            var newMetaFile = new RojoFile(subInstance.Name + ".meta.json");
+                            newMetaFile.Contents = metaContents;
+                            newDirectory.AddFile(newMetaFile);
+                        }
+                    }
+                    
+                    // Return the directory.
+                    return newDirectory;
+                } else {
+                    // Create the file.
+                    RojoFile newFile = null;
+                    if (instance.ClassName == "Script") {
+                        newFile = new RojoFile(instance.Name + ".server.lua");
+                    } else if (instance.ClassName == "LocalScript") {
+                        newFile = new RojoFile(instance.Name + ".client.lua");
+                    } else {
+                        newFile = new RojoFile(instance.Name + ".lua");
+                    }
+                    
+                    // Return the file with contents.
+                    newFile.Contents = (string) instance.Properties["Source"].Value;
+                    return newFile;
+                }
+            } else if (instance.ClassName == "Folder") {
+                // Create the directory.
+                var newDirectory = new RojoFile(instance.Name);
+                    
+                // Add the child instances.
+                foreach (var subInstance in instance.Children)
+                {
+                    var subFile = this.GetFile(subInstance);
+                    newDirectory.AddFile(subFile);
+                    
+                    // Create a meta file.
+                    if (subFile.Contents != "" && subInstance.ClassName.Contains("Script") && subInstance.Properties.Count > 1)
+                    {
+                        // Get the properties.
+                        var metaProperties = new  Rojo05MetaFileNoClassName();
+                        foreach (var propertyName in subInstance.Properties.Keys)
+                        {
+                            if (propertyName != "Source")
+                            {
+                                var property = subInstance.Properties[propertyName];
+                                metaProperties.properties[propertyName] = property.Value;
+                            }
+                        }
+                        
+                        // Add the file.
+                        var metaContents = JsonConvert.SerializeObject(metaProperties,Formatting.Indented);
+                        var newMetaFile = new RojoFile(subInstance.Name + ".meta.json");
+                        newMetaFile.Contents = metaContents;
+                        newDirectory.AddFile(newMetaFile);
+                    }
+                }
+                    
+                // Return the directory.
+                return newDirectory;
+            }
+            
+            // Serialize and store the instance.
+            var instanceData = JsonConvert.SerializeObject(instance,Formatting.Indented);
+            var file = new RojoFile(instance.Name + ".model.json");
+            file.Contents = instanceData;
+            return file;
         }
         
         /*

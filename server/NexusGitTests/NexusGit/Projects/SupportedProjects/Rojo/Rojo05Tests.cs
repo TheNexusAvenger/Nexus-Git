@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using NexusGit.NexusGit.Projects.SupportedProjects.Rojo;
+using NexusGit.RobloxInstance;
 using NUnit.Framework;
 
 namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo
@@ -127,7 +128,7 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo
                                 {
                                     "NexusInstance", new Dictionary<string, object>()
                                     {
-                                        {"$path", "module/NexusInstance"},
+                                        {"$path", "module/NexusIns"},
                                     }
                                 },
                             }
@@ -152,7 +153,7 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo
                     {
                         SubFiles =  new List<RojoFile>()
                         {
-                            new RojoFile("NexusInstance")
+                            new RojoFile("NexusIns")
                             {
                                 SubFiles =  new List<RojoFile>()
                                 {
@@ -250,6 +251,183 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo
             Assert.AreEqual(CuT.Children[1].Children[1].Children[0].ClassName,"ModuleScript");
             Assert.AreEqual(CuT.Children[1].Children[1].Children[0].Properties["Source"].Value,"print(\"Test source 6\")");
             Assert.AreEqual(CuT.Children[1].Children[1].Children[0].Children.Count,0);
+        }
+        
+        /*
+         * Tests the PopulateRojoFiles method of Rojo05TreeObject.
+         */
+        [Test]
+        public void TestPopulateRojoFiles()
+        {
+            // Create a project structure tree.
+            var tree = new Dictionary<string, object>()
+            {
+                {"$className", "DataModel"},
+                {
+                    "Lighting", new Dictionary<string, object>()
+                    {
+                        {"$className", "Lighting"},
+                        {"$properties", new Dictionary<string, object>()
+                        {
+                            {"TimeOfDay", "12:00:00"},
+                        }}
+                    }
+                },
+                {
+                    "ReplicatedStorage", new Dictionary<string, object>()
+                    {
+                        {"$className", "ReplicatedStorage"},
+                        {
+                            "NexusButton", new Dictionary<string, object>()
+                            {
+                                {"$path", "src"},
+                                {
+                                    "NexusInstance", new Dictionary<string, object>()
+                                    {
+                                        {"$path", "module/NexusIns"},
+                                    }
+                                },
+                            }
+                        },
+                        {
+                            "NexusButtonTests", new Dictionary<string, object>()
+                            {
+                                {"$path", "test"},
+                            }
+                        },
+                    }
+                },
+            };
+            tree = JsonConvert.DeserializeObject<Dictionary<string,object>>(JsonConvert.SerializeObject(tree));
+            
+            // Create the Rojo instances.
+            var instances = new RojoInstance()
+            {
+                Name = "game",
+                ClassName = "DataModel",
+                Children = new List<RojoInstance>()
+                {
+                    new RojoInstance()
+                    {
+                        Name = "Lighting",
+                        ClassName = "Lighting",
+                    },
+                    new RojoInstance()
+                    {
+                        Name = "ReplicatedStorage",
+                        ClassName = "ReplicatedStorage",
+                        Children = new List<RojoInstance>()
+                        {
+                            new RojoInstance()
+                            {
+                                Name = "NexusButton",
+                                ClassName = "ModuleScript",
+                                Properties = new Dictionary<string,Property<object>>()
+                                {
+                                    {"Source",new Property<object>("string","print(\"Test source 3\")")},
+                                },
+                                Children = new List<RojoInstance>()
+                                {
+                                    new RojoInstance()
+                                    {
+                                        Name = "CustomFrame",
+                                        ClassName = "ModuleScript",
+                                        Properties = new Dictionary<string,Property<object>>()
+                                        {
+                                            {"Source",new Property<object>("string","print(\"Test source 4\")")},
+                                        },
+                                    },
+                                    new RojoInstance()
+                                    {
+                                        Name = "NexusInstance",
+                                        ClassName = "Folder",
+                                        Children = new List<RojoInstance>()
+                                        {
+                                            new RojoInstance()
+                                            {
+                                                Name = "NexusObject",
+                                                ClassName = "ModuleScript",
+                                                Properties = new Dictionary<string,Property<object>>()
+                                                {
+                                                    {"Source",new Property<object>("string","print(\"Test source 1\")")}
+                                                },
+                                            },
+                                            new RojoInstance()
+                                            {
+                                                Name = "NexusInstance",
+                                                ClassName = "LocalScript",
+                                                Properties = new Dictionary<string,Property<object>>()
+                                                {
+                                                    {"Source",new Property<object>("string","print(\"Test source 2\")")},
+                                                    {"Disabled",new Property<object>("bool",true)}
+                                                },
+                                            },
+                                        }
+                                    },
+                                }
+                            },
+                            new RojoInstance()
+                            {
+                                Name = "NexusButtonTests",
+                                ClassName = "Script",
+                                Properties = new Dictionary<string,Property<object>>()
+                                {
+                                    {"Source",new Property<object>("string","print(\"Test source 5\")")},
+                                    {"Disabled",new Property<object>("bool",true)}
+                                },
+                                Children = new List<RojoInstance>()
+                                {
+                                    new RojoInstance()
+                                    {
+                                        Name = "CustomFrameTests",
+                                        ClassName = "ModuleScript",
+                                        Properties = new Dictionary<string,Property<object>>()
+                                        {
+                                            {"Source",new Property<object>("string","print(\"Test source 6\")")},
+                                        },
+                                    },
+                                }
+                            },
+                        }
+                    },
+                }
+            };
+            
+            // Populate a file.
+            var treeObject = Rojo05TreeObject.CreateFromStructure(tree,"game");
+            var project = new Rojo05();
+            var CuT = new RojoFile("Root");
+            treeObject.Children[0].PopulateRojoFiles(CuT,instances.Children[0],project);
+            treeObject.Children[1].PopulateRojoFiles(CuT,instances.Children[1],project);
+
+            // Assert the children counts are correct.
+            Assert.AreEqual(CuT.SubFiles.Count,3);
+            Assert.AreEqual(CuT.GetFile("module").SubFiles.Count,1);
+            Assert.AreEqual(CuT.GetFile("module/NexusIns").SubFiles.Count,3);
+            Assert.AreEqual(CuT.GetFile("module/NexusIns/NexusObject.lua").SubFiles.Count,0);
+            Assert.AreEqual(CuT.GetFile("module/NexusIns/NexusInstance.client.lua").SubFiles.Count,0);
+            Assert.AreEqual(CuT.GetFile("module/NexusIns/NexusInstance.meta.json").SubFiles.Count,0);
+            Assert.AreEqual(CuT.GetFile("src").SubFiles.Count,2);
+            Assert.AreEqual(CuT.GetFile("src/init.lua").SubFiles.Count, 0);
+            Assert.AreEqual(CuT.GetFile("src/CustomFrame.lua").SubFiles.Count,0);
+            Assert.AreEqual(CuT.GetFile("test").SubFiles.Count,3);
+            Assert.AreEqual(CuT.GetFile("test/init.server.lua").SubFiles.Count, 0);
+            Assert.AreEqual(CuT.GetFile("test/init.meta.json").SubFiles.Count,0);
+            Assert.AreEqual(CuT.GetFile("test/CustomFrameTests.lua").SubFiles.Count,0);
+
+            // Assert the contents are correct.
+            Assert.AreEqual(CuT.GetFile("module").Contents,null);
+            Assert.AreEqual(CuT.GetFile("module/NexusIns").Contents,null);
+            Assert.AreEqual(CuT.GetFile("module/NexusIns/NexusObject.lua").Contents,"print(\"Test source 1\")");
+            Assert.AreEqual(CuT.GetFile("module/NexusIns/NexusInstance.client.lua").Contents,"print(\"Test source 2\")");
+            Assert.AreEqual(CuT.GetFile("module/NexusIns/NexusInstance.meta.json").Contents,"{\r\n  \"properties\": {\r\n    \"Disabled\": true\r\n  }\r\n}");
+            Assert.AreEqual(CuT.GetFile("src").Contents,null);
+            Assert.AreEqual(CuT.GetFile("src/init.lua").Contents,"print(\"Test source 3\")");
+            Assert.AreEqual(CuT.GetFile("src/CustomFrame.lua").Contents,"print(\"Test source 4\")");
+            Assert.AreEqual(CuT.GetFile("test").Contents,null);
+            Assert.AreEqual(CuT.GetFile("test/init.server.lua").Contents,"print(\"Test source 5\")");
+            Assert.AreEqual(CuT.GetFile("test/CustomFrameTests.lua").Contents,"print(\"Test source 6\")");
+            Assert.AreEqual(CuT.GetFile("test/init.meta.json").Contents,"{\r\n  \"properties\": {\r\n    \"Disabled\": true\r\n  }\r\n}");
         }
     }
 }

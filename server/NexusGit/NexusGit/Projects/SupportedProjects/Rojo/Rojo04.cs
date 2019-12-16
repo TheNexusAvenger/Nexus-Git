@@ -180,14 +180,13 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                     
                     // Add the child file.
                     newFile.Contents = (string) instance.Properties["Source"].Value;
-                    newDirectory.SubFiles.Add(newFile);
+                    newDirectory.AddFile(newFile);
                     newFile.Parent = newDirectory;
                     
                     // Add the child instances.
                     foreach (var subInstance in instance.Children) {
                         var subFile = this.GetFile(subInstance);
-                        newDirectory.SubFiles.Add(subFile);
-                        subFile.Parent = newDirectory;
+                        newDirectory.AddFile(subFile);
                     }
                     
                     // Return the directory.
@@ -215,8 +214,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 foreach (var subInstance in instance.Children)
                 {
                     var subFile = this.GetFile(subInstance);
-                    newDirectory.SubFiles.Add(subFile);
-                    subFile.Parent = newDirectory;
+                    newDirectory.AddFile(subFile);
                 }
                     
                 // Return the directory.
