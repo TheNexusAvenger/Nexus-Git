@@ -223,7 +223,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
          * Writes a Rojo file.
          */
         public void WriteFile(string location) {
-            this.WriteFile(location,new List<string>());
+            this.WriteFile(location,FILE_ENDINGS);
         }
         
         /*
