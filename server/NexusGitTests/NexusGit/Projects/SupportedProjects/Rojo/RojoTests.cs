@@ -185,5 +185,33 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo
             Assert.IsTrue(CuT.FileExists("File2/File3"));
             Assert.IsTrue(CuT.FileExists("File2/File4"));
         }
+        
+        /*
+         * Tests the ChildOfClassExists method of RojoInstance.
+         */
+        [Test]
+        public void TestChildOfClassExists()
+        {
+            // Create the components under testing.
+            var CuT1 = new RojoInstance();
+            CuT1.ClassName = "ModuleScript";
+            var CuT2 = new RojoInstance();
+            CuT2.ClassName = "Script";
+            CuT1.Children.Add(CuT2);
+            var CuT3 = new RojoInstance();
+            CuT3.ClassName = "LocalScript";
+            CuT2.Children.Add(CuT3);
+            
+            // Assert the instances found are correct.
+            Assert.IsTrue(CuT1.ChildOfClassExists("Script"));
+            Assert.IsTrue(CuT1.ChildOfClassExists("LocalScript"));
+            Assert.IsFalse(CuT1.ChildOfClassExists("ModuleScript"));
+            Assert.IsFalse(CuT2.ChildOfClassExists("Script"));
+            Assert.IsTrue(CuT2.ChildOfClassExists("LocalScript"));
+            Assert.IsFalse(CuT2.ChildOfClassExists("ModuleScript"));
+            Assert.IsFalse(CuT3.ChildOfClassExists("Script"));
+            Assert.IsFalse(CuT3.ChildOfClassExists("LocalScript"));
+            Assert.IsFalse(CuT3.ChildOfClassExists("ModuleScript"));
+        }
     }
 }

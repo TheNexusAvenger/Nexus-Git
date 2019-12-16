@@ -354,6 +354,24 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             // Return the new instance.
             return newInstance;
         }
+        
+        /*
+         * Returns an instance of a class name exists in the tree.
+         */
+        public bool ChildOfClassExists(string className)
+        {
+            // Return true if a child of the class name exists.
+            foreach (var child in this.Children)
+            {
+                if (child.ClassName == className || child.ChildOfClassExists(className))
+                {
+                    return true;
+                }
+            }
+            
+            // Return false (not found).
+            return false;
+        }
     }
     
     /*
