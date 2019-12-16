@@ -642,7 +642,31 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
          * Writes the partitions to the file system.
          */
         public override void WriteProjectStructure(Partitions partitions) {
+            // Get the project structure and return if it doesn't exist.
+            var structure = this.GetStructure();
+            if (structure == null)
+            {
+                return;
+            }
             
+            // Create a root directory and add the partitions.
+            var rootDirectory = new RojoFile("root");
+            var treeStructure = Rojo05TreeObject.CreateFromStructure(structure.tree,"game");
+            foreach (var treeItem in treeStructure.Children) {
+                var instance = partitions.GetInstance(treeItem.Name);
+                if (instance != null) {
+                    var rojoInstance = RojoInstance.ConvertInstance(instance);
+                    treeItem.PopulateRojoFiles(rootDirectory,rojoInstance,this);
+                }
+            }
+            
+            // Write the subfiles.
+            var workingDirectory = FileFinder.GetParentDirectoryOfFile(this.GetRequiredFile());
+            foreach (var file in rootDirectory.SubFiles)
+            {
+                var location = Path.Combine(workingDirectory, file.Name);
+                file.WriteFile(location);
+            }
         }
         
         /*
