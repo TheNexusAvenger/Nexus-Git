@@ -433,6 +433,68 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
         }
         
         /*
+         * Creates a meta file for an instance.
+         */
+        public RojoFile GetMetaFile(RojoInstance instance)
+        {
+            // Clone the dictionary of properties.
+            var properties = new Dictionary<string,Property<object>>(instance.Properties);
+            if (properties.ContainsKey("Source"))
+            {
+                properties.Remove("Source");
+            }
+
+            // Create a file if properties exist.
+            if (properties.Count > 0)
+            {
+                // Get the properties.
+                var metaProperties = new  Rojo05MetaFileNoClassName();
+                foreach (var propertyName in properties.Keys)
+                {
+                    var property = instance.Properties[propertyName];
+                    metaProperties.properties[propertyName] = property.Value;
+                }
+                
+                // Create and return the file.
+                var metaContents = JsonConvert.SerializeObject(metaProperties,Formatting.Indented);
+                var metaFile = new RojoFile(instance.Name + ".meta.json");
+                metaFile.Contents = metaContents;
+                return metaFile;
+            }
+            
+            // Return null (no file).
+            return null;
+        }
+        
+        /*
+         * Creates a meta file for an instance with the class name.
+         */
+        public RojoFile GetMetaFileWithClassName(RojoInstance instance)
+        {
+            // Create a file if properties exist.
+            if (instance.Properties.Count > 0)
+            {
+                // Get the properties.
+                var metaProperties = new Rojo05MetaFile();
+                metaProperties.className = instance.ClassName;
+                foreach (var propertyName in instance.Properties.Keys)
+                {
+                    var property = instance.Properties[propertyName];
+                    metaProperties.properties[propertyName] = property.Value;
+                }
+                
+                // Create and return the file.
+                var metaContents = JsonConvert.SerializeObject(metaProperties,Formatting.Indented);
+                var metaFile = new RojoFile(instance.Name + ".meta.json");
+                metaFile.Contents = metaContents;
+                return metaFile;
+            }
+            
+            // Return null (no file).
+            return null;
+        }
+        
+        /*
          * Returns a Roblox instance for a given file or directory.
          */
         public override RojoFile GetFile(RojoInstance instance)
@@ -460,22 +522,9 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                     // Add the meta file.
                     if (instance.Properties.Count > 1)
                     {
-                        // Get the properties.
-                        var metaProperties = new  Rojo05MetaFileNoClassName();
-                        foreach (var propertyName in instance.Properties.Keys)
-                        {
-                            if (propertyName != "Source")
-                            {
-                                var property = instance.Properties[propertyName];
-                                metaProperties.properties[propertyName] = property.Value;
-                            }
-                        }
-                        
-                        // Add the file.
-                        var metaContents = JsonConvert.SerializeObject(metaProperties,Formatting.Indented);
-                        var newMetaFile = new RojoFile("init.meta.json");
-                        newMetaFile.Contents = metaContents;
-                        newDirectory.AddFile(newMetaFile);
+                        var metaFile = this.GetMetaFile(instance);
+                        metaFile.Name = "init.meta.json";
+                        newDirectory.AddFile(metaFile);
                     }
                     
                     // Add the child instances.
@@ -486,22 +535,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                         // Create a meta file.
                         if (subFile.Contents != "" && subInstance.ClassName.Contains("Script") && subInstance.Properties.Count > 1)
                         {
-                            // Get the properties.
-                            var metaProperties = new  Rojo05MetaFileNoClassName();
-                            foreach (var propertyName in subInstance.Properties.Keys)
-                            {
-                                if (propertyName != "Source")
-                                {
-                                    var property = subInstance.Properties[propertyName];
-                                    metaProperties.properties[propertyName] = property.Value;
-                                }
-                            }
-                        
-                            // Add the file.
-                            var metaContents = JsonConvert.SerializeObject(metaProperties,Formatting.Indented);
-                            var newMetaFile = new RojoFile(subInstance.Name + ".meta.json");
-                            newMetaFile.Contents = metaContents;
-                            newDirectory.AddFile(newMetaFile);
+                            newDirectory.AddFile(this.GetMetaFile(subInstance));
                         }
                     }
                     
@@ -535,25 +569,32 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                     // Create a meta file.
                     if (subFile.Contents != "" && subInstance.ClassName.Contains("Script") && subInstance.Properties.Count > 1)
                     {
-                        // Get the properties.
-                        var metaProperties = new  Rojo05MetaFileNoClassName();
-                        foreach (var propertyName in subInstance.Properties.Keys)
-                        {
-                            if (propertyName != "Source")
-                            {
-                                var property = subInstance.Properties[propertyName];
-                                metaProperties.properties[propertyName] = property.Value;
-                            }
-                        }
-                        
-                        // Add the file.
-                        var metaContents = JsonConvert.SerializeObject(metaProperties,Formatting.Indented);
-                        var newMetaFile = new RojoFile(subInstance.Name + ".meta.json");
-                        newMetaFile.Contents = metaContents;
-                        newDirectory.AddFile(newMetaFile);
+                        newDirectory.AddFile(this.GetMetaFile(subInstance));
                     }
                 }
                     
+                // Return the directory.
+                return newDirectory;
+            } else if (instance.ChildOfClassExists("Script") || instance.ChildOfClassExists("LocalScript") || instance.ChildOfClassExists("ModuleScript"))
+            {
+                // Create a directory.
+                var newDirectory = new RojoFile(instance.Name);
+                var metaFile = this.GetMetaFileWithClassName(instance);
+                metaFile.Name = "init.meta.json";
+                newDirectory.AddFile(metaFile);
+                
+                // Add the child instances.
+                foreach (var subInstance in instance.Children) {
+                    var subFile = this.GetFile(subInstance);
+                    newDirectory.AddFile(subFile);
+                        
+                    // Create a meta file.
+                    if (subFile.Contents != "" && subInstance.ClassName.Contains("Script") && subInstance.Properties.Count > 1)
+                    {
+                        newDirectory.AddFile(this.GetMetaFile(subInstance));
+                    }
+                }
+                
                 // Return the directory.
                 return newDirectory;
             }

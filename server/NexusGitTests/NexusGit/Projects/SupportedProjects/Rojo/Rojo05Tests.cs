@@ -4,7 +4,6 @@
  * Tests Rojo 0.5 support.
  */
 
-using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using NexusGit.NexusGit.Projects.SupportedProjects.Rojo;
@@ -428,6 +427,106 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo
             Assert.AreEqual(CuT.GetFile("test/init.server.lua").Contents,"print(\"Test source 5\")");
             Assert.AreEqual(CuT.GetFile("test/CustomFrameTests.lua").Contents,"print(\"Test source 6\")");
             Assert.AreEqual(CuT.GetFile("test/init.meta.json").Contents,"{\r\n  \"properties\": {\r\n    \"Disabled\": true\r\n  }\r\n}");
+        }
+        
+        /*
+         * Tests the PopulateRojoFiles method of Rojo05TreeObject with custom containers.
+         */
+        [Test]
+        public void TestPopulateRojoFilesCustomContainers()
+        {
+            // Create a project structure tree.
+            var tree = new Dictionary<string, object>()
+            {
+                {
+                    "ReplicatedStorage", new Dictionary<string, object>()
+                    {
+                        {"$className", "ReplicatedStorage"},
+                        {
+                            "NexusButton", new Dictionary<string, object>()
+                            {
+                                {"$path", "src"},
+                            }
+                        },
+                    }
+                },
+            };
+            tree = JsonConvert.DeserializeObject<Dictionary<string,object>>(JsonConvert.SerializeObject(tree));
+            
+            // Create the Rojo instances.
+            var instances = new RojoInstance()
+            {
+                Name = "game",
+                ClassName = "DataModel",
+                Children = new List<RojoInstance>()
+                {
+                    new RojoInstance()
+                    {
+                        Name = "ReplicatedStorage",
+                        ClassName = "ReplicatedStorage",
+                        Children = new List<RojoInstance>()
+                        {
+                            new RojoInstance()
+                            {
+                                Name = "NexusButton",
+                                ClassName = "Tool",
+                                Properties = new Dictionary<string,Property<object>>()
+                                {
+                                    {"ToolTip",new Property<object>("string","Test tooltip 1")},
+                                },
+                                Children = new List<RojoInstance>()
+                                {
+                                    new RojoInstance()
+                                    {
+                                        Name = "ToolRunner",
+                                        ClassName = "Script",
+                                        Properties = new Dictionary<string,Property<object>>()
+                                        {
+                                            {"Source",new Property<object>("string","print(\"Test source 1\")")},
+                                        },
+                                    },
+                                    new RojoInstance()
+                                    {
+                                        Name = "SubTool",
+                                        ClassName = "Tool",
+                                        Properties = new Dictionary<string,Property<object>>()
+                                        {
+                                            {"ToolTip",new Property<object>("string","Test tooltip 1")},
+                                        },
+                                        Children = new List<RojoInstance>()
+                                        {
+                                            new RojoInstance()
+                                            {
+                                                Name = "Handle",
+                                                ClassName = "Part",
+                                            },
+                                        }
+                                    },
+                                }
+                            },
+                        }
+                    },
+                }
+            };
+            
+            // Populate a file.
+            var treeObject = Rojo05TreeObject.CreateFromStructure(tree,"game");
+            var project = new Rojo05();
+            var CuT = new RojoFile("Root");
+            treeObject.Children[0].PopulateRojoFiles(CuT,instances.Children[0],project);
+
+            // Assert the children counts are correct.
+            Assert.AreEqual(CuT.SubFiles.Count,1);
+            Assert.AreEqual(CuT.GetFile("src").SubFiles.Count,3);
+            Assert.AreEqual(CuT.GetFile("src/ToolRunner.server.lua").SubFiles.Count, 0);
+            Assert.AreEqual(CuT.GetFile("src/init.meta.json").SubFiles.Count,0);
+            Assert.AreEqual(CuT.GetFile("src/SubTool.model.json").SubFiles.Count,0);
+            
+            // Assert the contents are correct.
+            Assert.AreEqual(CuT.GetFile("src").Contents,null);
+            Assert.AreEqual(CuT.GetFile("src/ToolRunner.server.lua").Contents,"print(\"Test source 1\")");
+            Assert.AreEqual(CuT.GetFile("src/init.meta.json").Contents,"{\r\n  \"className\": \"Tool\",\r\n  \"properties\": {\r\n    \"ToolTip\": \"Test tooltip 1\"\r\n  }\r\n}");
+            Assert.AreEqual(CuT.GetFile("src/SubTool.model.json").Contents,"{\r\n  \"Name\": \"SubTool\",\r\n  \"ClassName\": \"Tool\",\r\n  \"Children\": [\r\n    {\r\n      \"Name\": \"Handle\",\r\n      \"ClassName\": \"Part\",\r\n      \"Children\": [],\r\n      \"Properties\": {}\r\n    }\r\n  ],\r\n  \"Properties\": {\r\n    \"ToolTip\": {\r\n      \"Type\": \"string\",\r\n      \"Value\": \"Test tooltip 1\"\r\n    }\r\n  }\r\n}");
         }
     }
 }
