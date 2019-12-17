@@ -4,8 +4,7 @@ TheNexusAvenger
 Tests the ProgressBarView class.
 --]]
 
-local NexusUnitTesting = require("NexusUnitTesting__")
-local DependencyInjector = NexusUnitTesting.Util.DependencyInjector
+local NexusUnitTesting = require("NexusUnitTesting")
 
 local NexusGit = require(game:GetService("ServerStorage"):WaitForChild("NexusGit"))
 local ProgressBarView = NexusGit:GetResource("UI.View.Frame.ProgressBarView")

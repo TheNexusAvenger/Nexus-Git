@@ -4,7 +4,7 @@ TheNexusAvenger
 Tests the File class.
 --]]
 
-local NexusUnitTesting = require("NexusUnitTesting__")
+local NexusUnitTesting = require("NexusUnitTesting")
 
 local NexusGit = require(game:GetService("ServerStorage"):WaitForChild("NexusGit"))
 local File = NexusGit:GetResource("NexusGitRequest.File.File")

@@ -4,7 +4,7 @@ TheNexusAvenger
 Tests the PartialHttpRequest class.
 --]]
 
-local NexusUnitTesting = require("NexusUnitTesting__")
+local NexusUnitTesting = require("NexusUnitTesting")
 local DependencyInjector = NexusUnitTesting.Util.DependencyInjector
 
 local Root = game:GetService("ServerStorage"):WaitForChild("NexusGit")

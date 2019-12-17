@@ -4,7 +4,7 @@ TheNexusAvenger
 Tests the HttpResponse class.
 --]]
 
-local NexusUnitTesting = require("NexusUnitTesting__")
+local NexusUnitTesting = require("NexusUnitTesting")
 
 local NexusGit = require(game:GetService("ServerStorage"):WaitForChild("NexusGit"))
 local HttpResponse = NexusGit:GetResource("SplitHttp.HttpResponse")

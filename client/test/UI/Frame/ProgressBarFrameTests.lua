@@ -4,7 +4,7 @@ TheNexusAvenger
 Tests the ProgressBarFrame class.
 --]]
 
-local NexusUnitTesting = require("NexusUnitTesting__")
+local NexusUnitTesting = require("NexusUnitTesting")
 
 local NexusGit = require(game:GetService("ServerStorage"):WaitForChild("NexusGit"))
 local ProgressBarFrame = NexusGit:GetResource("UI.Frame.ProgressBarFrame")

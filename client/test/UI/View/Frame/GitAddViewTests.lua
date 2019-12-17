@@ -4,7 +4,7 @@ TheNexusAvenger
 Tests the GitAddView class.
 --]]
 
-local NexusUnitTesting = require("NexusUnitTesting__")
+local NexusUnitTesting = require("NexusUnitTesting")
 local DependencyInjector = NexusUnitTesting.Util.DependencyInjector
 
 local NexusGit = require(game:GetService("ServerStorage"):WaitForChild("NexusGit"))

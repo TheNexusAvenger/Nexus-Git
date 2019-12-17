@@ -4,7 +4,7 @@ TheNexusAvenger
 Tests the RobloxAPI class.
 --]]
 
-local NexusUnitTesting = require("NexusUnitTesting__")
+local NexusUnitTesting = require("NexusUnitTesting")
 
 local NexusGit = require(game:GetService("ServerStorage"):WaitForChild("NexusGit"))
 local RobloxAPI = NexusGit:GetResource("Serialization.RobloxAPI")

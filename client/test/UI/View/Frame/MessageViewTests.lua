@@ -4,8 +4,7 @@ TheNexusAvenger
 Tests the MessageView class.
 --]]
 
-local NexusUnitTesting = require("NexusUnitTesting__")
-local DependencyInjector = NexusUnitTesting.Util.DependencyInjector
+local NexusUnitTesting = require("NexusUnitTesting")
 
 local NexusGit = require(game:GetService("ServerStorage"):WaitForChild("NexusGit"))
 local MessageView = NexusGit:GetResource("UI.View.Frame.MessageView")

@@ -4,7 +4,7 @@ TheNexusAvenger
 Tests the UserdataSerializier class.
 --]]
 
-local NexusUnitTesting = require("NexusUnitTesting__")
+local NexusUnitTesting = require("NexusUnitTesting")
 
 local NexusGit = require(game:GetService("ServerStorage"):WaitForChild("NexusGit"))
 local UserdataSerializier = NexusGit:GetResource("Serialization.UserdataSerializier")
