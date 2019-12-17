@@ -20,9 +20,6 @@ class Rojo04TestLocalPushAsStandaloneRequestMultipleFile(NexusGitFunctionalTest.
         self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 20001,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
         self.workspace.createDirectory("src")
         self.workspace.createDirectory("test")
-        self.workspace.writeFile("src/testscript1.server.lua","print(\"Hello world 1!\")")
-        self.workspace.writeFile("src/testscript2.client.lua","print(\"Hello world 2!\")")
-        self.workspace.writeFile("test/testscript3.lua","print(\"Hello world 3!\")")
 
     """
     Runs the test.
@@ -139,9 +136,6 @@ class Rojo04TestLocalPushAsStandaloneRequestMissingPartition(NexusGitFunctionalT
         self.workspace.writeFile("rojo.json","{\"name\": \"Nexus Git Repository\",\"servePort\": 20001,\"partitions\": {\"src\": {\"path\": \"src\",\"target\": \"ReplicatedStorage.NexusGit\"},\"test\": {\"path\": \"test\",\"target\":\"ReplicatedStorage.NexusGitTest\"}}}")
         self.workspace.createDirectory("src")
         self.workspace.createDirectory("test")
-        self.workspace.writeFile("src/testscript1.server.lua","print(\"Hello world 1!\")")
-        self.workspace.writeFile("src/testscript2.client.lua","print(\"Hello world 2!\")")
-        self.workspace.writeFile("test/testscript3.lua","print(\"Hello world 3!\")")
 
     """
     Runs the test.
@@ -196,4 +190,6 @@ class Rojo04TestLocalPushAsStandaloneRequestMissingPartition(NexusGitFunctionalT
         self.assertEqual(response,"Local push successful.","Response message is incorrect.")
 
         # Assert the files are correct.
+        self.assertFalse(self.workspace.fileExists("src/testscript1.server.lua"))
+        self.assertFalse(self.workspace.fileExists("src/testscript2.client.lua"))
         self.assertEqual(self.workspace.readFile("test/testscript3.lua"),"print(\"Hello world 3!\")","Body is incorrect.")
