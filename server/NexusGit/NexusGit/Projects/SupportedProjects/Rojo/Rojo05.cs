@@ -471,6 +471,10 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             {
                 properties.Remove("LinkedSource");
             }
+            if (properties.ContainsKey("Disabled") && ((bool) properties["Disabled"].Value) == false)
+            {
+                properties.Remove("Disabled");
+            }
 
             // Create a file if properties exist.
             if (properties.Count > 0)
