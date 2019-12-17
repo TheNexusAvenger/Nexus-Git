@@ -97,6 +97,42 @@ namespace NexusGitTests.NexusGit.Projects.SupportedProjects.Rojo
         }
         
         /*
+         * Tests the HasPathReference method of Rojo05TreeObject.
+         */
+        [Test]
+        public void HasPathReference()
+        {
+            // Create several tree objects.
+            var CuT = new Rojo05TreeObject()
+            {
+                Path = "src",
+                Children = new List<Rojo05TreeObject>()
+                {
+                    new Rojo05TreeObject()
+                    {
+                        
+                    },
+                    new Rojo05TreeObject()
+                    {
+                        Children = new List<Rojo05TreeObject>()
+                        {
+                            new Rojo05TreeObject()
+                            {
+                                Path = "test",
+                            }
+                        }
+                    },
+                }
+            };
+            
+            // Assert the required paths are correct.
+            Assert.IsTrue(CuT.HasPathReference());
+            Assert.IsFalse(CuT.Children[0].HasPathReference());
+            Assert.IsTrue(CuT.Children[1].HasPathReference());
+            Assert.IsTrue(CuT.Children[1].Children[0].HasPathReference());
+        }
+        
+        /*
          * Tests the GetRojoInstance method of Rojo05TreeObject.
          */
         [Test]

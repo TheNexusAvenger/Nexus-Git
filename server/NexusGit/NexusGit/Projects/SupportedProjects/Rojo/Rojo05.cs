@@ -101,6 +101,30 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
         }
         
         /*
+         * Returns if a path is needed in the object or a subobject.
+         */
+        public bool HasPathReference()
+        {
+            // Return true if the path is defined.
+            if (this.Path != null)
+            {
+                return true;
+            }
+            
+            // Return if a child has a path.
+            foreach (var childObject in this.Children)
+            {
+                if (childObject.HasPathReference())
+                {
+                    return true;
+                }
+            }
+            
+            // Return false (path not used).
+            return false;
+        }
+        
+        /*
          * Returns a Rojo instance
          */
         public RojoInstance GetRojoInstance(RojoFile projectFiles,Rojo05 project)
@@ -692,21 +716,24 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
          * Returns the partitions to use.
          */
         public override Dictionary<string,string> GetPartitions() {
-            // Get the project structure and return null if it doesn't exist.
+            // Get the project structure and return if it doesn't exist.
             var structure = this.GetStructure();
-            if (structure == null) {
+            if (structure == null)
+            {
                 return null;
             }
-
+            
             // Get the partitions.
             var partitions = new Dictionary<string,string>();
-            foreach (var treeItemName in structure.tree.Keys) {
-                if (!treeItemName.StartsWith("$"))
-                {
-                    partitions.Add(treeItemName,treeItemName);
-                }
+            var treeStructure = Rojo05TreeObject.CreateFromStructure(structure.tree,"game");
+            foreach (var treeObject in treeStructure.Children)
+            {
+                //if (treeObject.HasPathReference()) // TODO: Requires rework of GetPartitions. Already planned for V.0.2.0.
+                //{
+                    partitions.Add(treeObject.Name,treeObject.Name);
+                //}
             }
-
+            
             // Return the partitions.
             return partitions;
         }
