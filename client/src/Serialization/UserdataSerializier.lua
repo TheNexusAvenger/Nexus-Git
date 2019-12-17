@@ -130,6 +130,7 @@ local USERDATA_DEESERIALIZERS = {
 		return Axes.new(unpack(AxesConstructor))
 	end,
 	["Bool"] = true,
+	["boolean"] = true,
 	["BrickColor"] = function(String)
 		return BrickColor.new(String)
 	end,
@@ -150,6 +151,9 @@ local USERDATA_DEESERIALIZERS = {
 	["Enum"] = function(Table)
 		return Enum[Table[1]][Table[2]]
 	end,
+	["EnumItem"] = function(Table)
+		return Enum[Table[1]][Table[2]]
+	end,
 	["Faces"] = function(Table)
 		local FacesConstructor = {}
 		for _,FaceString in pairs(Table) do
@@ -159,7 +163,9 @@ local USERDATA_DEESERIALIZERS = {
 		return Faces.new(unpack(FacesConstructor))
 	end,
 	["Float"] = true,
+	["number"] = true,
 	["String"] = true,
+	["string"] = true,
 	["NumberRange"] = function(Table)
 		return NumberRange.new(unpack(Table))
 	end,

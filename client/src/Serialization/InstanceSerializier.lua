@@ -94,8 +94,8 @@ function InstanceSerializier:Deserialize(Table,ParentLocation)
 	--]]
 	local function CreateBaseInstance(InstanceData,Parent)
 		--Get an existing instance.
-		local Name = InstanceData.Properties.Name.Value
 		local ClassName = InstanceData.Properties.ClassName.Value
+		local Name = InstanceData.Properties.Name and InstanceData.Properties.Name.Value or ClassName
 		local NewInstance
 		if Parent then
 			NewInstance = Parent:FindFirstChild(Name)
@@ -133,6 +133,9 @@ function InstanceSerializier:Deserialize(Table,ParentLocation)
 				if PropertyData.Type == "TemporaryInstanceReference" then
 					NewInstance[PropertyName] = BaseInstances[PropertyData.Value]
 				else
+					if not PropertyData.Type or PropertyData.Type == "" then
+						PropertyData.Type = typeof(NewInstance[PropertyName])
+					end
 					NewInstance[PropertyName] = UserdataSerializier:Deserialize(PropertyData)
 				end
 			end

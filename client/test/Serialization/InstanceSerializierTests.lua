@@ -4,7 +4,7 @@ TheNexusAvenger
 Tests the InstanceSerializier class.
 --]]
 
-local NexusUnitTesting = require("NexusUnitTesting__")
+local NexusUnitTesting = require("NexusUnitTesting")
 
 local NexusGit = require(game:GetService("ServerStorage"):WaitForChild("NexusGit"))
 local InstanceSerializier = NexusGit:GetResource("Serialization.InstanceSerializier")
@@ -119,6 +119,35 @@ NexusUnitTesting:RegisterUnitTest("Deserialize",function(UnitTest)
 	UnitTest:AssertEquals(SurfaceGui.Adornee,Part,"Property is incorrect.")
 	UnitTest:AssertEquals(LocalScript.Source,"--Test script","Property is incorrect.")
 	UnitTest:AssertEquals(RemoteEvent.Name,"Event","Property is incorrect.")
+end)
+
+--[[
+Tests the Deserialize method with implicit typees.
+--]]
+NexusUnitTesting:RegisterUnitTest("DeserializeImplicitTypes",function(UnitTest)
+	--Create the deserialization data.
+	local SerializationData = {
+		TemporaryId = 1,
+		Type = "Instance",
+		Properties = {
+			["ClassName"] = {Type="",Value="Part"},
+			["Transparency"] = {Type="",Value=0.5},
+			["BrickColor"] = {Type="",Value="Bright red"},
+			["Anchored"] = {Type="",Value=true},
+			["CanCollide"] = {Type="",Value=false},
+			["TopSurface"] = {Type="",Value={"SurfaceType","Smooth"}},
+		},
+		Children = {},
+	}
+	
+	--Test deserialization of the data.
+	local Part = InstanceSerializier:Deserialize(SerializationData)
+	
+	--Assert it was deserialized correctly.
+	UnitTest:AssertEquals(Part.BrickColor,BrickColor.new("Bright red"),"Property is incorrect.")
+	UnitTest:AssertEquals(Part.Anchored,true,"Property is incorrect.")
+	UnitTest:AssertEquals(Part.CanCollide,false,"Property is incorrect.")
+	UnitTest:AssertEquals(Part.TopSurface,Enum.SurfaceType.Smooth,"Property is incorrect.")
 end)
 
 
