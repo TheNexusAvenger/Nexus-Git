@@ -1,0 +1,16 @@
+{
+	"name": "Repository",
+	"servePort": 8000,
+	"tree": {
+		"$className": "DataModel",
+		"ServerStorage": {
+			"$className": "ServerStorage",
+			"NexusGit": {
+			  "$path": "client/src"
+			},
+			"NexusGitTests": {
+			  "$path": "client/test"
+			}
+		}
+	}
+}
