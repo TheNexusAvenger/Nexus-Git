@@ -6,6 +6,10 @@ open, but will only be accepted if they have the following:
 <br>3. Unit tests are added as needed, and existing tests still pass or are changed as needed.
 <br>4. Comments are included.
 
+Submodules are planned but aren't used yet. Nexus Instance
+and Nexus Plugin Framework are external dependencies and should
+not be changed. Issues with them should be brought up seprately.
+
 ## Alpha Version Warning
 Nexus Git is currently in Alpha. While the project has shipped,
 it may not be completely viable for production work since major

@@ -13,6 +13,7 @@ nav:
   - Home: index.md
   - Getting Started:
     - Overview: getting-started/overview.md
+    - Setup: getting-started/setup.md
   - Building: building.md
   - Contributing: contributing.md
 
