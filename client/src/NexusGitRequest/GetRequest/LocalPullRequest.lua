@@ -1,6 +1,6 @@
+  
 --[[
 TheNexusAvenger
-
 Performs a local pull from the file system.
 --]]
 
@@ -44,8 +44,9 @@ function LocalPullRequest:PerformLocalPull()
 	end
 	
 	--Get and update the partitions.
-	for SplitParentDirectory,StoredInstanceData in pairs(ParsedResponse.Instances) do
+	for InstanceLocation,StoredInstanceData in pairs(ParsedResponse.Instances) do
 		--Get the parent location.
+		local SplitParentDirectory = string.split(InstanceLocation,".")
 		table.remove(SplitParentDirectory,#SplitParentDirectory)
 		local ParentDirectory = table.concat(SplitParentDirectory,".")
 		local ParentLocation = PartitionsRequest:GetInstancePath(ParentDirectory)
@@ -54,7 +55,7 @@ function LocalPullRequest:PerformLocalPull()
 		if ParentLocation then
 			InstanceSerializier:Deserialize(StoredInstanceData,ParentLocation)
 		else
-			MissingParentLocations[SplitParentDirectory] = ParentDirectory
+			MissingParentLocations[InstanceLocation] = ParentDirectory
 		end
 	end
 	
