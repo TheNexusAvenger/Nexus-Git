@@ -121,16 +121,16 @@ Builds the response and returns the
 function MultiHttpRequest:__GetCompleteResponse(FirstResponse)
 	--Create the complete response.
 	local ResponseId = FirstResponse.Id
-	local RemainingPackets = FirstResponse.MaxPackets 
-	local FinalResponse = MultiHttpResponse.new(RemainingPackets + 1)
+	local TotalResponses = FirstResponse.MaxPackets 
+	local FinalResponse = MultiHttpResponse.new(TotalResponses)
 	FinalResponse:AddPartialResponse(FirstResponse)
 	
 	--Get the remaining responses.
-	if RemainingPackets > 0 then
-		local ResponsesLeft = RemainingPackets
+	if TotalResponses > 0 then
+		local ResponsesLeft = TotalResponses - 1
 	
 		--Send the requests.
-		for i = 2,RemainingPackets + 1 do
+		for i = 2,TotalResponses do
 			if PARALLIZE_SEQUENTIAL_REQUESTS then
 				spawn(function()
 					FinalResponse:AddPartialResponse(self:__GetResponse(i,ResponseId))
