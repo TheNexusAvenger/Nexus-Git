@@ -468,6 +468,6 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
         /*
          * Returns the partitions to use.
          */
-        public abstract Dictionary<string,string> GetPartitions();
+        public abstract Dictionary<string,bool> GetPartitions();
     }
 }

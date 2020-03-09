@@ -33,7 +33,7 @@ class Rojo04TestLocalPushAsStandaloneRequestMultipleFile(NexusGitFunctionalTest.
         request = {
             "Type": "Partitions",
             "Instances": {
-                "src": {
+                "ReplicatedStorage.NexusGit": {
                     "Properties": {
                         "Name": {
                             "Type": "String",
@@ -81,7 +81,7 @@ class Rojo04TestLocalPushAsStandaloneRequestMultipleFile(NexusGitFunctionalTest.
                         },
                     ]
                 },
-                "test": {
+                "ReplicatedStorage.NexusGitTest": {
                     "Properties": {
                         "Name": {
                             "Type": "String",
@@ -149,8 +149,8 @@ class Rojo04TestLocalPushAsStandaloneRequestMissingPartition(NexusGitFunctionalT
         request = {
             "Type": "Partitions",
             "Instances": {
-                "src": None,
-                "test": {
+                "ReplicatedStorage.NexusGit": None,
+                "ReplicatedStorage.NexusGitTest": {
                     "Properties": {
                         "Name": {
                             "Type": "String",

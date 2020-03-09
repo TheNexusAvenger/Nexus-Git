@@ -239,19 +239,19 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             // Read the folders.
             var incrementer = new TemporaryIdIncrementer();
             var workingDirectory = FileFinder.GetParentDirectoryOfFile(this.GetRequiredFile());
-            var partitionData = this.GetPartitions();
-            foreach (var partitionLocation in partitionData.Keys)
+            var structure = this.GetStructure();
+            foreach (var partitionLocation in structure.partitions.Values)
             {
                 // Get the target instance and new name.
-                var targetInstance = partitionData[partitionLocation];
+                var targetInstance = partitionLocation["target"];
                 var splitTargetName = targetInstance.Split('.');
                 var instanceName = splitTargetName[splitTargetName.Length - 1];
                 
                 // Get the instance and add it to the partitions if it exists.
-                var instance = this.GetFromFile(workingDirectory + partitionLocation);
+                var instance = this.GetFromFile(Path.Combine(workingDirectory,partitionLocation["path"]));
                 if (instance != null) {
                     instance.Name = instanceName;
-                    partitions.AddInstance(partitionLocation,instance.ToRobloxInstance(incrementer));
+                    partitions.AddInstance(partitionLocation["target"],instance.ToRobloxInstance(incrementer));
                 }
             }
             
@@ -263,15 +263,34 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
          * Writes the partitions to the file system.
          */
         public override void WriteProjectStructure(Partitions partitions) {
+            // Get the project structure and return null if it doesn't exist.
+            var structure = this.GetStructure();
+            if (structure == null) {
+                return;
+            }
+            
             // Get and write the files.
             var workingDirectory = FileFinder.GetParentDirectoryOfFile(this.GetRequiredFile());
-            foreach (var partitionLocation in partitions.Instances.Keys) {
-                var instance = partitions.GetInstance(partitionLocation);
-                if (instance != null) {
+            foreach (var instanceName in partitions.Instances.Keys) {
+                var instance = partitions.GetInstance(instanceName);
+                
+                // Get the partition location.
+                string partitionLocation = null;
+                foreach (var partitionData in structure.partitions.Values)
+                {
+                    if (partitionData["target"] == instanceName)
+                    {
+                        partitionLocation = partitionData["path"];
+                        break;;
+                    }
+                }
+                
+                // Write the files.
+                if (instance != null && partitionLocation != null) {
                     var rojoInstance = RojoInstance.ConvertInstance(instance);
                     var files = this.GetFile(rojoInstance);
 
-                    files.WriteFile(Path.Combine(workingDirectory, partitionLocation));
+                    files.WriteFile(Path.Combine(workingDirectory,partitionLocation));
                 }
             }
         }
@@ -279,7 +298,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
         /*
          * Returns the partitions to use.
          */
-        public override Dictionary<string, string> GetPartitions() {
+        public override Dictionary<string,bool> GetPartitions() {
             // Get the project structure and return null if it doesn't exist.
             var structure = this.GetStructure();
             if (structure == null) {
@@ -287,9 +306,9 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             }
 
             // Get the partitions.
-            var partitions = new Dictionary<string, string>();
+            var partitions = new Dictionary<string,bool>();
             foreach (var partitionData in structure.partitions.Values) {
-                partitions.Add(partitionData["path"], partitionData["target"]);
+                partitions.Add(partitionData["target"],true);
             }
 
             // Return the partitions.

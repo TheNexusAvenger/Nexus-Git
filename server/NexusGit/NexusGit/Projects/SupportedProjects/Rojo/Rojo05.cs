@@ -719,7 +719,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
         /*
          * Returns the partitions to use.
          */
-        public override Dictionary<string,string> GetPartitions() {
+        public override Dictionary<string,bool> GetPartitions() {
             // Get the project structure and return if it doesn't exist.
             var structure = this.GetStructure();
             if (structure == null)
@@ -728,14 +728,18 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
             }
             
             // Get the partitions.
-            var partitions = new Dictionary<string,string>();
+            var partitions = new Dictionary<string,bool>();
             var treeStructure = Rojo05TreeObject.CreateFromStructure(structure.tree,"game");
             foreach (var treeObject in treeStructure.Children)
             {
-                //if (treeObject.HasPathReference()) // TODO: Requires rework of GetPartitions. Already planned for V.0.2.0.
-                //{
-                    partitions.Add(treeObject.Name,treeObject.Name);
-                //}
+                if (treeObject.HasPathReference())
+                {
+                    partitions.Add(treeObject.Name,true);
+                }
+                else
+                {
+                    partitions.Add(treeObject.Name,false);
+                }
             }
             
             // Return the partitions.

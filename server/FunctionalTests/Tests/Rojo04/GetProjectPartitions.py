@@ -28,4 +28,4 @@ class Rojo04TestProjectPartitionsAsStandaloneRequestMultipleFile(NexusGitFunctio
 
         # Send a standalone request and get the response.
         response = self.sendGETRequest("/getprojectpartitions")
-        self.assertEqual(response,"{\"src\":\"ReplicatedStorage.NexusGit\",\"test\":\"ReplicatedStorage.NexusGitTest\"}")
+        self.assertEqual(response,"{\"ReplicatedStorage.NexusGit\":true,\"ReplicatedStorage.NexusGitTest\":true}")

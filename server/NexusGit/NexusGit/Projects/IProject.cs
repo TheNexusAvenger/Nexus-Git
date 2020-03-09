@@ -33,7 +33,7 @@ namespace NexusGit.NexusGit.Projects
         /*
          * Returns the partitions to use.
          */
-        Dictionary<string,string> GetPartitions();
+        Dictionary<string,bool> GetPartitions();
         
         /*
          * Writes the partitions to the file system.
