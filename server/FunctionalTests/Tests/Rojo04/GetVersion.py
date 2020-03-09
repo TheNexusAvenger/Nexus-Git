@@ -28,7 +28,7 @@ class Rojo04TestVersionAsSplitRequest(NexusGitFunctionalTest.NexusGitFunctionalT
 
 		# Send a split request and get the response.
 		response = self.sendGETRequest("/getversion?packet=0&maxPackets=1")
-		self.assertEqual(response,"{\"status\":\"success\",\"id\":0,\"currentPacket\":0,\"maxPackets\":0,\"packet\":\"{\\r\\n  \\\"version\\\": \\\"0.1.0 Alpha\\\",\\r\\n  \\\"project\\\": \\\"Rojo 0.4.X\\\"\\r\\n}\"}")
+		self.assertEqual(response,"{\"status\":\"success\",\"id\":0,\"currentPacket\":0,\"maxPackets\":1,\"packet\":\"{\\r\\n  \\\"version\\\": \\\"0.1.0 Alpha\\\",\\r\\n  \\\"project\\\": \\\"Rojo 0.4.X\\\"\\r\\n}\"}")
 
 """
 Tests the version as a standalone request.
