@@ -22,14 +22,15 @@ local INSTANCE_CREATION_PRESETS = {
 	TextButton = {
 		BackgroundColor3 = "Button",
 		BorderColor3 = "ButtonBorder",
+		BorderSizePixel = 1,
 		TextColor3 = "ButtonText",
 		Font = "SourceSans",
 		TextSize = 14,
-		BorderSizePixel = 1,
 	},
 	TextBox = {
 		BackgroundColor3 = "InputFieldBackground",
 		BorderColor3 = "InputFieldBorder",
+		BorderSizePixel = 1,
 		TextColor3 = "MainText",
 		PlaceholderColor3 = "DimmedText",
 		TextXAlignment = "Left",
@@ -37,7 +38,6 @@ local INSTANCE_CREATION_PRESETS = {
 		TextSize = 14,
 		ClearTextOnFocus = false,
 		ClipsDescendants = true,
-		BorderSizePixel = 1,
 	}
 }
 
@@ -53,7 +53,6 @@ NexusWrappedInstance:SetClassName(CLASS_NAME)
 NexusPluginFramework:SetContextResource(NexusWrappedInstance)
 
 local ReadOnlyProperties = {}
-local Plugin = NexusPlugin.GetPlugin()
 local Settings = NexusSettings.GetSettings()
 
 local CachedInstances = {}

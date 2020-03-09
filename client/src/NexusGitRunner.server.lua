@@ -5,10 +5,12 @@ Runs the Nexus Git Plugin.
 --]]
 
 local NexusGit = require(script.Parent)
+local NexusPluginFramework = NexusGit:GetResource("NexusPluginFramework")
+NexusPluginFramework:SetPlugin(plugin)
+
 local Configuration = NexusGit:GetResource("Configuration")
 local ActionsWindow = NexusGit:GetResource("UI.View.Window.ActionsWindow")
 local Settings = NexusGit:GetResource("Persistence.Settings")
-local NexusPluginFramework = NexusGit:GetResource("NexusPluginFramework")
 
 local ExistingWindow
 local WindowOpen = Settings.IsActionsWindowOpen()

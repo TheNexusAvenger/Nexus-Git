@@ -4,7 +4,7 @@ TheNexusAvenger
 Project for managing Nexus Git.
 --]]
 
-local NexusProject = require(script:WaitForChild("NexusPluginFramework"):WaitForChild("NexusPluginFrameworkProject"):WaitForChild("NexusProject"))
+local NexusProject = require(script:WaitForChild("NexusPluginFramework"):WaitForChild("NexusProject"))
 local NexusGitProject = NexusProject.new(script)
 
 

@@ -4,11 +4,11 @@ TheNexusAvenger
 Allows tracking of dependencies in a project.
 --]]
 
-local NexusInstancePackage = require(script.Parent:WaitForChild("NexusInstanceFinder"))
-local NexusObject = require(NexusInstancePackage:WaitForChild("NexusObject"))
+local NexusObject = require(script.Parent:WaitForChild("NexusInstance"):WaitForChild("NexusObject"))
 
 local NexusProjectContext = NexusObject:Extend()
 NexusProjectContext:SetClassName("NexusProjectContext")
+
 
 
 --[[
@@ -16,7 +16,6 @@ Creates a Nexus Project Context object.
 --]]
 function NexusProjectContext:__new(RequiringScript,Project)
 	self:InitializeSuper()
-	
 	self.__RequiringScript = RequiringScript
 	self.__Project = Project
 end

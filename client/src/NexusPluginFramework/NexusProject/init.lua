@@ -8,8 +8,7 @@ local CYCLIC_WARNING_TIME_REQUIREMENT = 5
 
 
 
-local NexusInstancePackage = require(script:WaitForChild("NexusInstanceFinder"))
-local NexusObject = require(NexusInstancePackage:WaitForChild("NexusObject"))
+local NexusObject = require(script:WaitForChild("NexusInstance"):WaitForChild("NexusObject"))
 local NexusProjectContext = require(script:WaitForChild("NexusProjectContext"))
 
 local NexusProject = NexusObject:Extend()
