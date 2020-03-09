@@ -12,7 +12,7 @@ import sys
 
 
 
-DOTNET_CORE_VERSION = "netcoreapp3.0"
+DOTNET_CORE_VERSION = "netcoreapp3.1"
 PLATFORMS = [
     "win-x64",
     "osx-x64",
