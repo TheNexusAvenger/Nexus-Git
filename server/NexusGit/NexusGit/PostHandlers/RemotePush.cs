@@ -4,9 +4,10 @@
  * Handles pushing to remote repositories.
  */
 
+using Nexus.Http.Server.Http.Request;
+using Nexus.Http.Server.Http.Response;
+using Nexus.Http.Server.SplitHttp.Request;
 using NexusGit.Git;
-using NexusGit.Http.Request;
-using NexusGit.SplitRequestHttp;
 
 namespace NexusGit.NexusGit.PostHandlers
 {
@@ -18,7 +19,7 @@ namespace NexusGit.NexusGit.PostHandlers
         /*
          * Returns a response for a given request.
          */
-        public override Response GetCompleteResponseData(HttpRequest request)
+        public override HttpResponse GetCompleteResponseData(HttpRequest request)
         {
             // Get the arguments.
             var remote = request.GetURL().GetParameter("remote");
@@ -42,7 +43,7 @@ namespace NexusGit.NexusGit.PostHandlers
             
             // Return the response.
             var response = repository.RemotePush(remote,branch,force.ToLower() == "true");
-            return Response.CreateSuccessResponse(response.ToJson());
+            return HttpResponse.CreateSuccessResponse(response.ToJson());
         }
     }
 }

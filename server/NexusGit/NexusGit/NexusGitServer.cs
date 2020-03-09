@@ -4,11 +4,11 @@
  * Runs the Nexus Git server.
  */
 
-using NexusGit.Http;
+using Nexus.Http.Server.Http.Server;
+using Nexus.Http.Server.SplitHttp.Request;
 using NexusGit.NexusGit.GetHandlers;
 using NexusGit.NexusGit.PostHandlers;
 using NexusGit.NexusGit.Projects;
-using NexusGit.SplitRequestHttp;
 
 namespace NexusGit.NexusGit
 {

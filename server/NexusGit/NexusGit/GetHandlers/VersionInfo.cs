@@ -5,10 +5,10 @@
  */
 
 using Newtonsoft.Json;
-using NexusGit.Http.Request;
+using Nexus.Http.Server.Http.Request;
+using Nexus.Http.Server.Http.Response;
+using Nexus.Http.Server.SplitHttp.Request;
 using NexusGit.NexusGit.Projects;
-using NexusGit.RobloxInstance;
-using NexusGit.SplitRequestHttp;
 
 namespace NexusGit.NexusGit.GetHandlers
 {
@@ -39,7 +39,7 @@ namespace NexusGit.NexusGit.GetHandlers
         /*
          * Returns a response for a given request.
          */
-        public override Response GetCompleteResponseData(HttpRequest request)
+        public override HttpResponse GetCompleteResponseData(HttpRequest request)
         {
             // Create the response.
             var info = new VersionInfoResponse();
@@ -47,7 +47,7 @@ namespace NexusGit.NexusGit.GetHandlers
             info.project = this.Project.GetName();
             
             // Return a response.
-            return Response.CreateSuccessResponse(JsonConvert.SerializeObject(info,Formatting.Indented));
+            return HttpResponse.CreateSuccessResponse(JsonConvert.SerializeObject(info,Formatting.Indented));
         }
     }
 }

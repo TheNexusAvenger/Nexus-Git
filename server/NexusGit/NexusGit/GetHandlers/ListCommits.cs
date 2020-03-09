@@ -6,9 +6,10 @@
 
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Nexus.Http.Server.Http.Request;
+using Nexus.Http.Server.Http.Response;
+using Nexus.Http.Server.SplitHttp.Request;
 using NexusGit.Git;
-using NexusGit.Http.Request;
-using NexusGit.SplitRequestHttp;
 
 namespace NexusGit.NexusGit.GetHandlers
 {
@@ -29,7 +30,7 @@ namespace NexusGit.NexusGit.GetHandlers
         /*
          * Returns a response for a given request.
          */
-        public override Response GetCompleteResponseData(HttpRequest request)
+        public override HttpResponse GetCompleteResponseData(HttpRequest request)
         {
             // Create the repository.
             var repository = new Repository();
@@ -55,7 +56,7 @@ namespace NexusGit.NexusGit.GetHandlers
             
             
             // Return the response.
-            return Response.CreateSuccessResponse(JsonConvert.SerializeObject(commits,Formatting.None));
+            return HttpResponse.CreateSuccessResponse(JsonConvert.SerializeObject(commits,Formatting.None));
         }
     }
 }

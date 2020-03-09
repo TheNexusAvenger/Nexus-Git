@@ -4,11 +4,11 @@
  * Handles getting the project structure partitions from the current project.
  */
 
-using System.Collections.Generic;
 using Newtonsoft.Json;
-using NexusGit.Http.Request;
+using Nexus.Http.Server.Http.Request;
+using Nexus.Http.Server.Http.Response;
+using Nexus.Http.Server.SplitHttp.Request;
 using NexusGit.NexusGit.Projects;
-using NexusGit.SplitRequestHttp;
 
 namespace NexusGit.NexusGit.GetHandlers
 {
@@ -30,14 +30,14 @@ namespace NexusGit.NexusGit.GetHandlers
         /*
          * Returns a response for a given request.
          */
-        public override Response GetCompleteResponseData(HttpRequest request)
+        public override HttpResponse GetCompleteResponseData(HttpRequest request)
         {
             // Get the partitions.
             var partitions = this.Project.GetPartitions();
             
             // Return the partitions as a response.
             var partitionsJson = JsonConvert.SerializeObject(partitions);
-            return Response.CreateSuccessResponse(partitionsJson);
+            return HttpResponse.CreateSuccessResponse(partitionsJson);
         }
     }
 }

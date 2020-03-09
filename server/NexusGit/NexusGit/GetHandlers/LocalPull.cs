@@ -4,10 +4,10 @@
  * Handles pulling the project structure from the file system to Roblox Studio.
  */
 
-using NexusGit.Http.Request;
+using Nexus.Http.Server.Http.Request;
+using Nexus.Http.Server.Http.Response;
+using Nexus.Http.Server.SplitHttp.Request;
 using NexusGit.NexusGit.Projects;
-using NexusGit.RobloxInstance;
-using NexusGit.SplitRequestHttp;
 
 namespace NexusGit.NexusGit.GetHandlers
 {
@@ -29,7 +29,7 @@ namespace NexusGit.NexusGit.GetHandlers
         /*
          * Returns a response for a given request.
          */
-        public override Response GetCompleteResponseData(HttpRequest request)
+        public override HttpResponse GetCompleteResponseData(HttpRequest request)
         {
             // Get the partitions.
             var partitions = this.Project.ReadProjectStructure();
@@ -38,7 +38,7 @@ namespace NexusGit.NexusGit.GetHandlers
             var partitionData = partitions.Serialize();
 
             // Return a response.
-            return Response.CreateSuccessResponse(partitionData);
+            return HttpResponse.CreateSuccessResponse(partitionData);
         }
     }
 }
