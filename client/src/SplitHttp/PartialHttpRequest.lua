@@ -9,8 +9,6 @@ local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
 local HttpRequest = NexusGit:GetResource("SplitHttp.HttpRequest")
 local HttpResponse = NexusGit:GetResource("SplitHttp.HttpResponse")
 
-local HttpService = game:GetService("HttpService")
-
 local PartialHttpRequest = NexusInstance:Extend()
 PartialHttpRequest:Implements(HttpRequest)
 PartialHttpRequest:SetClassName("PartialHttpRequest")
@@ -27,6 +25,7 @@ function PartialHttpRequest:__new(Method,URL,Body,RequestId,PacketId,MaxPacketId
 	self.RequestId = RequestId
 	self.PacketId = PacketId or 0
 	self.MaxPacketId = MaxPacketId or 1
+	self.HttpService = game:GetService("HttpService")
 end
 
 --[[
@@ -36,9 +35,9 @@ function PartialHttpRequest:__SendRequest(Method,Request,Body)
 	--Send the request.
 	local Response
 	if Method == "POST" then
-		Response = HttpService:PostAsync(Request,Body)
+		Response = self.HttpService:PostAsync(Request,Body)
 	else
-		Response = HttpService:GetAsync(Request)
+		Response = self.HttpService:GetAsync(Request)
 	end
 	
 	--Return a response object.

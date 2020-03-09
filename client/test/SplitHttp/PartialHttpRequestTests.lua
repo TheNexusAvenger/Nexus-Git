@@ -5,7 +5,6 @@ Tests the PartialHttpRequest class.
 --]]
 
 local NexusUnitTesting = require("NexusUnitTesting")
-local DependencyInjector = NexusUnitTesting.Util.DependencyInjector
 
 local Root = game:GetService("ServerStorage"):WaitForChild("NexusGit")
 local SplitHttp = Root:WaitForChild("SplitHttp")
@@ -47,39 +46,22 @@ Tests the SendRequest method.
 --]]
 NexusUnitTesting:RegisterUnitTest("SendRequest",function(UnitTest)
 	--Create the mock HttpService.
-	local HttpServiceInjector = DependencyInjector.CreateOverrider()
-	HttpServiceInjector:WhenCalled("GetAsync"):ThenCall(function(_,URL)
+	local MockHttpService = {}
+	function MockHttpService:GetAsync(URL)
 		if URL == "http://localhost:8000?requestId=3&packet=0&maxPackets=3" or URL == "http://localhost:8000?requestId=3&packet=1&maxPackets=3" then
 			return "{\"status\":\"incomplete\",\"id\":3}"
 		elseif URL == "http://localhost:8000?requestId=3&packet=2&maxPackets=3" then
 			return "{\"status\":\"success\",\"id\":12,\"currentPacket\":0,\"maxPackets\":2,\"packet\":\"Hello world!\"}"
 		end
-	end)
-	HttpServiceInjector:WhenCalled("JSONDecode"):ThenCall(function(_,JSON)
-		return HttpService:JSONDecode(JSON)
-	end)
-	local FakeHttpService = DependencyInjector.Inject({},HttpServiceInjector)
-	
-	--Create the mock game.
-	local GameInjector = DependencyInjector.CreateOverrider()
-	GameInjector:WhenIndexed("GetService"):ThenReturn(function(_,Index)
-		if Index == "HttpService" then
-			return FakeHttpService
-		end
-	end)
-	local FakeGame = DependencyInjector.Inject({},GameInjector)
-	
-	--Create the main injector.
-	local Injector = DependencyInjector.CreateOverrider()
-	Injector:WhenIndexed("game"):ThenReturn(FakeGame)
-	
-	--Require the injected module.
-	local PartialHttpRequest = DependencyInjector.Require(SplitHttp:WaitForChild("PartialHttpRequest"),Injector)
+	end
 	
 	--Create the components under testing.
 	local CuT1 = PartialHttpRequest.new("GET","http://localhost:8000","Body",3,0,3)
+	CuT1.HttpService = MockHttpService
 	local CuT2 = PartialHttpRequest.new("GET","http://localhost:8000","Body",3,1,3)
+	CuT2.HttpService = MockHttpService
 	local CuT3 = PartialHttpRequest.new("GET","http://localhost:8000","Body",3,2,3)
+	CuT3.HttpService = MockHttpService
 	
 	--Get the responses.
 	local Response1 = CuT1:SendRequest()

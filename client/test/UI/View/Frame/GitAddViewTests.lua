@@ -5,7 +5,6 @@ Tests the GitAddView class.
 --]]
 
 local NexusUnitTesting = require("NexusUnitTesting")
-local DependencyInjector = NexusUnitTesting.Util.DependencyInjector
 
 local NexusGit = require(game:GetService("ServerStorage"):WaitForChild("NexusGit"))
 local Directory = NexusGit:GetResource("NexusGitRequest.File.Directory")
@@ -75,11 +74,6 @@ end)
 Tests the AddFiles method with an error.
 --]]
 NexusUnitTesting:RegisterUnitTest("AddFilesWithError",function(UnitTest)
-	--Silence the warnings.
-	local Injector = DependencyInjector.CreateOverrider()
-	Injector:WhenCalled("warn"):ThenReturn(nil)
-	local GitAddView = DependencyInjector.Require(NexusGit:GetObjectReference("UI.View.Frame.GitAddView"),Injector)
-	
 	--Create several files.
 	local Directory1,Directory2 = Directory.new("TestDirectory1"),Directory.new("TestDirectory1")
 	local File1,File2,File3 = File.new("TestFileName1.lua"),File.new("TestFileName2.lua"),File.new("TestFileName3.lua")
