@@ -67,13 +67,13 @@ function GetPartitionsRequest:GetPartitions()
 	
 	--Get and parse the partitions.
 	local Partitions = {}
-	for Name,Path in pairs(ParsedResponse) do
+	for Path,SyncOut in pairs(ParsedResponse) do
 		local ReferenceInstance = GetPartitionsRequest:GetInstancePath(Path)
-		Partitions[Name] = ReferenceInstance
+		Partitions[Path] = {ReferenceInstance,SyncOut}
 		
 		--Warn if the reference doesn't exist.
 		if not ReferenceInstance then
-			warn("Missing reference for "..tostring(Name)..": "..tostring(Path))
+			warn("Missing reference : "..tostring(Path))
 		end
 	end
 	

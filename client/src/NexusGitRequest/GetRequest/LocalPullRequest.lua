@@ -44,9 +44,8 @@ function LocalPullRequest:PerformLocalPull()
 	end
 	
 	--Get and update the partitions.
-	for Name,StoredInstanceData in pairs(ParsedResponse.Instances) do
+	for SplitParentDirectory,StoredInstanceData in pairs(ParsedResponse.Instances) do
 		--Get the parent location.
-		local SplitParentDirectory = string.split(PartitionData[Name],".")
 		table.remove(SplitParentDirectory,#SplitParentDirectory)
 		local ParentDirectory = table.concat(SplitParentDirectory,".")
 		local ParentLocation = PartitionsRequest:GetInstancePath(ParentDirectory)
@@ -55,7 +54,7 @@ function LocalPullRequest:PerformLocalPull()
 		if ParentLocation then
 			InstanceSerializier:Deserialize(StoredInstanceData,ParentLocation)
 		else
-			MissingParentLocations[Name] = ParentDirectory
+			MissingParentLocations[SplitParentDirectory] = ParentDirectory
 		end
 	end
 	

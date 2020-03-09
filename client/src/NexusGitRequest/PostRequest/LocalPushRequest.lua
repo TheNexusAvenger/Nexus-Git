@@ -43,9 +43,9 @@ function LocalPushRequest:PerformLocalPush()
 	
 	--Create the serializable partitions.
 	local NewPartitions = Partitions.new()
-	for Name,Ins in pairs(PartitionData) do
-		if Ins ~= nil then
-			NewPartitions:StoreInstance(Name,Ins)
+	for Path,SyncData in pairs(PartitionData) do
+		if SyncData[1] ~= nil and SyncData[2] then
+			NewPartitions:StoreInstance(Path,SyncData[1])
 		end
 	end
 	
