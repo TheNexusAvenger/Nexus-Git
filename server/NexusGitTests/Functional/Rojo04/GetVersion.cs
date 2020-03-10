@@ -50,7 +50,7 @@ namespace NexusGitTests.Functional.Rojo04
         public override void Run()
         {
             var response = this.SendGETRequest("/getversion");
-            Assert.AreEqual(response,"{\r\n  \"version\": \"0.1.0 Alpha\",\r\n  \"project\": \"Rojo 0.4.X\"\r\n}");
+            Assert.AreEqual(response,"{\r\n  \"version\": \"0.2.0 Alpha\",\r\n  \"project\": \"Rojo 0.4.X\"\r\n}");
         }
     }
 }

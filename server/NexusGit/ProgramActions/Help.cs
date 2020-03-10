@@ -29,7 +29,7 @@ namespace NexusGit.ProgramActions
          */
         public void RunCommand(List<string> arguments)
         {
-            Console.WriteLine("Nexus Git Version 0.1 Alpha");
+            Console.WriteLine("Nexus Git Version 0.2 Alpha");
             Console.WriteLine("Allows Git actions to be called from Roblox Studio.");
             Console.WriteLine("Nexus Development by TheNexusAvenger");
             Console.WriteLine("");

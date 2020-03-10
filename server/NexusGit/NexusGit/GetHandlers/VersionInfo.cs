@@ -43,7 +43,7 @@ namespace NexusGit.NexusGit.GetHandlers
         {
             // Create the response.
             var info = new VersionInfoResponse();
-            info.version = "0.1.0 Alpha";
+            info.version = "0.2.0 Alpha";
             info.project = this.Project.GetName();
             
             // Return a response.
