@@ -27,7 +27,7 @@ namespace NexusGitTests.Functional.Rojo04
         public override void Run()
         {
             var response = this.SendGETRequest("/getversion?packet=0&maxPackets=1");
-            Assert.AreEqual(response,"{\"status\":\"success\",\"id\":0,\"currentPacket\":0,\"maxPackets\":1,\"packet\":\"{\\r\\n  \\\"version\\\": \\\"0.1.0 Alpha\\\",\\r\\n  \\\"project\\\": \\\"Rojo 0.4.X\\\"\\r\\n}\"}");
+            Assert.AreEqual(response,"{\"status\":\"success\",\"id\":0,\"currentPacket\":0,\"maxPackets\":1,\"packet\":\"{\\r\\n  \\\"version\\\": \\\"0.2.0 Alpha\\\",\\r\\n  \\\"project\\\": \\\"Rojo 0.4.X\\\"\\r\\n}\"}");
         }
     }
     
