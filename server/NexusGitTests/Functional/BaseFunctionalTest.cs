@@ -67,6 +67,9 @@ namespace NexusGitTests.Functional
             this.nexusGitTask = new Task(() => { this.server.Start(); });
             this.nexusGitTask.Start();
             this.WaitForInitialization();
+            
+            // Run the tests.
+            this.Run();
         }
         
         /*
