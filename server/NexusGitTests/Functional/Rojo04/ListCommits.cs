@@ -33,10 +33,10 @@ namespace NexusGitTests.Functional.Rojo04
             this.Workspace.RunCommand("git","fetch");
             this.Workspace.RunCommand("git","config user.email \"john@doe.com\"");
             this.Workspace.RunCommand("git","config user.name \"John Doe\"");
-            this.Workspace.RunCommand("git","add src/testscript1.server.lua");
-            this.Workspace.RunCommand("git","add src/testscript2.client.lua");
+            this.Workspace.RunCommand("git","add file1.txt");
+            this.Workspace.RunCommand("git","add file2.txt");
             this.Workspace.RunCommand("git","commit -m \"Test commit 1\"");
-            this.Workspace.RunCommand("git","add test/testscript3.lua");
+            this.Workspace.RunCommand("git","add file3.txt");
             this.Workspace.RunCommand("git","commit -m \"Test commit 2\nNew line\"");
         }
         

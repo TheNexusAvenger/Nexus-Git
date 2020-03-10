@@ -38,52 +38,63 @@ namespace NexusGitTests.Functional.Rojo05
                 Type = "Partitions",
                 Instances =
                 {
-                    {"ReplicatedStorage.NexusGit",new Instance(0)
-                    {
-                        Properties = new Dictionary<string, Property<object>>()
-                        {
-                            {"Name", new Property<object>("String","NexusGit")},
-                            {"ClassName", new Property<object>("String","Folder")}
-                        },
-                        Children = new List<Instance>()
-                        {
-                            new Instance(1)
-                            {
-                                Properties = new Dictionary<string, Property<object>>()
-                                {
-                                    {"Name", new Property<object>("String","testscript1")},
-                                    {"ClassName", new Property<object>("String","Script")},
-                                    {"Source", new Property<object>("String","print(\"Hello world 1!\")")}
-                                },
-                            },
-                            new Instance(2)
-                            {
-                                Properties = new Dictionary<string, Property<object>>()
-                                {
-                                    {"Name", new Property<object>("String","testscript2")},
-                                    {"ClassName", new Property<object>("String","LocalScript")},
-                                    {"Source", new Property<object>("String","print(\"Hello world 2!\")")}
-                                },
-                            }
-                        }
-                    }},
-                    {"ReplicatedStorage.NexusGitTest",new Instance(3)
+                    {"ReplicatedStorage",new Instance(0)
                         {
                             Properties = new Dictionary<string, Property<object>>()
                             {
-                                {"Name", new Property<object>("String","NexusGitTest")},
-                                {"ClassName", new Property<object>("String","Folder")}
+                                {"Name", new Property<object>("String","ReplicatedStorage")},
+                                {"ClassName", new Property<object>("String","ReplicatedStorage")}
                             },
                             Children = new List<Instance>()
                             {
+                                new Instance(1)
+                                {
+                                    Properties = new Dictionary<string, Property<object>>()
+                                    {
+                                        {"Name", new Property<object>("String","NexusGit")},
+                                        {"ClassName", new Property<object>("String","Folder")}
+                                    },
+                                    Children = new List<Instance>()
+                                    {
+                                        new Instance(2)
+                                        {
+                                            Properties = new Dictionary<string, Property<object>>()
+                                            {
+                                                {"Name", new Property<object>("String","testscript1")},
+                                                {"ClassName", new Property<object>("String","Script")},
+                                                {"Source", new Property<object>("String","print(\"Hello world 1!\")")}
+                                            },
+                                        },
+                                        new Instance(3)
+                                        {
+                                            Properties = new Dictionary<string, Property<object>>()
+                                            {
+                                                {"Name", new Property<object>("String","testscript2")},
+                                                {"ClassName", new Property<object>("String","LocalScript")},
+                                                {"Source", new Property<object>("String","print(\"Hello world 2!\")")}
+                                            },
+                                        }
+                                    }
+                                },
                                 new Instance(4)
                                 {
                                     Properties = new Dictionary<string, Property<object>>()
                                     {
-                                        {"Name", new Property<object>("String","testscript3")},
-                                        {"ClassName", new Property<object>("String","ModuleScript")},
-                                        {"Source", new Property<object>("String","print(\"Hello world 3!\")")}
+                                        {"Name", new Property<object>("String","NexusGitTests")},
+                                        {"ClassName", new Property<object>("String","Folder")}
                                     },
+                                    Children = new List<Instance>()
+                                    {
+                                        new Instance(5)
+                                        {
+                                            Properties = new Dictionary<string, Property<object>>()
+                                            {
+                                                {"Name", new Property<object>("String","testscript3")},
+                                                {"ClassName", new Property<object>("String","ModuleScript")},
+                                                {"Source", new Property<object>("String","print(\"Hello world 3!\")")}
+                                            },
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -129,23 +140,33 @@ namespace NexusGitTests.Functional.Rojo05
                 Type = "Partitions",
                 Instances =
                 {
-                    {"ReplicatedStorage.NexusGitTest",new Instance(3)
+                    {"ReplicatedStorage",new Instance(0)
                         {
                             Properties = new Dictionary<string, Property<object>>()
                             {
-                                {"Name", new Property<object>("String","NexusGitTest")},
-                                {"ClassName", new Property<object>("String","Folder")}
+                                {"Name", new Property<object>("String","ReplicatedStorage")},
+                                {"ClassName", new Property<object>("String","ReplicatedStorage")}
                             },
                             Children = new List<Instance>()
                             {
-                                new Instance(4)
-                                {
+                                new Instance(1) {
                                     Properties = new Dictionary<string, Property<object>>()
                                     {
-                                        {"Name", new Property<object>("String","testscript3")},
-                                        {"ClassName", new Property<object>("String","ModuleScript")},
-                                        {"Source", new Property<object>("String","print(\"Hello world 3!\")")}
+                                        {"Name", new Property<object>("String","NexusGitTests")},
+                                        {"ClassName", new Property<object>("String","Folder")}
                                     },
+                                    Children = new List<Instance>()
+                                    {
+                                        new Instance(2)
+                                        {
+                                            Properties = new Dictionary<string, Property<object>>()
+                                            {
+                                                {"Name", new Property<object>("String","testscript3")},
+                                                {"ClassName", new Property<object>("String","ModuleScript")},
+                                                {"Source", new Property<object>("String","print(\"Hello world 3!\")")}
+                                            },
+                                        }
+                                    }
                                 }
                             }
                         }

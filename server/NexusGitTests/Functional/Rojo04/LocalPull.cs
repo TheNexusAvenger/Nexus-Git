@@ -100,13 +100,13 @@ namespace NexusGitTests.Functional.Rojo04
             Assert.AreEqual(response.Instances.Count,1);
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Properties["Name"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Properties["Name"].Value,"NexusGit");
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children,2);
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children.Count,2);
 
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Properties["ClassName"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Properties["ClassName"].Value,"Folder");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Properties["Name"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Properties["Name"].Value,"directory1");
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children,1);
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children.Count,2);
 
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Properties["ClassName"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Properties["ClassName"].Value,"Script");
@@ -114,15 +114,15 @@ namespace NexusGitTests.Functional.Rojo04
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Properties["Name"].Value,"testscript1");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Properties["Source"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Properties["Source"].Value,"print(\"Hello world 1!\")");
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children,0);
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children.Count,0);
 
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[1].Properties["ClassName"].Type,"String");
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[1].Properties["ClassName"].Value,"LocalScript");
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[1].Properties["Name"].Type,"String");
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[1].Properties["Name"].Value,"directory2");
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[1].Properties["Source"].Type,"String");
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[1].Properties["Source"].Value,"print(\"Hello world 2!\")");
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[1].Children,1);
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[1].Properties["ClassName"].Type,"String");
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[1].Properties["ClassName"].Value,"LocalScript");
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[1].Properties["Name"].Type,"String");
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[1].Properties["Name"].Value,"testscript2");
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[1].Properties["Source"].Type,"String");
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[1].Properties["Source"].Value,"print(\"Hello world 2!\")");
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[1].Children.Count,0);
 
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[1].Children[0].Properties["ClassName"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[1].Children[0].Properties["ClassName"].Value,"ModuleScript");
@@ -130,7 +130,7 @@ namespace NexusGitTests.Functional.Rojo04
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[1].Children[0].Properties["Name"].Value,"testscript3");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[1].Children[0].Properties["Source"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[1].Children[0].Properties["Source"].Value,"print(\"Hello world 3!\")");
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[1].Children[0].Children,0);
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[1].Children[0].Children.Count,0);
         }
     }
     
@@ -160,10 +160,10 @@ namespace NexusGitTests.Functional.Rojo04
             var response = JsonConvert.DeserializeObject<Partitions>(this.SendGETRequest("/localpull"));
 
             Assert.AreEqual(response.Type,"Partitions");
-            Assert.AreEqual(response.Instances,1);
+            Assert.AreEqual(response.Instances.Count,1);
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Properties["Name"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Properties["Name"].Value,"NexusGit");
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children,1);
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children.Count,1);
 
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Properties["ClassName"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Properties["ClassName"].Value,"Script");
@@ -171,19 +171,19 @@ namespace NexusGitTests.Functional.Rojo04
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Properties["Name"].Value,"directory");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Properties["Source"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Properties["Source"].Value,"print(\"Hello world!\")");
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children,1);
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children.Count,1);
 
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Properties["ClassName"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Properties["ClassName"].Value,"Model");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Properties["Name"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Properties["Name"].Value,"hello");
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children,2);
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children.Count,2);
 
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children[0].Properties["ClassName"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children[0].Properties["ClassName"].Value,"Part");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children[0].Properties["Name"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children[0].Properties["Name"].Value,"Some Part");
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children[0].Children,0);
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children[0].Children.Count,0);
 
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children[1].Properties["ClassName"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children[1].Properties["ClassName"].Value,"StringValue");
@@ -191,7 +191,7 @@ namespace NexusGitTests.Functional.Rojo04
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children[1].Properties["Name"].Value,"Some StringValue");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children[1].Properties["Value"].Type,"String");
             Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children[1].Properties["Value"].Value,"Hello, world!");
-            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children[1].Children,0);
+            Assert.AreEqual(response.Instances["ReplicatedStorage.NexusGit"].Children[0].Children[0].Children[1].Children.Count,0);
         }
     }
 }

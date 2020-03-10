@@ -34,12 +34,12 @@ namespace NexusGitTests.Functional.Rojo04
         public override void Run()
         {
             // Add the file and assert the response is correct.
-            var response = this.SendPOSTRequest("/gitadd", "[\"src/testscript1.server.lua\",\"test/testscript3.lua\"]");
+            var response = this.SendPOSTRequest("/gitadd", "[\"file1.txt\",\"file3.txt\"]");
             Assert.AreEqual(response,"[\"Add complete.\"]");
             
             // Assert the initial status is correct.
             response = this.SendGETRequest("/getgitstatus");
-            Assert.AreEqual(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: src/testscript1.server.lua\",\"New file: test/testscript3.lua\",\"Untracked files:\",\"rojo.json\",\"src/testscript2.client.lua\"]");
+            Assert.AreEqual(response,"[\"Current branch:\",\"master\",\"Changes to be committed:\",\"New file: file1.txt\",\"New file: file3.txt\",\"Untracked files:\",\"file2.txt\",\"rojo.json\"]");
         }
     }
 }

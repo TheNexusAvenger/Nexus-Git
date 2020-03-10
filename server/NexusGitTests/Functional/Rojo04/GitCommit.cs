@@ -36,13 +36,13 @@ namespace NexusGitTests.Functional.Rojo04
         public override void Run()
         {
             // Add the file and assert the response is correct.
-            this.SendPOSTRequest("/gitadd","[\"src/testscript1.server.lua\",\"test/testscript3.lua\"]");
-            var response = this.SendPOSTRequest("/gitcommit","{\"message\":\"Test commit\",\"files\":[\"src/testscript1.server.lua\",\"test/testscript3.lua\"]}");
+            this.SendPOSTRequest("/gitadd","[\"file1.txt\",\"file3.txt\"]");
+            var response = this.SendPOSTRequest("/gitcommit","{\"message\":\"Test commit\",\"files\":[\"file1.txt\",\"file3.txt\"]}");
             Assert.AreEqual(response,"[\"Commit successful.\"]");
             
             // Assert the initial status is correct.
             response = this.SendGETRequest("/getgitstatus");
-            Assert.AreEqual(response,"[\"Current branch:\",\"master\",\"Untracked files:\",\"rojo.json\",\"src/testscript2.client.lua\"]");
+            Assert.AreEqual(response,"[\"Current branch:\",\"master\",\"Untracked files:\",\"file2.txt\",\"rojo.json\"]");
         }
     }
     
@@ -66,6 +66,8 @@ namespace NexusGitTests.Functional.Rojo04
             this.Workspace.RunCommand("git","init");
             this.Workspace.RunCommand("git","config user.email \"john@doe.com\"");
             this.Workspace.RunCommand("git","config user.name \"John Doe\"");
+            this.Workspace.RunCommand("git","add file1.txt");
+            this.Workspace.RunCommand("git","add file2.txt");
         }
         
         /*
