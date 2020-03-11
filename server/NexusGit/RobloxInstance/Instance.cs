@@ -11,20 +11,6 @@ using System.Collections.Generic;
 namespace NexusGit.RobloxInstance
 {
     /*
-     * Class representing a build for Roblox instances.
-     */
-    public class InstanceBuilder
-    {
-        /*
-         * Returns an ISerializable object from a string.
-         */
-        public Instance Deserialize(string data)
-        {
-            return JsonConvert.DeserializeObject<Instance>(data);
-        }
-    }
-
-    /*
      * Class representing a Roblox instance.
      */
     public class Instance
