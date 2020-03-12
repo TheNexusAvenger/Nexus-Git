@@ -49,6 +49,11 @@ namespace NexusGitTests.Functional.Rojo04
          */
         public override void Run()
         {
+            // Assert the server information is correct.
+            Assert.AreEqual(this.server.GetPort(),20001);
+            Assert.AreEqual(this.server.GetProject().GetName(),"Rojo 0.4.X");
+            
+            // Assert the response for the version is correct.
             var response = this.SendGETRequest("/getversion");
             Assert.AreEqual(response,"{\r\n  \"version\": \"0.2.0 Alpha\",\r\n  \"project\": \"Rojo 0.4.X\"\r\n}");
         }

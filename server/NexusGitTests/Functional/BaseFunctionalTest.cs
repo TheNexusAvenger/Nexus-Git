@@ -15,11 +15,10 @@ namespace NexusGitTests.Functional
 {
     public abstract class BaseFunctionalTest
     {
-        public FunctionalTestWorkspace Workspace;
-        private NexusGitServer server;
+        protected FunctionalTestWorkspace Workspace;
+        protected NexusGitServer server;
         private Task nexusGitTask;
         private int port = 20001;
-        private string initialDirectory;
      
         /*
          * Waits for the server to initialize.
@@ -56,7 +55,6 @@ namespace NexusGitTests.Functional
             // Create the temporary directory and workspace.
             var temporaryDirectory = Path.Combine(Path.GetTempPath(),Path.GetRandomFileName().Replace(".",""));
             this.Workspace = new FunctionalTestWorkspace(temporaryDirectory);
-            this.initialDirectory = Directory.GetCurrentDirectory();
             Directory.SetCurrentDirectory(temporaryDirectory);
             
             // Set up the test.
