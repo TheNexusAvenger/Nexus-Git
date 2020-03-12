@@ -49,17 +49,24 @@ namespace NexusGit.RobloxInstance
         /*
          * Sets a property of the instance.
          */
-        public void SetProperty(string name,Property<Object> property)
+        public void SetProperty(string name,Property<object> property)
         {
-            this.Properties.Add(name,property);
+            this.Properties[name] = property;
         }
 
         /*
          * Returns the value of a property.
          */
-        public Property<Object> GetProperty(string name)
+        public Property<object> GetProperty(string name)
         {
-            return this.Properties[name];
+            // Return the property.
+            if (this.Properties.ContainsKey(name))
+            {
+                return this.Properties[name];
+            }
+            
+            // Return null (not found).
+            return null;
         }
 
         /*
