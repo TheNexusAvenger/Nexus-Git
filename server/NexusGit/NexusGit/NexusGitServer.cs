@@ -7,6 +7,7 @@
 using Nexus.Http.Server.Http.Server;
 using Nexus.Http.Server.SplitHttp.Request;
 using NexusGit.NexusGit.GetHandlers;
+using NexusGit.NexusGit.GetHandlers.Modules;
 using NexusGit.NexusGit.PostHandlers;
 using NexusGit.NexusGit.Projects;
 
@@ -37,6 +38,7 @@ namespace NexusGit.NexusGit
             requestHandler.RegisterHandler("GET","ListRemoteBranches",new RemoteBranches());
             requestHandler.RegisterHandler("GET","ListCommits",new ListCommits());
             requestHandler.RegisterHandler("GET","ListRemotes",new ListRemotes());
+            requestHandler.RegisterHandler("GET","Modules/List",new ListModules());
             requestHandler.RegisterHandler("POST","GitAdd",new GitAdd());
             requestHandler.RegisterHandler("POST","GitCommit",new GitCommit());
             requestHandler.RegisterHandler("POST","RemotePush",new RemotePush());

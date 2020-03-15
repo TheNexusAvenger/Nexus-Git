@@ -6,6 +6,7 @@
 
 using NexusGit.FileIO;
 using NexusGit.Git.RepositoryActions;
+using NexusGit.Git.RepositoryActions.Modules;
 
 namespace NexusGit.Git
 {
@@ -144,6 +145,14 @@ namespace NexusGit.Git
         public GitResponse ListCommits(string remote,string branch)
         {
             return new ListCommits(this,remote,branch).PerformAction();
+        }
+        
+        /*
+         * Gets the submodules. Returns a response object.
+         */
+        public GitResponse ListSubmodules()
+        {
+            return new ListModules(this).PerformAction();
         }
     }
 }
