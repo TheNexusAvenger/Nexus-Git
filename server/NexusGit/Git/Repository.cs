@@ -29,6 +29,14 @@ namespace NexusGit.Git
         {
             return GetGitDirectory() != null;
         }
+        
+        /*
+         * Returns the submodules of the repository.
+         */
+        public Submodules GetSubmodules()
+        {
+            return Submodules.FromDirectory(GetGitDirectory());
+        }
 
         /*
          * Executes a Git command. Returns a list of the output. Returns
