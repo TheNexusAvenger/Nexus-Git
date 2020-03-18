@@ -93,6 +93,12 @@ function FileListFrame:__new(File)
 	TextLabel.Parent = self:GetMainContainer()
 	self:__SetChangedOverride("TextLabel",function() end)
 	self.TextLabel = TextLabel
+
+	--Make deleted files more clear.
+	if tostring(FileStatus) == "NexusEnum.FileStatus.Deleted" then
+		TextLabel.Font = "SourceSansItalic"
+		TextLabel.Text = FileName.." (Deleted)"
+	end
 	
 	--Add a UI constaint to make the children list.
 	local UIListLayout = NexusWrappedInstance.GetInstance("UIListLayout")
