@@ -6,7 +6,7 @@ Creates windows for views.
 
 local NexusGit = require(script.Parent.Parent.Parent.Parent):GetContext(script)
 local NexusPluginGui = NexusGit:GetResource("NexusPluginFramework.Plugin.NexusPluginGui")
-local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
+local NexusInstance = NexusGit:GetResource("NexusPluginFramework.NexusInstance.NexusInstance")
 
 local WindowCreator = NexusInstance:Extend()
 WindowCreator:SetClassName("WindowCreator")

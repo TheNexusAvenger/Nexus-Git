@@ -5,7 +5,7 @@ Stores and fetches settings.
 --]]
 
 local NexusGit = require(script.Parent.Parent):GetContext(script)
-local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
+local NexusInstance = NexusGit:GetResource("NexusPluginFramework.NexusInstance.NexusInstance")
 local Plugin = NexusGit:GetResource("NexusPluginFramework.Plugin.NexusPlugin").GetPlugin()
 
 

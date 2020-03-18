@@ -5,7 +5,7 @@ Contains information about a file.
 --]]
 
 local NexusGit = require(script.Parent.Parent.Parent):GetContext(script)
-local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
+local NexusInstance = NexusGit:GetResource("NexusPluginFramework.NexusInstance.NexusInstance")
 local NexusEnums = NexusGit:GetResource("NexusPluginFramework.Data.Enum.NexusEnumCollection").GetBuiltInEnums()
 
 local File = NexusInstance:Extend()

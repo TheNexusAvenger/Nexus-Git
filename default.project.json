@@ -1,15 +1,26 @@
 {
 	"name": "Repository",
-	"servePort": 8000,
 	"tree": {
 		"$className": "DataModel",
 		"ServerStorage": {
 			"$className": "ServerStorage",
 			"NexusGit": {
-			  "$path": "client/src"
+				"$path": "client/src",
+				"NexusPluginFramework": {
+					"$path": "client/module/Nexus-Plugin-Framework/src",
+					"NexusInstance": {
+						"$path": "client/module/Nexus-Plugin-Framework/module/Nexus-Instance/src"
+					},
+					"NexusProject": {
+						"$path": "client/module/Nexus-Plugin-Framework/module/Nexus-Project/src",
+						"NexusInstance": {
+							"$path": "client/module/Nexus-Plugin-Framework/module/Nexus-Instance/src"
+						}
+					}
+				}
 			},
 			"NexusGitTests": {
-			  "$path": "client/test"
+				"$path": "client/test"
 			}
 		}
 	}

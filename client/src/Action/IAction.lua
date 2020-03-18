@@ -5,7 +5,7 @@ Interface representing an action.
 --]]
 
 local NexusGit = require(script.Parent.Parent):GetContext(script)
-local NexusInterface = NexusGit:GetResource("NexusInstance.NexusInterface")
+local NexusInterface = NexusGit:GetResource("NexusPluginFramework.NexusInstance.NexusInterface")
 
 local IAction = NexusInterface:Extend()
 IAction:SetClassName("IAction")

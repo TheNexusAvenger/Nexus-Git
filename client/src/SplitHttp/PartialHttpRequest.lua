@@ -5,7 +5,7 @@ Sends partial HTTP requests to a server.
 --]]
 
 local NexusGit = require(script.Parent.Parent):GetContext(script)
-local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
+local NexusInstance = NexusGit:GetResource("NexusPluginFramework.NexusInstance.NexusInstance")
 local HttpRequest = NexusGit:GetResource("SplitHttp.HttpRequest")
 local HttpResponse = NexusGit:GetResource("SplitHttp.HttpResponse")
 

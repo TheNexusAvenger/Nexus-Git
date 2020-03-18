@@ -5,7 +5,7 @@ Action representing a git add.
 --]]
 
 local NexusGit = require(script.Parent.Parent):GetContext(script)
-local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
+local NexusInstance = NexusGit:GetResource("NexusPluginFramework.NexusInstance.NexusInstance")
 local LocalPush = NexusGit:GetResource("Action.LocalPush")
 local Settings = NexusGit:GetResource("Persistence.Settings")
 local GitAddWindow = NexusGit:GetResource("UI.View.Window.GitAddWindow")

@@ -11,7 +11,7 @@ local PARALLIZE_SEQUENTIAL_REQUESTS = true
 
 
 local NexusGit = require(script.Parent.Parent):GetContext(script)
-local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
+local NexusInstance = NexusGit:GetResource("NexusPluginFramework.NexusInstance.NexusInstance")
 local HttpRequest = NexusGit:GetResource("SplitHttp.HttpRequest")
 local PartialHttpRequest = NexusGit:GetResource("SplitHttp.PartialHttpRequest")
 local PartialHttpResponseRequest = NexusGit:GetResource("SplitHttp.PartialHttpResponseRequest")

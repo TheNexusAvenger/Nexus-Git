@@ -5,7 +5,7 @@ Action representing displaying the settings.
 --]]
 
 local NexusGit = require(script.Parent.Parent):GetContext(script)
-local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
+local NexusInstance = NexusGit:GetResource("NexusPluginFramework.NexusInstance.NexusInstance")
 local Settings = NexusGit:GetResource("Persistence.Settings")
 local SettingsWindow = NexusGit:GetResource("UI.View.Window.SettingsWindow")
 local NexusEnums = NexusGit:GetResource("NexusPluginFramework.Data.Enum.NexusEnumCollection").GetBuiltInEnums()

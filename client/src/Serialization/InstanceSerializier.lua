@@ -11,7 +11,7 @@ local IGNORED_PROPERTIES = {
 
 
 local NexusGit = require(script.Parent.Parent):GetContext(script)
-local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
+local NexusInstance = NexusGit:GetResource("NexusPluginFramework.NexusInstance.NexusInstance")
 local RobloxAPI = NexusGit:GetResource("Serialization.RobloxAPI")
 local UserdataSerializier = NexusGit:GetResource("Serialization.UserdataSerializier")
 

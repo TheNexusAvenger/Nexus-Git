@@ -1,0 +1,3 @@
+[submodule "client/module/Nexus-Plugin-Framework"]
+	path = client/module/Nexus-Plugin-Framework
+	url = https://github.com/TheNexusAvenger/Nexus-Plugin-Framework.git

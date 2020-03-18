@@ -5,7 +5,7 @@ Pushes the local instances to the server.
 --]]
 
 local NexusGit = require(script.Parent.Parent.Parent):GetContext(script)
-local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
+local NexusInstance = NexusGit:GetResource("NexusPluginFramework.NexusInstance.NexusInstance")
 local HttpRequest = NexusGit:GetResource("SplitHttp.HttpRequest")
 local MultiHttpRequest = NexusGit:GetResource("SplitHttp.MultiHttpRequest")
 local Partitions = NexusGit:GetResource("Serialization.Partitions")

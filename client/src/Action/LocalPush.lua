@@ -5,7 +5,7 @@ Action representing a local push.
 --]]
 
 local NexusGit = require(script.Parent.Parent):GetContext(script)
-local NexusInstance = NexusGit:GetResource("NexusInstance.NexusInstance")
+local NexusInstance = NexusGit:GetResource("NexusPluginFramework.NexusInstance.NexusInstance")
 local Settings = NexusGit:GetResource("Persistence.Settings")
 local ProgressBarWindow = NexusGit:GetResource("UI.View.Window.ProgressBarWindow")
 local ConfirmationWindow = NexusGit:GetResource("UI.View.Window.ConfirmationWindow")
