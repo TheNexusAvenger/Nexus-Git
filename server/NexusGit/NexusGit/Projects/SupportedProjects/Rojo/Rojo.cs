@@ -7,6 +7,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NexusGit.FileIO;
+using NexusGit.Git;
 using NexusGit.RobloxInstance;
 
 namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
@@ -182,7 +184,13 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
         /*
          * Writes a Rojo file.
          */
-        public void WriteFile(string location,List<string> extensionsToRemove) {
+        public void WriteFile(string location,List<string> extensionsToRemove,Submodules submodules) {
+            // Return if the file is in a submodule.
+            if (submodules != null && submodules.IsInSubmodule(location))
+            {
+                return;
+            }
+            
             if (this.Contents == null) {
                 // Create the directory if it doesn't exist.
                 if (!Directory.Exists(location)) {
@@ -191,7 +199,7 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
                 
                 // Write the children.
                 foreach (var child in this.SubFiles) {
-                    child.WriteFile(Path.Combine(location, child.Name), extensionsToRemove);
+                    child.WriteFile(Path.Combine(location, child.Name), extensionsToRemove,submodules);
                 }
                 
                 // Clear the old files.
@@ -223,7 +231,16 @@ namespace NexusGit.NexusGit.Projects.SupportedProjects.Rojo
          * Writes a Rojo file.
          */
         public void WriteFile(string location) {
-            this.WriteFile(location,FILE_ENDINGS);
+            // Get the submodules.
+            var submodulesDirectory = FileFinder.GetParentDirectoryOfFile(".gitmodules");
+            Submodules submodules = null;
+            if (submodulesDirectory != null)
+            {
+                submodules = Submodules.FromDirectory(submodulesDirectory);
+            }
+            
+            // Write the files.
+            this.WriteFile(location,FILE_ENDINGS,submodules);
         }
         
         /*
