@@ -3,6 +3,13 @@ Nexus Git provides access to Git repositories in Roblox Studio.
 It uses existing project structures (like Rojo) to allow developers
 who don't use external editors to contribute to Git-based repositories.
 
+## Project Suspended
+**Development of Nexus Git by the repository owner has been stopped due
+to the estimated time required to make Nexus Git robust enough to keep
+using. Bug fixes are still supported but feature requests will not
+be implemented. Pull requests are still accepted. Additionally,
+two-way syncing is an option in Rojo 0.6.**
+
 ## Documentation
 Documentation for the server and the client (Roblox Studio Plugin) can be found
 on the [GitHub pages](https://thenexusavenger.github.io/Nexus-Git)

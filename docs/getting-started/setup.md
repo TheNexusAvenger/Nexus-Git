@@ -14,12 +14,10 @@ Serving on port 8000 using Rojo 0.5
 ```
 
 ## Client
-Nexus Git can be purchased from the
-[Roblox plugin marketplace](https://www.roblox.com/library/4520145491/Nexus-Git-V-0-1-0-Alpha).
-If the cost is too much or you want to
-try it without buying it, see the
-[building instructions for the client](../building.md).
-Purchasing it helps justify development,
-but it is understandable if you don't want
-to pay for it. It is also useful if you want
-to contibute to the project.
+Nexus Git has been removed from the 
+Roblox plugin marketplace due to the project
+being suspended. 
+See the
+[building instructions for the client](../building.md)
+for building the plugin, or use the model file
+as part of releases V.0.2.0 and newer.

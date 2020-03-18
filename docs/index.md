@@ -3,6 +3,13 @@ Nexus Git provides access to Git repositories in Roblox Studio.
 It uses existing project structures (like Rojo) to allow developers
 who don't use external editors to contribute to Git-based repositories.
 
+# Project Suspended
+**Development of Nexus Git by the repository owner has been stopped due
+to the estimated time required to make Nexus Git robust enough to keep
+using. Bug fixes are still supported but feature requests will not
+be implemented. Pull requests are still accepted. Additionally,
+two-way syncing is an option in Rojo 0.6.**
+
 ## Currently Supported Project Structures
 Rojo 0.4 and Rojo 0.5 are supported with this plugin for syncing into Roblox
 Studio and syncing out of Roblox Studio. Additional projects can be supported,
@@ -28,13 +35,10 @@ is made and maintained similar to [rbx-dom in Rust](https://github.com/rojo-rbx/
 ## Warning: Alpha Release
 Nexus Git is current in an Alpha state. The overview of
 known limitations includes that will be resolved:
-- Linux and macOS currently have builds but have not been tested ([Trello card 1](https://trello.com/c/xjPnlInU/49-add-a-linux-jenkins-node), [Trello card 2](https://trello.com/c/o2luiqAy/48-add-a-macos-jenkins-node))<br>
 - Git Branches aren't supported ([Trello card](https://trello.com/c/UWRzTdn9/35-add-branches-view))<br>
 - Git Submodules aren't supported ([Trello card](https://trello.com/c/tP433r0v/42-add-submodules-support))<br>
-- Deleted files aren't clear ([Trello card](https://trello.com/c/d39v7imP/43-change-deleted-file-color))<br>
 - The client-side API dump is not up to date ([Trello card](https://trello.com/c/GLjr1lmk/53-add-updating-api-dump))<br>
 - RMXMX is current not supported ([Trello card](https://trello.com/c/nC0IwA9l/50-add-rbxmx-support))<br>
-- Code coverages is <40% on the server, and worse on the client ([Trello card](https://trello.com/c/fafs0apF/37-improve-unit-tests))
 
 These will be addressed in version 0.2.0. Due to blockers
 that prevent it from being updated, it will be several
