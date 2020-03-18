@@ -26,6 +26,10 @@ Creates an git push view object.
 --]]
 function GitPushView:__new(Host,RemotesToBranches,DefaultRemote,DefaultBranch)
 	self:InitializeSuper("Frame")
+
+	--Correct the defaults.
+	if not DefaultRemote then DefaultRemote = "" end
+	if not DefaultBranch then DefaultBranch = "" end
 	
 	--Store the host.
 	self:__SetChangedOverride("Host",function() end)
