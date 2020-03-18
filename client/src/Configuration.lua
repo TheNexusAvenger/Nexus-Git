@@ -9,5 +9,5 @@ return {
 	IconsSpritesheet = "http://www.roblox.com/asset/?id=4317622258",
 	Name = "Nexus Git",
 	Author = "By TheNexusAvenger",
-	Version = "0.1.0 Alpha",
+	Version = "0.2.0 Alpha",
 }
