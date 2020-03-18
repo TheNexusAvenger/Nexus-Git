@@ -232,65 +232,9 @@
       
     
     
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Home
-      </label>
-    
     <a href="." title="Home" class="md-nav__link md-nav__link--active">
       Home
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#currently-supported-project-structures" class="md-nav__link">
-    Currently Supported Project Structures
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utility-for-rojo-users" class="md-nav__link">
-    Utility for Rojo Users
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#limitation-no-rbxm-support" class="md-nav__link">
-    Limitation: No RBXM Support
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#warning-alpha-release" class="md-nav__link">
-    Warning: Alpha Release
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
     
   </li>
 
@@ -384,49 +328,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#currently-supported-project-structures" class="md-nav__link">
-    Currently Supported Project Structures
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utility-for-rojo-users" class="md-nav__link">
-    Utility for Rojo Users
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#limitation-no-rbxm-support" class="md-nav__link">
-    Limitation: No RBXM Support
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#warning-alpha-release" class="md-nav__link">
-    Warning: Alpha Release
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -444,6 +345,12 @@
 <p>Nexus Git provides access to Git repositories in Roblox Studio.
 It uses existing project structures (like Rojo) to allow developers
 who don't use external editors to contribute to Git-based repositories.</p>
+<h1 id="project-suspended">Project Suspended</h1>
+<p><strong>Development of Nexus Git by the repository owner has been stopped due
+to the estimated time required to make Nexus Git robust enough to keep
+using. Bug fixes are still supported but feature requests will not
+be implemented. Pull requests are still accepted. Additionally,
+two-way syncing is an option in Rojo 0.6.</strong></p>
 <h2 id="currently-supported-project-structures">Currently Supported Project Structures</h2>
 <p>Rojo 0.4 and Rojo 0.5 are supported with this plugin for syncing into Roblox
 Studio and syncing out of Roblox Studio. Additional projects can be supported,
@@ -466,13 +373,10 @@ is made and maintained similar to <a href="https://github.com/rojo-rbx/rbx-dom">
 <h2 id="warning-alpha-release">Warning: Alpha Release</h2>
 <p>Nexus Git is current in an Alpha state. The overview of
 known limitations includes that will be resolved:
-- Linux and macOS currently have builds but have not been tested (<a href="https://trello.com/c/xjPnlInU/49-add-a-linux-jenkins-node">Trello card 1</a>, <a href="https://trello.com/c/o2luiqAy/48-add-a-macos-jenkins-node">Trello card 2</a>)<br>
 - Git Branches aren't supported (<a href="https://trello.com/c/UWRzTdn9/35-add-branches-view">Trello card</a>)<br>
 - Git Submodules aren't supported (<a href="https://trello.com/c/tP433r0v/42-add-submodules-support">Trello card</a>)<br>
-- Deleted files aren't clear (<a href="https://trello.com/c/d39v7imP/43-change-deleted-file-color">Trello card</a>)<br>
 - The client-side API dump is not up to date (<a href="https://trello.com/c/GLjr1lmk/53-add-updating-api-dump">Trello card</a>)<br>
-- RMXMX is current not supported (<a href="https://trello.com/c/nC0IwA9l/50-add-rbxmx-support">Trello card</a>)<br>
-- Code coverages is &lt;40% on the server, and worse on the client (<a href="https://trello.com/c/fafs0apF/37-improve-unit-tests">Trello card</a>)</p>
+- RMXMX is current not supported (<a href="https://trello.com/c/nC0IwA9l/50-add-rbxmx-support">Trello card</a>)<br></p>
 <p>These will be addressed in version 0.2.0. Due to blockers
 that prevent it from being updated, it will be several
 months before the next feature release. Major bugs will
